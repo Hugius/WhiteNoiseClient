@@ -1,0 +1,8 @@
+6 47
+META script_type_init
+META script_execution_entry
+
+fe3d:scene_load("scene")
+fe3d:camera_enable_first_person_view()
+fe3d:cursor_hide()
+fe3d:model_place("ak47", "ak47", 0.0, 0.0, 0.0)
