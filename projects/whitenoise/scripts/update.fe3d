@@ -1,5 +1,54 @@
-3 0
+42 4
 META script_type_update
 META script_execution_entry
 
+BOOL wDown = fe3d:input_is_key_down("KEY_W")
+BOOL aDown = fe3d:input_is_key_down("KEY_A")
+BOOL sDown = fe3d:input_is_key_down("KEY_S")
+BOOL dDown = fe3d:input_is_key_down("KEY_D")
+BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
+BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
+DEC yaw = fe3d:camera_get_yaw()
+INCR yaw 35.0
+DEC pitch = fe3d:camera_get_pitch()
 
+IF wDown IS <true>:
+    fe3d:camera_follow_z(0.01)
+IF aDown IS <true>:
+    fe3d:camera_follow_x(-0.01)
+IF sDown IS <true>:
+    fe3d:camera_follow_z(-0.01)
+IF dDown IS <true>:
+    fe3d:camera_follow_x(0.01)
+
+VEC3 camPos = fe3d:camera_get_position()
+DEC xOffset = 0.5
+DEC yOffset = 0.0
+DEC zOffset = 0.5
+DEC xMultiplier = math:cos(yaw)
+DEC yMultiplier = math:sin(pitch)
+DEC zMultiplier = math:sin(yaw)
+MUL xOffset xMultiplier
+MUL yOffset yMultiplier
+MUL zOffset zMultiplier
+INCR camPos.x xOffset
+DECR camPos.y 0.8
+INCR camPos.y yOffset
+INCR camPos.z zOffset
+VEC3 gunRot = fe3d:model_get_rotation("ak47")
+EDIT gunRot.y = fe3d:camera_get_yaw()
+NEG gunRot.y
+INCR gunRot.y 90.0
+DEC pitchOffset = pitch
+DECR pitchOffset _lastPitch
+DECR gunRot.z pitchOffset
+fe3d:model_set_position("ak47", camPos.x, camPos.y, camPos.z)
+fe3d:model_set_rotation("ak47", gunRot.x, gunRot.y, gunRot.z)
+EDIT _lastPitch = pitch
+
+IF rPressed IS <true>:
+    fe3d:model_start_animation("ak47", "ak47_reload", 0)
+
+BOOL shootStarted = fe3d:model_is_animation_started("ak47", "ak47_shoot")
+IF lmbDown IS <true> AND shootStarted IS <false>:
+    fe3d:model_start_animation("ak47", "ak47_shoot", 0)
