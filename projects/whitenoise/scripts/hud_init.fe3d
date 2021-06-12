@@ -1,0 +1,4 @@
+0 21
+META script_type_init
+
+fe3d:image_place("crosshair", "crosshair.png", 0.0, 0.0, 0.0, 0.03, 0.05)

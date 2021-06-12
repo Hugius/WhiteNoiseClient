@@ -1,11 +1,7 @@
-9 25
+5 13
 META script_type_init
 META script_execution_entry
 
 fe3d:scene_load("scene")
-fe3d:camera_set_position(0.0, 2.0, 0.0)
-fe3d:camera_enable_first_person_view()
-fe3d:cursor_hide()
-fe3d:model_place("ak47", "ak47", 0.0, 0.0, 0.0)
-fe3d:camera_set_max_pitch(25.0)
-GLOB DEC _lastPitch = 0.0
+EXEC player_init
+EXEC hud_init

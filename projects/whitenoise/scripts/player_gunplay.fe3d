@@ -1,0 +1,33 @@
+31 58
+META script_type_update
+
+BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
+BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
+BOOL rmbDown = fe3d:input_is_mouse_down("BUTTON_RIGHT")
+DEC yaw = fe3d:camera_get_yaw()
+
+/// Update ADS
+DEC fov = fe3d:camera_get_fov()
+IF rmbDown IS <true>:
+    EDIT _targetYawOffset = 0.0
+    IF fov MORE 60.0:
+        DECR fov 0.5
+ELSE:
+    EDIT _targetYawOffset = 35.0
+    IF fov LESS 80.0:
+        INCR fov 0.5
+fe3d:camera_set_fov(fov)
+IF _yawOffset LESS _targetYawOffset:
+    INCR _yawOffset 1.0
+ELIF _yawOffset MORE _targetYawOffset:
+    DECR _yawOffset 1.0
+INCR yaw _yawOffset
+
+/// Update shooting
+BOOL shootStarted = fe3d:model_is_animation_started("m1911", "m1911_shoot")
+IF lmbDown IS <true> AND shootStarted IS <false>:
+    fe3d:model_start_animation("m1911", "m1911_shoot", 0)
+
+/// Update reloading
+IF rPressed IS <true>:
+    fe3d:model_start_animation("m1911", "m1911_reload", 0)

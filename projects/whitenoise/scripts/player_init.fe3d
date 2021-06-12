@@ -1,0 +1,14 @@
+12 57
+META script_type_init
+
+fe3d:camera_set_position(0.0, 3.2, 0.0)
+fe3d:camera_enable_first_person_view()
+fe3d:cursor_hide()
+fe3d:model_place("floor_center", "floor_center", 0.0, 0.0, 0.0)
+fe3d:model_place("player", "skeleton", 0.0, 0.0, 0.0)
+fe3d:model_set_max_height("player", 3.1)
+fe3d:model_place("m1911", "m1911", 0.0, 0.0, 0.0)
+GLOB DEC _lastPitch = 0.0
+GLOB DEC _yawOffset = 35.0
+GLOB DEC _targetYawOffset = 35.0
+fe3d:model_start_animation("player", "skeleton_m1911", 0)
