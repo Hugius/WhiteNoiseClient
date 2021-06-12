@@ -1,0 +1,21 @@
+10 12
+META script_type_update
+META script_execution_waiting
+
+DEC pitch = fe3d:camera_get_pitch()
+IF _inventory[_equipIndex] IS "":
+    PASS
+ELSE:
+    IF pitch MORE 0.0:
+        DECR pitch 1.0
+    ELIF pitch LESS 0.0:
+        INCR pitch 1.0
+    fe3d:camera_set_pitch(pitch)
+
+INT scrollDir = fe3d:input_get_mousewheel_direction()
+INCR _equipIndex scrollDir
+IF _equipIndex IS -1:
+    EDIT _equipIndex = _inventorySize
+    DECR _equipIndex 1
+ELIF _equipIndex IS _inventorySize:
+    EDIT _equipIndex = 0

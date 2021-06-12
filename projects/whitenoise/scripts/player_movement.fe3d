@@ -1,46 +1,61 @@
-50 59
+43 32
 META script_type_update
+META script_execution_waiting
 
-BOOL wDown = fe3d:input_is_key_down("KEY_W")
-BOOL aDown = fe3d:input_is_key_down("KEY_A")
-BOOL sDown = fe3d:input_is_key_down("KEY_S")
-BOOL dDown = fe3d:input_is_key_down("KEY_D")
+/// Revert back eye offset
+DEC offset = _skeletonEyeOffset
+NEG offset
+fe3d:camera_follow_z(offset)
+
+/// Movement input
+BOOL wKeyDown = fe3d:input_is_key_down("KEY_W")
+BOOL aKeyDown = fe3d:input_is_key_down("KEY_A")
+BOOL sKeyDown = fe3d:input_is_key_down("KEY_S")
+BOOL dKeyDown = fe3d:input_is_key_down("KEY_D")
+BOOL shiftKeyDown = fe3d:input_is_key_down("KEY_LSHIFT")
 BOOL isMoving = <false>
+DEC speed = _playerMovementSpeed
+DEC yaw = fe3d:camera_get_yaw()
+INCR yaw _yawOffset
 
-IF wDown IS <true>:
-    fe3d:camera_follow_z(0.01)
+IF shiftKeyDown IS <true>:
+    MUL speed _sprintMultiplier
+
+IF wKeyDown IS <true>:
+    fe3d:camera_follow_z(speed)
     EDIT isMoving = <true>
-IF aDown IS <true>:
-    fe3d:camera_follow_x(-0.01)
+IF sKeyDown IS <true>:
+    NEG speed
+    fe3d:camera_follow_z(speed)
     EDIT isMoving = <true>
-IF sDown IS <true>:
-    fe3d:camera_follow_z(-0.01)
+    NEG speed
+IF dKeyDown IS <true>:
+    fe3d:camera_follow_x(speed)
     EDIT isMoving = <true>
-IF dDown IS <true>:
-    fe3d:camera_follow_x(0.01)
+IF aKeyDown IS <true>:
+    NEG speed
+    fe3d:camera_follow_x(speed)
     EDIT isMoving = <true>
+    NEG speed
 
 VEC3 camPos = fe3d:camera_get_position()
 VEC3 gunPos = camPos
-DEC xOffset = 0.8
-DEC yOffset = 0.0
-DEC zOffset = 0.8
-DEC xMultiplier = math:cos(yaw)
-DEC yMultiplier = math:sin(pitch)
-DEC zMultiplier = math:sin(yaw)
-MUL xOffset xMultiplier
-MUL yOffset yMultiplier
-MUL zOffset zMultiplier
-INCR gunPos.x xOffset
-DECR gunPos.y 0.375
-INCR gunPos.y yOffset
-INCR gunPos.z zOffset
+VEC3 skeletonPos = camPos
+VEC3 skeletonOffset = [-0.2 -3.2 -0.2]
+VEC3 gunOffset = [1.1 -0.375 1.1]
+DEC cosYaw = math:cos(yaw)
+DEC sinYaw = math:sin(yaw)
+MUL gunOffset.x cosYaw
+MUL gunOffset.z sinYaw
+INCR gunPos gunOffset
+INCR skeletonPos skeletonOffset
+///fe3d:model_set_position("player", skeletonPos.x, skeletonPos.y, skeletonPos.z)
+
 VEC3 gunRot = fe3d:model_get_rotation("m1911")
 EDIT gunRot.y = fe3d:camera_get_yaw()
 NEG gunRot.y
 INCR gunRot.y 90.0
-DECR camPos.y 3.2
-fe3d:model_set_position("player", camPos.x, camPos.y, camPos.z)
+fe3d:model_set_position("player", camPos.x, 0.0, camPos.z)
 fe3d:model_set_position("m1911", gunPos.x, gunPos.y, gunPos.z)
 fe3d:model_set_rotation("player", 0.0, gunRot.y, 0.0)
 fe3d:model_set_rotation("m1911", gunRot.x, gunRot.y, gunRot.z)
@@ -50,3 +65,6 @@ IF isMoving IS <true> AND walkStarted IS <false>:
     fe3d:model_start_animation("player", "skeleton_walk", -1)
 IF isMoving IS <false> AND walkStarted IS <true>:
     fe3d:model_fade_animation("player", "skeleton_walk", 1)
+
+/// Move camera to eye position
+fe3d:camera_follow_z(_skeletonEyeOffset)
