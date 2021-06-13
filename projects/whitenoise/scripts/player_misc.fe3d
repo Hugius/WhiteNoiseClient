@@ -1,21 +1,48 @@
-10 12
+46 32
 META script_type_update
 META script_execution_waiting
 
-DEC pitch = fe3d:camera_get_pitch()
-IF _inventory[_equipIndex] IS "":
-    PASS
+IF _primaryGun IS "":
+    fe3d:camera_unlock_pitch()
 ELSE:
-    IF pitch MORE 0.0:
-        DECR pitch 1.0
-    ELIF pitch LESS 0.0:
-        INCR pitch 1.0
+    fe3d:camera_lock_pitch()
+    DEC pitch = fe3d:camera_get_pitch()
+    DEC absPitch = math:abs(pitch)
+    IF absPitch LESS 3.0:
+        EDIT pitch = 0.0
+    ELIF pitch MORE 2.5:
+        DECR pitch 2.5
+    ELIF pitch LESS -2.5:
+        INCR pitch 2.5
     fe3d:camera_set_pitch(pitch)
 
+IF _isEquippingGun IS <true>:
+    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911")
+    IF isStarted IS <true>:
+        BOOL isPlaying = fe3d:model_is_animation_playing("player", "skeleton_m1911")
+        INT index = fe3d:model_get_animation_frame_index("player", "skeleton_m1911")
+        IF isPlaying IS <true> AND index IS 2:
+            fe3d:model_pause_animation("player", "skeleton_m1911")
+            EDIT _isEquippingGun = <false>
+            EDIT _isGunEquipped = <true>
+
+IF _isUnequippingGun IS <true>:
+    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911")
+    IF isStarted IS <false>:
+        EDIT _isUnequippingGun = <false>
+        EDIT _isGunEquipped = <false>
+
+IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
+    IF _primaryGun NOT "":
+        fe3d:model_start_animation("player", "skeleton_m1911", 0)
+        EDIT _isEquippingGun = <true>
+
+/// Update weapon swapping
 INT scrollDir = fe3d:input_get_mousewheel_direction()
-INCR _equipIndex scrollDir
-IF _equipIndex IS -1:
-    EDIT _equipIndex = _inventorySize
-    DECR _equipIndex 1
-ELIF _equipIndex IS _inventorySize:
-    EDIT _equipIndex = 0
+IF scrollDir NOT 0 AND _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
+    IF _primaryGun NOT "":
+        fe3d:model_resume_animation("player", "skeleton_m1911")
+        EDIT _isUnequippingGun = <true>
+    STR secondary = _secondaryGun
+    EDIT _secondaryGun = _primaryGun
+    EDIT _primaryGun = secondary
