@@ -1,4 +1,4 @@
-53 10
+10 43
 META script_type_update
 META script_execution_waiting
 
@@ -9,14 +9,15 @@ BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
 BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Update ADS - toggle
-IF rmbPressed IS <true>:
+IF rmbPressed IS <true> AND _primaryGun NOT "":
     IF _isADS IS <true>:
         fe3d:model_resume_animation("player", "skeleton_m1911_ads")
         EDIT _isADS = <false>
+        EDIT _targetYawOffset = _defaultYawOffset
     ELSE:
         fe3d:model_start_animation("player", "skeleton_m1911_ads", 0)
         EDIT _isADS = <true>
-    EDIT _targetYawOffset = 0.0
+        EDIT _targetYawOffset = 0.0
 
 /// Update ADS - gun animation
 IF _yawOffset LESS _targetYawOffset:
@@ -27,12 +28,11 @@ ELIF _yawOffset MORE _targetYawOffset:
 /// Update ADS - miscellaneous
 DEC fov = fe3d:camera_get_fov()
 IF _isADS IS <true>:
-    IF fov MORE 60.0:
+    IF fov MORE _adsFOV:
         DECR fov 0.5
     fe3d:image_set_visible("crosshair", <false>)
 ELSE:
-    EDIT _targetYawOffset = 24.0
-    IF fov LESS 80.0:
+    IF fov LESS _defaultFOV:
         INCR fov 0.5
     fe3d:image_set_visible("crosshair", <true>)
 fe3d:camera_set_fov(fov)
