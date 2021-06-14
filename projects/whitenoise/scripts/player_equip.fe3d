@@ -1,14 +1,14 @@
-60 18
+73 33
 META script_type_update
 META script_execution_waiting
 
 /// IDs
-STR gunID = "m1911"
+STR gunID = _primaryGunID
 STR armEquipID = misc:concat_strings("skeleton_", gunID)
 EDIT armEquipID = misc:concat_strings(armEquipID, "_eqp")
 
 /// Update camera lock
-IF _primaryGun IS "":
+IF _primaryGunID IS "":
     fe3d:camera_unlock_pitch()
 ELSE:
     fe3d:camera_lock_pitch()
@@ -24,7 +24,7 @@ ELSE:
 
 /// Update gun equipping - starting animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
-    IF _primaryGun NOT "":
+    IF _primaryGunID NOT "":
         fe3d:model_start_animation("player", armEquipID, 0)
         fe3d:model_set_visible(gunID, <true>)
         EDIT _isEquippingGun = <true>
@@ -64,9 +64,12 @@ INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
         IF isArmsPlaying IS <false>:
-            IF _primaryGun NOT "":
+            IF _primaryGunID NOT "":
                 fe3d:model_resume_animation("player", armEquipID)
                 EDIT _isUnequippingGun = <true>
-            STR secondary = _secondaryGun
-            EDIT _secondaryGun = _primaryGun
-            EDIT _primaryGun = secondary
+            STR secondaryID = _secondaryGunID
+            INT secondaryIndex = _secondaryGunIndex
+            EDIT _secondaryGunID = _primaryGunID
+            EDIT _secondaryGunIndex = _primaryGunIndex
+            EDIT _primaryGunID = secondaryID
+            EDIT _primaryGunIndex = secondaryIndex

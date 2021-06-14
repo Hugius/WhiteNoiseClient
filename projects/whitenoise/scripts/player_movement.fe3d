@@ -1,6 +1,9 @@
-21 42
+57 47
 META script_type_update
 META script_execution_waiting
+
+/// IDs
+STR gunID = _primaryGunID
 
 /// Revert back eye offset
 DEC offset = _skeletonEyeOffset
@@ -51,19 +54,22 @@ fe3d:camera_follow_z(_movementSpeedZ)
 DEC yaw = fe3d:camera_get_yaw()
 INCR yaw _yawOffset
 VEC3 gunPos = fe3d:camera_get_position()
-VEC3 gunOffset = [1.1 -0.375 1.1]
+VEC3 gunOffset = [0.0 0.0 0.0]
+EDIT gunOffset.x = _gunDistance
+EDIT gunOffset.y = _gunHeights[_primaryGunIndex]
+EDIT gunOffset.z = _gunDistance
 DEC cosYaw = math:cos(yaw)
 DEC sinYaw = math:sin(yaw)
 MUL gunOffset.x cosYaw
 INCR gunOffset.y _gunOffsetY
 MUL gunOffset.z sinYaw
 INCR gunPos gunOffset
-VEC3 gunRot = fe3d:model_get_rotation("m1911")
+VEC3 gunRot = fe3d:model_get_rotation(gunID)
 EDIT gunRot.y = fe3d:camera_get_yaw()
 NEG gunRot.y
 INCR gunRot.y 90.0
-fe3d:model_set_position("m1911", gunPos.x, gunPos.y, gunPos.z)
-fe3d:model_set_rotation("m1911", gunRot.x, gunRot.y, gunRot.z)
+fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
+fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
 
 /// Update skeleton position & rotation
 VEC3 camPos = fe3d:camera_get_position()
@@ -84,10 +90,10 @@ ELSE:
 BOOL armsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
 IF armsStarted IS <true>:
     fe3d:model_set_animation_speed("player", "skeleton_walk_arms", animationSpeed)
-    IF _isMoving IS <false> OR _primaryGun NOT "":
+    IF _isMoving IS <false> OR _primaryGunID NOT "":
         fe3d:model_fade_animation("player", "skeleton_walk_arms", 1)
 ELSE:
-    IF _isMoving IS <true> AND _primaryGun IS "" AND _isUnequippingGun IS <false>:
+    IF _isMoving IS <true> AND _primaryGunID IS "" AND _isUnequippingGun IS <false>:
         fe3d:model_start_animation("player", "skeleton_walk_arms", -1)
 
 /// Move camera to eye position
