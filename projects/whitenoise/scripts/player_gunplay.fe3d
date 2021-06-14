@@ -1,4 +1,4 @@
-10 43
+69 79
 META script_type_update
 META script_execution_waiting
 
@@ -9,7 +9,7 @@ BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
 BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Update ADS - toggle
-IF rmbPressed IS <true> AND _primaryGun NOT "":
+IF rmbPressed IS <true> AND _primaryGun NOT "" AND _isReloading IS <false>:
     IF _isADS IS <true>:
         fe3d:model_resume_animation("player", "skeleton_m1911_ads")
         EDIT _isADS = <false>
@@ -49,8 +49,8 @@ IF _isADS IS <true>:
 
 /// Update shooting
 BOOL isSemi = <true>
-BOOL shootStarted = fe3d:model_is_animation_started("m1911", "m1911_shoot")
-IF shootStarted IS <false>:
+BOOL isShootStarted = fe3d:model_is_animation_started("m1911", "m1911_shoot")
+IF isShootStarted IS <false>:
     IF isSemi IS <true>:
         IF lmbPressed IS <true>:
             fe3d:model_start_animation("m1911", "m1911_shoot", 0)
@@ -59,5 +59,15 @@ IF shootStarted IS <false>:
             fe3d:model_start_animation("m1911", "m1911_shoot", 0)
 
 /// Update reloading
-IF rPressed IS <true>:
+IF rPressed IS <true> AND _primaryGun NOT "" AND _isReloading IS <false>:
+    EDIT _isReloading = <true>
     fe3d:model_start_animation("m1911", "m1911_reload", 0)
+    fe3d:model_start_animation("player", "skeleton_m1911_rld", 0)
+    IF _isADS IS <true>:
+        fe3d:model_resume_animation("player", "skeleton_m1911_ads")
+        EDIT _isADS = <false>
+        EDIT _targetYawOffset = _defaultYawOffset
+
+BOOL isReloadStarted = fe3d:model_is_animation_started("m1911", "m1911_reload")
+IF _isReloading IS <true> AND isReloadStarted IS <false>:
+    EDIT _isReloading = <false>

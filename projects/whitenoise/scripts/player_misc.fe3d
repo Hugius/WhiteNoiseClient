@@ -1,4 +1,4 @@
-63 8
+58 84
 META script_type_update
 META script_execution_waiting
 
@@ -20,7 +20,7 @@ ELSE:
 /// Update gun equipping: starting animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
     IF _primaryGun NOT "":
-        fe3d:model_start_animation("player", "skeleton_m1911", 0)
+        fe3d:model_start_animation("player", "skeleton_m1911_eqp", 0)
         fe3d:model_set_visible("m1911", <true>)
         EDIT _isEquippingGun = <true>
 
@@ -30,19 +30,19 @@ IF _isEquippingGun IS <true>:
 
 /// Update gun equipping: stopping animation
 IF _isEquippingGun IS <true>:
-    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911")
+    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911_eqp")
     IF isStarted IS <true>:
-        BOOL isPlaying = fe3d:model_is_animation_playing("player", "skeleton_m1911")
-        INT index = fe3d:model_get_animation_frame_index("player", "skeleton_m1911")
+        BOOL isPlaying = fe3d:model_is_animation_playing("player", "skeleton_m1911_eqp")
+        INT index = fe3d:model_get_animation_frame_index("player", "skeleton_m1911_eqp")
         IF isPlaying IS <true> AND index IS 2:
-            fe3d:model_pause_animation("player", "skeleton_m1911")
+            fe3d:model_pause_animation("player", "skeleton_m1911_eqp")
             EDIT _gunOffsetY = 0.0
             EDIT _isEquippingGun = <false>
             EDIT _isGunEquipped = <true>
 
 /// Update gun unequipping: checking if animation is finished
 IF _isUnequippingGun IS <true>:
-    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911")
+    BOOL isStarted = fe3d:model_is_animation_started("player", "skeleton_m1911_eqp")
     IF isStarted IS <false>:
         fe3d:model_set_visible("m1911", <false>)
         EDIT _gunOffsetY = -1.0
@@ -54,11 +54,13 @@ IF _isUnequippingGun IS <true>:
     DECR _gunOffsetY 0.02
 
 /// Update gun swap
+BOOL armsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
 INT scrollDir = fe3d:input_get_mousewheel_direction()
-IF scrollDir NOT 0 AND _isADS IS <false>:
+BOOL r = _isReloading
+IF scrollDir NOT 0 AND _isADS IS <false> AND armsStarted IS <false> AND r IS <false>:
     IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
         IF _primaryGun NOT "":
-            fe3d:model_resume_animation("player", "skeleton_m1911")
+            fe3d:model_resume_animation("player", "skeleton_m1911_eqp")
             EDIT _isUnequippingGun = <true>
         STR secondary = _secondaryGun
         EDIT _secondaryGun = _primaryGun
