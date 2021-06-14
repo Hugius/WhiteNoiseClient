@@ -1,4 +1,4 @@
-19 32
+12 0
 META script_type_init
 META script_execution_waiting
 
@@ -6,9 +6,11 @@ META script_execution_waiting
 GLOB CONST DEC _maxMovementSpeed = 0.025
 GLOB CONST DEC _sprintMultiplier = 2.0
 GLOB CONST DEC _skeletonEyeOffset = 0.2
-GLOB CONST DEC _defaultFOV = 80.0
-GLOB CONST DEC _adsFOV = 60.0
+GLOB CONST DEC _defaultFov = 80.0
+GLOB CONST DEC _adsFov = 60.0
+GLOB CONST DEC _fovSpeed = 0.5
 GLOB CONST DEC _defaultYawOffset = 25.0
+GLOB CONST DEC _yawOffsetSpeed = 1.0
 
 /// Non-constants
 GLOB STR _primaryGun = "m1911"
@@ -28,12 +30,11 @@ GLOB BOOL _isUnequippingGun = <false>
 /// First person camera
 fe3d:camera_enable_first_person_view()
 fe3d:camera_set_position(0.0, 3.0, 0.0)
-fe3d:camera_set_fov(_defaultFOV)
+fe3d:camera_set_fov(_defaultFov)
 fe3d:camera_set_yaw(0.0)
 fe3d:camera_set_pitch(0.0)
 fe3d:camera_set_max_pitch(48.0)
 fe3d:cursor_hide()
-fe3d:model_place("floor_center", "floor_center", 0.0, 0.0, 0.0)
 
 /// Skeleton
 fe3d:model_place("player", "skeleton", 0.0, 0.0, 0.0)

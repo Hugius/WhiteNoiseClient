@@ -1,0 +1,72 @@
+60 18
+META script_type_update
+META script_execution_waiting
+
+/// IDs
+STR gunID = "m1911"
+STR armEquipID = misc:concat_strings("skeleton_", gunID)
+EDIT armEquipID = misc:concat_strings(armEquipID, "_eqp")
+
+/// Update camera lock
+IF _primaryGun IS "":
+    fe3d:camera_unlock_pitch()
+ELSE:
+    fe3d:camera_lock_pitch()
+    DEC pitch = fe3d:camera_get_pitch()
+    DEC absPitch = math:abs(pitch)
+    IF absPitch LESS 3.0:
+        EDIT pitch = 0.0
+    ELIF pitch MORE 2.5:
+        DECR pitch 2.5
+    ELIF pitch LESS -2.5:
+        INCR pitch 2.5
+    fe3d:camera_set_pitch(pitch)
+
+/// Update gun equipping - starting animation
+IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
+    IF _primaryGun NOT "":
+        fe3d:model_start_animation("player", armEquipID, 0)
+        fe3d:model_set_visible(gunID, <true>)
+        EDIT _isEquippingGun = <true>
+
+/// Update gun equipping - gun height
+IF _isEquippingGun IS <true>:
+    INCR _gunOffsetY 0.02
+
+/// Update gun equippin - stopping animation
+IF _isEquippingGun IS <true>:
+    BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
+    IF isStarted IS <true>:
+        BOOL isPlaying = fe3d:model_is_animation_playing("player", armEquipID)
+        INT index = fe3d:model_get_animation_frame_index("player", armEquipID)
+        IF isPlaying IS <true> AND index IS 2:
+            fe3d:model_pause_animation("player", armEquipID)
+            EDIT _gunOffsetY = 0.0
+            EDIT _isEquippingGun = <false>
+            EDIT _isGunEquipped = <true>
+
+/// Update gun unequipping - cleanup
+IF _isUnequippingGun IS <true>:
+    BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
+    IF isStarted IS <false>:
+        fe3d:model_set_visible(gunID, <false>)
+        EDIT _gunOffsetY = -1.0
+        EDIT _isUnequippingGun = <false>
+        EDIT _isGunEquipped = <false>
+
+/// Update gun unequipping - gun height
+IF _isUnequippingGun IS <true>:
+    DECR _gunOffsetY 0.02
+
+/// Update gun swapping
+BOOL isArmsPlaying = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
+INT scrollDir = fe3d:input_get_mousewheel_direction()
+IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
+    IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
+        IF isArmsPlaying IS <false>:
+            IF _primaryGun NOT "":
+                fe3d:model_resume_animation("player", armEquipID)
+                EDIT _isUnequippingGun = <true>
+            STR secondary = _secondaryGun
+            EDIT _secondaryGun = _primaryGun
+            EDIT _primaryGun = secondary

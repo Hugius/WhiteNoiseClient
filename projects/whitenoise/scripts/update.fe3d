@@ -1,7 +1,8 @@
-5 16
+5 17
 META script_type_update
 META script_execution_entry
 
 EXEC player_movement
 EXEC player_gunplay
+EXEC player_equip
 EXEC player_misc
