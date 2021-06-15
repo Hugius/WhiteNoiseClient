@@ -1,4 +1,4 @@
-84 4
+70 61
 META script_type_update
 META script_execution_waiting
 
@@ -69,7 +69,7 @@ IF _isADS IS <true>:
 BOOL isSemi = _gunDataSemi[gunIndex]
 BOOL isShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
 IF isShootStarted IS <false> AND _isReloading IS <false>:
-    IF _isGunEquipped IS <true>:
+    IF _isGunEquipped IS <true> AND _isFreeLooking IS <false>:
         IF isSemi IS <true>:
             IF lmbPressed IS <true>:
                 fe3d:model_start_animation(gunID, gunShootID, 0)
