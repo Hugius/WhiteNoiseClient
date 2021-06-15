@@ -1,31 +1,17 @@
-46 23
+75 28
 META script_type_update
 META script_execution_waiting
 
-/// IDs
-STR armEquipID = misc:concat_strings("skeleton_", _primaryGunID)
+/// Values
+STR gunID = _primaryGunID
+STR armEquipID = misc:concat_strings("skeleton_", gunID)
 EDIT armEquipID = misc:concat_strings(armEquipID, "_eqp")
-
-/// Update camera lock
-IF _primaryGunID IS "":
-    fe3d:camera_unlock_pitch()
-ELSE:
-    fe3d:camera_lock_pitch()
-    DEC pitch = fe3d:camera_get_pitch()
-    DEC absPitch = math:abs(pitch)
-    IF absPitch LESS 3.0:
-        EDIT pitch = 0.0
-    ELIF pitch MORE 2.5:
-        DECR pitch 2.5
-    ELIF pitch LESS -2.5:
-        INCR pitch 2.5
-    fe3d:camera_set_pitch(pitch)
 
 /// Update gun equipping - starting arm animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
     IF _isUnequippingGun IS <false>:
         fe3d:model_start_animation("player", armEquipID, 0)
-        fe3d:model_set_visible(_primaryGunID, <true>)
+        fe3d:model_set_visible(gunID, <true>)
         EDIT _isEquippingGun = <true>
 
 /// Update gun equipping - pausing arm animation
@@ -44,7 +30,7 @@ IF _isEquippingGun IS <true>:
 IF _isUnequippingGun IS <true>:
     BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
     IF isStarted IS <false>:
-        fe3d:model_set_visible(_primaryGunID, <false>)
+        fe3d:model_set_visible(gunID, <false>)
         EDIT _gunHeightOffset = -1.0
         EDIT _isUnequippingGun = <false>
         EDIT _isGunEquipped = <false>
@@ -78,3 +64,20 @@ IF _isSwappingGun IS <true> AND _isUnequippingGun IS <false>:
     EDIT _primaryGunID = secondaryID
     EDIT _primaryGunIndex = secondaryIndex
     EDIT _isSwappingGun = <false>
+
+/// Update camera lock
+IF _primaryGunID IS "":
+    fe3d:camera_unlock_pitch()
+ELSE:
+    fe3d:camera_lock_pitch()
+    DEC pitch = fe3d:camera_get_pitch()
+    DEC absPitch = math:abs(pitch)
+    DEC negSpeed = _pitchSpeed
+    NEG negSpeed
+    IF absPitch LESS 0.000001:
+        EDIT pitch = 0.0
+    ELIF pitch MORE _pitchSpeed:
+        DECR pitch _pitchSpeed
+    ELIF pitch LESS negSpeed:
+        INCR pitch _pitchSpeed
+    fe3d:camera_set_pitch(pitch)

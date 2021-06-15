@@ -1,3 +1,42 @@
-1 29
+40 34
 META script_type_update
 META script_execution_waiting
+
+/// Compose animation speed
+DEC animationSpeed = 1.0
+IF _isSprinting IS <true>:
+    MUL animationSpeed _sprintMultiplier
+
+/// Update legs animation
+BOOL legsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_legs")
+IF legsStarted IS <true>:
+    fe3d:model_set_animation_speed("player", "skeleton_walk_legs", animationSpeed)
+    IF _isMoving IS <false>:
+        fe3d:model_fade_animation("player", "skeleton_walk_legs", 1)
+ELSE:
+    IF _isMoving IS <true>:
+        fe3d:model_start_animation("player", "skeleton_walk_legs", -1)
+
+/// Update arms animation
+BOOL armsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
+IF armsStarted IS <true>:
+    fe3d:model_set_animation_speed("player", "skeleton_walk_arms", animationSpeed)
+    IF _isMoving IS <false> OR _primaryGunID NOT "":
+        fe3d:model_fade_animation("player", "skeleton_walk_arms", 1)
+ELSE:
+    IF _isMoving IS <true> AND _primaryGunID IS "" AND _isUnequippingGun IS <false>:
+        fe3d:model_start_animation("player", "skeleton_walk_arms", -1)
+
+/// Update view bobbing
+IF _isMoving IS <true> OR _cameraHeightOffset NOT 0.0:
+    DEC bobbingSpeed = _bobbingSpeed
+    IF _isSprinting IS <true>:
+        MUL bobbingSpeed _sprintMultiplier
+    MUL bobbingSpeed _bobbingDirection
+    INCR _cameraHeightOffset bobbingSpeed
+    DEC absOffset = math:abs(_cameraHeightOffset)
+    IF absOffset MORE _maxBobbingOffset:
+        MUL _bobbingDirection -1.0
+    ELIF _isMoving IS <false> AND absOffset LESS 0.000001:
+        EDIT _cameraHeightOffset = 0.0
+        EDIT _bobbingDirection = 1.0

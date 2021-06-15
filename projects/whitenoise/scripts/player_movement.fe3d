@@ -1,16 +1,8 @@
-62 27
+41 35
 META script_type_update
 META script_execution_waiting
 
-/// IDs
-STR gunID = _primaryGunID
-
-/// Revert back eye offset
-DEC offset = _skeletonEyeOffset
-NEG offset
-fe3d:camera_follow_z(offset)
-
-/// Values
+/// Inputs
 BOOL wDown = fe3d:input_is_key_down("KEY_W")
 BOOL aDown = fe3d:input_is_key_down("KEY_A")
 BOOL sDown = fe3d:input_is_key_down("KEY_S")
@@ -18,32 +10,52 @@ BOOL dDown = fe3d:input_is_key_down("KEY_D")
 BOOL shiftDown = fe3d:input_is_key_down("KEY_LSHIFT")
 BOOL ctrlDown = fe3d:input_is_key_down("KEY_LCTRL")
 
+/// Values
+STR gunID = _primaryGunID
+INT gunIndex = _primaryGunIndex
+
+/// Revert back eye offset
+DEC offset = _skeletonEyeOffset
+NEG offset
+fe3d:camera_follow_z(offset)
+
+/// Update camera height
+VEC3 camPos = fe3d:camera_get_position()
+EDIT camPos.y = _defaultCameraHeight
+INCR camPos.y _cameraHeightOffset
+fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
+
 /// Update movement speed
+EDIT _isMoving = <false>
+EDIT _isSprinting = <false>
 MUL _movementSpeedX 0.9
 MUL _movementSpeedZ 0.9
 DEC movementSpeed = _maxMovementSpeed
-DEC animationSpeed = 1.0
+BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true>:
     MUL movementSpeed _sprintMultiplier
-    MUL animationSpeed _sprintMultiplier
+    EDIT isSprinting = <true>
 
 /// Update movement inputs
-EDIT _isMoving = <false>
 IF wDown IS <true>:
     EDIT _movementSpeedZ = movementSpeed
     EDIT _isMoving = <true>
+    EDIT _isSprinting = isSprinting
 IF sDown IS <true>:
     NEG movementSpeed
     EDIT _movementSpeedZ = movementSpeed
     EDIT _isMoving = <true>
+    EDIT _isSprinting = isSprinting
     NEG movementSpeed
 IF dDown IS <true>:
     EDIT _movementSpeedX = movementSpeed
     EDIT _isMoving = <true>
+    EDIT _isSprinting = isSprinting
 IF aDown IS <true>:
     NEG movementSpeed
     EDIT _movementSpeedX = movementSpeed
     EDIT _isMoving = <true>
+    EDIT _isSprinting = isSprinting
     NEG movementSpeed
 
 /// Update movement
@@ -56,7 +68,7 @@ INCR yaw _yawOffset
 VEC3 gunPos = fe3d:camera_get_position()
 VEC3 gunOffset = [0.0 0.0 0.0]
 EDIT gunOffset.x = _gunDistance
-EDIT gunOffset.y = _gunDataHeight[_primaryGunIndex]
+EDIT gunOffset.y = _gunDataHeight[gunIndex]
 EDIT gunOffset.z = _gunDistance
 DEC cosYaw = math:cos(yaw)
 DEC sinYaw = math:sin(yaw)
@@ -72,29 +84,9 @@ fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
 fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
 
 /// Update skeleton position & rotation
-VEC3 camPos = fe3d:camera_get_position()
-fe3d:model_set_position("player", camPos.x, 0.0, camPos.z)
+EDIT camPos = fe3d:camera_get_position()
+fe3d:model_set_position("player", camPos.x, _cameraHeightOffset, camPos.z)
 fe3d:model_set_rotation("player", 0.0, gunRot.y, 0.0)
-
-/// Update legs animation
-BOOL legsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_legs")
-IF legsStarted IS <true>:
-    fe3d:model_set_animation_speed("player", "skeleton_walk_legs", animationSpeed)
-    IF _isMoving IS <false>:
-        fe3d:model_fade_animation("player", "skeleton_walk_legs", 1)
-ELSE:
-    IF _isMoving IS <true>:
-        fe3d:model_start_animation("player", "skeleton_walk_legs", -1)
-
-/// Update arms animation
-BOOL armsStarted = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
-IF armsStarted IS <true>:
-    fe3d:model_set_animation_speed("player", "skeleton_walk_arms", animationSpeed)
-    IF _isMoving IS <false> OR _primaryGunID NOT "":
-        fe3d:model_fade_animation("player", "skeleton_walk_arms", 1)
-ELSE:
-    IF _isMoving IS <true> AND _primaryGunID IS "" AND _isUnequippingGun IS <false>:
-        fe3d:model_start_animation("player", "skeleton_walk_arms", -1)
 
 /// Move camera to eye position
 fe3d:camera_follow_z(_skeletonEyeOffset)
