@@ -1,4 +1,4 @@
-57 47
+62 27
 META script_type_update
 META script_execution_waiting
 
@@ -56,12 +56,12 @@ INCR yaw _yawOffset
 VEC3 gunPos = fe3d:camera_get_position()
 VEC3 gunOffset = [0.0 0.0 0.0]
 EDIT gunOffset.x = _gunDistance
-EDIT gunOffset.y = _gunHeights[_primaryGunIndex]
+EDIT gunOffset.y = _gunDataHeight[_primaryGunIndex]
 EDIT gunOffset.z = _gunDistance
 DEC cosYaw = math:cos(yaw)
 DEC sinYaw = math:sin(yaw)
 MUL gunOffset.x cosYaw
-INCR gunOffset.y _gunOffsetY
+INCR gunOffset.y _gunHeightOffset
 MUL gunOffset.z sinYaw
 INCR gunPos gunOffset
 VEC3 gunRot = fe3d:model_get_rotation(gunID)

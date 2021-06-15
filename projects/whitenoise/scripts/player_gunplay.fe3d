@@ -1,4 +1,4 @@
-4 23
+70 28
 META script_type_update
 META script_execution_waiting
 
@@ -65,18 +65,18 @@ IF _isADS IS <true>:
             fe3d:model_pause_animation("player", adsID)
 
 /// Update shooting
-BOOL isSemi = <true>
+BOOL isSemi = _gunDataSemi[_primaryGunIndex]
 BOOL isShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
 IF isShootStarted IS <false> AND _isReloading IS <false> AND _primaryGunID NOT "":
-    IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
+    IF _isGunEquipped IS <true>:
         IF isSemi IS <true>:
             IF lmbPressed IS <true>:
                 fe3d:model_start_animation(gunID, gunShootID, 0)
-                fe3d:sound_play_forced("m1911_fire", 0, 0)
+                fe3d:sound_play_forced(gunShootID, 0, 0)
         ELSE:
-            if lmbDown IS <true>:
+            IF lmbDown IS <true>:
                 fe3d:model_start_animation(gunID, gunShootID, 0)
-                fe3d:sound_play_forced("m1911_fire", 0, 0)
+                fe3d:sound_play_forced(gunShootID, 0, 0)
 
 /// Update reloading - starting animation
 IF rPressed IS <true> AND _primaryGunID NOT "":
