@@ -1,4 +1,4 @@
-70 61
+48 48
 META script_type_update
 META script_execution_waiting
 
@@ -24,7 +24,7 @@ BOOL isAdsStarted = fe3d:model_is_animation_started("player", adsID)
 IF isAdsStarted  IS <true>:
     EDIT isAdsPlaying = fe3d:model_is_animation_playing("player", adsID)
 IF rmbPressed IS <true> AND isAdsPlaying IS <false>:
-    IF _isReloading IS <false>:
+    IF _isReloading IS <false> AND _isFreeLooking IS <false>:
         IF _isADS IS <true>:
             fe3d:model_resume_animation("player", adsID)
             EDIT _isADS = <false>
@@ -81,9 +81,10 @@ IF isShootStarted IS <false> AND _isReloading IS <false>:
 
 /// Update reloading - starting animation
 IF rPressed IS <true> AND _isADS IS <false> AND _isReloading IS <false>:
-    EDIT _isReloading = <true>
-    fe3d:model_start_animation(gunID, gunReloadID, 0)
-    fe3d:model_start_animation("player", armReloadID, 0)
+    IF _isFreeLooking IS <false>:
+        EDIT _isReloading = <true>
+        fe3d:model_start_animation(gunID, gunReloadID, 0)
+        fe3d:model_start_animation("player", armReloadID, 0)
 
 /// Update reloading - cleanup
 BOOL isReloadStarted = fe3d:model_is_animation_started("player", armReloadID)

@@ -1,4 +1,4 @@
-67 30
+64 33
 META script_type_update
 META script_execution_waiting
 
@@ -64,22 +64,3 @@ IF _isSwappingGun IS <true> AND _isUnequippingGun IS <false>:
     EDIT _primaryGunID = secondaryID
     EDIT _primaryGunIndex = secondaryIndex
     EDIT _isSwappingGun = <false>
-
-/// Update camera lock
-BOOL fDown = fe3d:input_is_key_down("KEY_F")
-EDIT _isFreeLooking = fDown
-IF _isFreeLooking IS <true>:
-    fe3d:camera_unlock_pitch()
-ELSE:
-    fe3d:camera_lock_pitch()
-    DEC pitch = fe3d:camera_get_pitch()
-    DEC absPitch = math:abs(pitch)
-    DEC negSpeed = _pitchSpeed
-    NEG negSpeed
-    IF absPitch LESS 0.000001:
-        EDIT pitch = 0.0
-    ELIF pitch MORE _pitchSpeed:
-        DECR pitch _pitchSpeed
-    ELIF pitch LESS negSpeed:
-        INCR pitch _pitchSpeed
-    fe3d:camera_set_pitch(pitch)
