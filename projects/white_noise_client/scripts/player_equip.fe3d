@@ -1,11 +1,11 @@
-64 33
+0 23
 META script_type_update
 META script_execution_waiting
 
 /// Values
 STR gunID = _primaryGunID
-STR armEquipID = misc:concat_strings("skeleton_", gunID)
-EDIT armEquipID = misc:concat_strings(armEquipID, "_eqp")
+STR armEquipID = misc:string_concat("skeleton_", gunID)
+EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
 
 /// Update gun equipping - starting arm animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:

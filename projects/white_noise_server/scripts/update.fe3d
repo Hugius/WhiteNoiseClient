@@ -1,0 +1,22 @@
+18 31
+META script_type_update
+META script_execution_entry
+
+LIST messages = fe3d:server_get_pending_messages()
+STR message = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("messages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT message = messages[index]
+        BOOL contains = misc:string_contains(message, ":")
+        IF contains IS <true>:
+            LIST stringParts = misc:string_split(message, ":")
+            IF stringParts[0] IS "position_player":
+                fe3d:server_broadcast_message(message)
+        ELSE:
+            STR log = misc:string_concat("Received invalid message: ", message)
+            fe3d:print(log)
+        INCR index 1

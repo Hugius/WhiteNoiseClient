@@ -1,0 +1,5 @@
+3 21
+META script_type_init
+META script_execution_entry
+
+fe3d:server_start(10)

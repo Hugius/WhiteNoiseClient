@@ -11,12 +11,12 @@ BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 /// Values
 STR gunID = _primaryGunID
 INT gunIndex = _primaryGunIndex
-STR adsID = misc:concat_strings("skeleton_", gunID)
-EDIT adsID = misc:concat_strings(adsID, "_ads")
-STR gunShootID = misc:concat_strings(gunID, "_shoot")
-STR gunReloadID = misc:concat_strings(gunID, "_reload")
-STR armReloadID = misc:concat_strings("skeleton_", gunID)
-EDIT armReloadID = misc:concat_strings(armReloadID, "_rld")
+STR adsID = misc:string_concat("skeleton_", gunID)
+EDIT adsID = misc:string_concat(adsID, "_ads")
+STR gunShootID = misc:string_concat(gunID, "_shoot")
+STR gunReloadID = misc:string_concat(gunID, "_reload")
+STR armReloadID = misc:string_concat("skeleton_", gunID)
+EDIT armReloadID = misc:string_concat(armReloadID, "_rld")
 
 /// Update ADS - toggling
 BOOL isAdsPlaying = <false>
