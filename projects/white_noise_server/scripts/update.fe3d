@@ -1,22 +1,35 @@
-18 31
+15 54
 META script_type_update
 META script_execution_entry
 
+/// Values
+STR newUsername = fe3d:server_get_new_username()
+LIST usernames = fe3d:server_get_pending_usernames()
 LIST messages = fe3d:server_get_pending_messages()
+LIST stringParts = {}
 STR message = ""
+STR log = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("messages")
+BOOL contains = <false>
+
+IF newUsername NOT "":
+    STR joinMessage = misc:string_concat("player_join:", newUsername)
+    fe3d:server_broadcast_tcp_message(joinMessage, newUsername)
+
+/// Extract messages
 LOOP:
     IF index IS maxIndex:
         BREAK
     ELSE:
+        EDIT username = usernames[index]
         EDIT message = messages[index]
-        BOOL contains = misc:string_contains(message, ":")
+        EDIT contains = misc:string_contains(message, ":")
         IF contains IS <true>:
-            LIST stringParts = misc:string_split(message, ":")
-            IF stringParts[0] IS "position_player":
-                fe3d:server_broadcast_message(message)
+            EDIT stringParts = misc:string_split(message, ":")
+            IF stringParts[0] IS "player_position":
+                fe3d:server_broadcast_udp_message(message, username)
         ELSE:
-            STR log = misc:string_concat("Received invalid message: ", message)
+            EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)
         INCR index 1

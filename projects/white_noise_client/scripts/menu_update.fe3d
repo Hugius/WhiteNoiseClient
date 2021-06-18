@@ -1,4 +1,4 @@
-4 50
+12 24
 META script_type_update
 META script_execution_waiting
 
@@ -11,3 +11,4 @@ IF cPressed IS <true>:
     fe3d:scene_load("scene")
     EXEC player_init
     EXEC hud_init
+    EXEC networking_init

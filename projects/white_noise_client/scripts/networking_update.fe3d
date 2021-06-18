@@ -1,0 +1,43 @@
+33 77
+META script_type_update
+META script_execution_waiting
+
+STR currentPlayerUsername = fe3d:client_get_username()
+VEC3 position = fe3d:model_get_position("player")
+CAST position STR
+STR posMessage = misc:string_concat("player_position:", _currentPlayerIndex)
+EDIT posMessage = misc:string_concat(posMessage, ":")
+EDIT posMessage = misc:string_concat(posMessage, position)
+fe3d:client_send_udp_message(posMessage)
+
+LIST messages = fe3d:client_get_pending_messages()
+STR message = ""
+STR skeletonID = ""
+STR playerUsername = ""
+STR playerIndex = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("messages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT message = messages[index]
+        EDIT contains = misc:string_contains(message, ":")
+        IF contains IS <true>:
+            EDIT stringParts = misc:string_split(message, ":")
+            IF stringParts[0] IS "player_join":
+                EDIT playerUsername = stringParts[1]
+                EDIT playerIndex = stringParts[2]
+                IF playerUsername IS currentPlayerUsername:
+                    CAST playerIndex INT
+                    EDIT _currentPlayerIndex = playerIndex
+                    CAST playerIndex STR
+                EDIT skeletonID = misc:string_concat(playerIndex, "_skeleton")
+                fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
+            ELIF stringParts[0] IS "player_position":
+                PASS
+        ELSE:
+            EDIT log = misc:string_concat("Received invalid message: ", message)
+            fe3d:print(log)
+            fe3d:game_stop()
+        INCR index 1

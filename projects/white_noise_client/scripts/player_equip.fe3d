@@ -1,4 +1,4 @@
-0 23
+22 67
 META script_type_update
 META script_execution_waiting
 
@@ -6,11 +6,14 @@ META script_execution_waiting
 STR gunID = _primaryGunID
 STR armEquipID = misc:string_concat("skeleton_", gunID)
 EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
+CAST _currentPlayerIndex STR
+STR skeletonID = misc:string_concat(_currentPlayerIndex, _"skeleton")
+CAST _currentPlayerIndex INT
 
 /// Update gun equipping - starting arm animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
     IF _isUnequippingGun IS <false>:
-        fe3d:model_start_animation("player", armEquipID, 0)
+        fe3d:model_start_animation(skeletonID, armEquipID, 0)
         fe3d:model_set_visible(gunID, <true>)
         EDIT _isEquippingGun = <true>
 
@@ -18,7 +21,7 @@ IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
 IF _isEquippingGun IS <true>:
     BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
     IF isStarted IS <true>:
-        BOOL isPlaying = fe3d:model_is_animation_playing("player", armEquipID)
+        BOOL isPlaying = fe3d:model_is_animation_playing(skeletonID, armEquipID)
         INT index = fe3d:model_get_animation_frame_index("player", armEquipID)
         IF isPlaying IS <true> AND index IS 2:
             fe3d:model_pause_animation("player", armEquipID)
