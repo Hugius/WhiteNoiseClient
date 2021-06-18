@@ -85,8 +85,8 @@ fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
 
 /// Update skeleton position & rotation
 EDIT camPos = fe3d:camera_get_position()
-fe3d:model_set_position("player", camPos.x, _cameraHeightOffset, camPos.z)
-fe3d:model_set_rotation("player", 0.0, gunRot.y, 0.0)
+fe3d:model_set_position("player_skeleton", camPos.x, _cameraHeightOffset, camPos.z)
+fe3d:model_set_rotation("player_skeleton", 0.0, gunRot.y, 0.0)
 
 /// Move camera to eye position
 fe3d:camera_follow_z(_skeletonEyeOffset)

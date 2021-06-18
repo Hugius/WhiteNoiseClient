@@ -1,4 +1,4 @@
-22 67
+19 74
 META script_type_update
 META script_execution_waiting
 
@@ -6,32 +6,29 @@ META script_execution_waiting
 STR gunID = _primaryGunID
 STR armEquipID = misc:string_concat("skeleton_", gunID)
 EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
-CAST _currentPlayerIndex STR
-STR skeletonID = misc:string_concat(_currentPlayerIndex, _"skeleton")
-CAST _currentPlayerIndex INT
 
 /// Update gun equipping - starting arm animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
     IF _isUnequippingGun IS <false>:
-        fe3d:model_start_animation(skeletonID, armEquipID, 0)
+        fe3d:model_start_animation("player_skeleton", armEquipID, 0)
         fe3d:model_set_visible(gunID, <true>)
         EDIT _isEquippingGun = <true>
 
 /// Update gun equipping - pausing arm animation
 IF _isEquippingGun IS <true>:
-    BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
+    BOOL isStarted = fe3d:model_is_animation_started("player_skeleton", armEquipID)
     IF isStarted IS <true>:
-        BOOL isPlaying = fe3d:model_is_animation_playing(skeletonID, armEquipID)
-        INT index = fe3d:model_get_animation_frame_index("player", armEquipID)
+        BOOL isPlaying = fe3d:model_is_animation_playing("player_skeleton", armEquipID)
+        INT index = fe3d:model_get_animation_frame_index("player_skeleton", armEquipID)
         IF isPlaying IS <true> AND index IS 2:
-            fe3d:model_pause_animation("player", armEquipID)
+            fe3d:model_pause_animation("player_skeleton", armEquipID)
             EDIT _gunHeightOffset = 0.0
             EDIT _isEquippingGun = <false>
             EDIT _isGunEquipped = <true>
 
 /// Update gun unequipping - finishing up
 IF _isUnequippingGun IS <true>:
-    BOOL isStarted = fe3d:model_is_animation_started("player", armEquipID)
+    BOOL isStarted = fe3d:model_is_animation_started("player_skeleton", armEquipID)
     IF isStarted IS <false>:
         fe3d:model_set_visible(gunID, <false>)
         EDIT _gunHeightOffset = -1.0
@@ -47,13 +44,13 @@ IF _isUnequippingGun IS <true>:
     DECR _gunHeightOffset _gunHeightOffsetSpeed
 
 /// Update gun swapping - resuming arm animation
-BOOL isArmsPlaying = fe3d:model_is_animation_started("player", "skeleton_walk_arms")
+BOOL isArmsPlaying = fe3d:model_is_animation_started("player_skeleton", "skeleton_walk_arms")
 INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
         IF isArmsPlaying IS <false> AND _secondaryGunID NOT "":
             IF _isSwappingGun IS <false>:
-                fe3d:model_resume_animation("player", armEquipID)
+                fe3d:model_resume_animation("player_skeleton", armEquipID)
                 EDIT _isGunEquipped = <false>
                 EDIT _isUnequippingGun = <true>
                 EDIT _isSwappingGun = <true>

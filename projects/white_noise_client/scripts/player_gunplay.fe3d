@@ -20,17 +20,17 @@ EDIT armReloadID = misc:string_concat(armReloadID, "_rld")
 
 /// Update ADS - toggling
 BOOL isAdsPlaying = <false>
-BOOL isAdsStarted = fe3d:model_is_animation_started("player", adsID)
+BOOL isAdsStarted = fe3d:model_is_animation_started("player_skeleton", adsID)
 IF isAdsStarted  IS <true>:
-    EDIT isAdsPlaying = fe3d:model_is_animation_playing("player", adsID)
+    EDIT isAdsPlaying = fe3d:model_is_animation_playing("player_skeleton", adsID)
 IF rmbPressed IS <true> AND isAdsPlaying IS <false>:
     IF _isReloading IS <false> AND _isFreeLooking IS <false>:
         IF _isADS IS <true>:
-            fe3d:model_resume_animation("player", adsID)
+            fe3d:model_resume_animation("player_skeleton", adsID)
             EDIT _isADS = <false>
             EDIT _targetYawOffset = _defaultYawOffset
         ELSE:
-            fe3d:model_start_animation("player", adsID, 0)
+            fe3d:model_start_animation("player_skeleton", adsID, 0)
             EDIT _isADS = <true>
             EDIT _targetYawOffset = 0.0
 
@@ -58,12 +58,12 @@ fe3d:camera_set_fov(fov)
 
 /// Update ADS - arm animation
 IF _isADS IS <true>:
-    BOOL isArmStarted = fe3d:model_is_animation_started("player", adsID)
+    BOOL isArmStarted = fe3d:model_is_animation_started("player_skeleton", adsID)
     IF isArmStarted IS <true>:
-        BOOL isPlaying = fe3d:model_is_animation_playing("player", adsID)
-        INT index = fe3d:model_get_animation_frame_index("player", adsID)
+        BOOL isPlaying = fe3d:model_is_animation_playing("player_skeleton", adsID)
+        INT index = fe3d:model_get_animation_frame_index("player_skeleton", adsID)
         IF isPlaying IS <true> AND index IS 2:
-            fe3d:model_pause_animation("player", adsID)
+            fe3d:model_pause_animation("player_skeleton", adsID)
 
 /// Update shooting
 BOOL isSemi = _gunDataSemi[gunIndex]
@@ -84,9 +84,9 @@ IF rPressed IS <true> AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isFreeLooking IS <false>:
         EDIT _isReloading = <true>
         fe3d:model_start_animation(gunID, gunReloadID, 0)
-        fe3d:model_start_animation("player", armReloadID, 0)
+        fe3d:model_start_animation("player_skeleton", armReloadID, 0)
 
 /// Update reloading - cleanup
-BOOL isReloadStarted = fe3d:model_is_animation_started("player", armReloadID)
+BOOL isReloadStarted = fe3d:model_is_animation_started("player_skeleton", armReloadID)
 IF _isReloading IS <true> AND isReloadStarted IS <false>:
     EDIT _isReloading = <false>

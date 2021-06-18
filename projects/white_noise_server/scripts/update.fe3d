@@ -1,29 +1,45 @@
-15 54
+19 45
 META script_type_update
 META script_execution_entry
 
 /// Values
-STR newUsername = fe3d:server_get_new_username()
-LIST usernames = fe3d:server_get_pending_usernames()
-LIST messages = fe3d:server_get_pending_messages()
+LIST connectedUsernames = fe3d:server_get_connected_usernames()
+LIST messageUsernames = fe3d:server_get_pending_usernames()
+LIST messageContents = fe3d:server_get_pending_messages()
 LIST stringParts = {}
+STR newUsername = fe3d:server_get_new_username()
 STR message = ""
+STR username = ""
 STR log = ""
 INT index = 0
-INT maxIndex = misc:list_get_size("messages")
+INT maxIndex = 0
 BOOL contains = <false>
 
+/// Notify all other players that a new player joined the game
 IF newUsername NOT "":
-    STR joinMessage = misc:string_concat("player_join:", newUsername)
-    fe3d:server_broadcast_tcp_message(joinMessage, newUsername)
+    EDIT message = misc:string_concat("player_join:", newUsername)
+    fe3d:server_broadcast_tcp_message(message, newUsername)
+
+/// Send all connected usernames to the joined player
+IF newUsername NOT "":
+    EDIT maxIndex = misc:list_get_size("connectedUsernames")
+    LOOP:
+        IF index IS maxIndex:
+            BREAK
+        ELSE:
+            EDIT message = misc:string_concat("player_join:", connectedUsernames[index])
+            fe3d:server_send_tcp_message(newUsername, message)
+            INCR index 1
 
 /// Extract messages
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("messageContents")
 LOOP:
     IF index IS maxIndex:
         BREAK
     ELSE:
-        EDIT username = usernames[index]
-        EDIT message = messages[index]
+        EDIT username = messageUsernames[index]
+        EDIT message = messageContents[index]
         EDIT contains = misc:string_contains(message, ":")
         IF contains IS <true>:
             EDIT stringParts = misc:string_split(message, ":")
