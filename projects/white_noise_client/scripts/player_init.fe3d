@@ -1,4 +1,4 @@
-50 39
+9 39
 META script_type_update
 META script_execution_waiting
 
@@ -8,7 +8,7 @@ GLOB CONST LIST _gunDataSemi = {<true>, <false>}
 GLOB CONST DEC _gunDistance = 1.1
 GLOB CONST DEC _maxMovementSpeed = 0.025
 GLOB CONST DEC _sprintMultiplier = 2.0
-GLOB CONST DEC _skeletonEyeOffset = 0.2
+GLOB CONST DEC _skeletonEyeOffset = 0.3
 GLOB CONST DEC _defaultFov = 80.0
 GLOB CONST DEC _adsFov = 60.0
 GLOB CONST DEC _fovSpeed = 0.5

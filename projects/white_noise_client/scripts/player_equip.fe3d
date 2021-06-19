@@ -1,4 +1,4 @@
-19 74
+45 33
 META script_type_update
 META script_execution_waiting
 
@@ -44,7 +44,8 @@ IF _isUnequippingGun IS <true>:
     DECR _gunHeightOffset _gunHeightOffsetSpeed
 
 /// Update gun swapping - resuming arm animation
-BOOL isArmsPlaying = fe3d:model_is_animation_started("player_skeleton", "skeleton_walk_arms")
+STR armsID = "skeleton_walk_arms"
+BOOL isArmsPlaying = fe3d:model_is_animation_started("player_skeleton", armsID)
 INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
