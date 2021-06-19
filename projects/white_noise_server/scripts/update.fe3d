@@ -1,39 +1,42 @@
-19 45
+23 42
 META script_type_update
 META script_execution_entry
 
-/// Values
-LIST connectedUsernames = fe3d:server_get_connected_usernames()
-LIST messageUsernames = fe3d:server_get_pending_usernames()
-LIST messageContents = fe3d:server_get_pending_messages()
-LIST stringParts = {}
-STR newUsername = fe3d:server_get_new_username()
+/// Commonly used values
 STR message = ""
 STR username = ""
-STR log = ""
 INT index = 0
 INT maxIndex = 0
-BOOL contains = <false>
 
 /// Notify all other players that a new player joined the game
+STR newUsername = fe3d:server_get_new_username()
 IF newUsername NOT "":
     EDIT message = misc:string_concat("player_join:", newUsername)
     fe3d:server_broadcast_tcp_message(message, newUsername)
 
 /// Send all connected usernames to the joined player
 IF newUsername NOT "":
+    LIST connectedUsernames = fe3d:server_get_connected_usernames()
+    EDIT index = 0
     EDIT maxIndex = misc:list_get_size("connectedUsernames")
     LOOP:
         IF index IS maxIndex:
             BREAK
-        ELSE:
+        ELIF connectedUsernames[index] NOT newUsername:
             EDIT message = misc:string_concat("player_join:", connectedUsernames[index])
             fe3d:server_send_tcp_message(newUsername, message)
-            INCR index 1
+        INCR index 1
 
 /// Extract messages
+LIST messageUsernames = fe3d:server_get_pending_usernames()
+LIST messageContents = fe3d:server_get_pending_messages()
+LIST stringParts = {}
+STR log = ""
 EDIT index = 0
 EDIT maxIndex = misc:list_get_size("messageContents")
+BOOL contains = <false>
+BOOL isForwardTCP = <false>
+BOOL isForwardUDP = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
@@ -43,8 +46,15 @@ LOOP:
         EDIT contains = misc:string_contains(message, ":")
         IF contains IS <true>:
             EDIT stringParts = misc:string_split(message, ":")
-            IF stringParts[0] IS "player_position":
+            EDIT isForwardTCP = misc:list_contains("_forwardTCPs", stringParts[0])
+            EDIT isForwardUDP = misc:list_contains("_forwardUDPs", stringParts[0])
+            IF isForwardTCP IS <true>:
+                fe3d:server_broadcast_tcp_message(message, username)
+            ELIF isForwardUDP IS <true>:
                 fe3d:server_broadcast_udp_message(message, username)
+            ELSE:
+                EDIT log = misc:string_concat("Received unknown message: ", message)
+                fe3d:print(log)
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)

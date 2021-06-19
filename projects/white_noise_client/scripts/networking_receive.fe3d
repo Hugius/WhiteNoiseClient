@@ -1,0 +1,50 @@
+6 8
+META script_type_update
+META script_execution_waiting
+
+LIST messages = fe3d:client_get_pending_messages()
+LIST stringParts = {}
+VEC3 pos = [0.0 0.0 0.0]
+VEC3 rot = [0.0 0.0 0.0]
+STR message = ""
+STR username = ""
+STR skeletonID = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("messages")
+BOOL contains = <false>
+BOOL isJoined = <false>
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT message = messages[index]
+        EDIT contains = misc:string_contains(message, ":")
+        IF contains IS <true>:
+            EDIT stringParts = misc:string_split(message, ":")
+            IF stringParts[0] IS "player_join":
+                EDIT username = stringParts[1]
+                EDIT skeletonID = misc:string_concat(username, "_skeleton")
+                fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
+            ELIF stringParts[0] IS "player_position":
+                CAST pos STR
+                EDIT username = stringParts[1]
+                EDIT pos = stringParts[2]
+                EDIT skeletonID = misc:string_concat(username, "_skeleton")
+                CAST pos VEC3
+                EDIT isJoined = fe3d:model_is_existing(skeletonID)
+                IF isJoined IS <true>:
+                    fe3d:model_set_position(skeletonID, pos.x, pos.y, pos.z)
+            ELIF stringParts[0] IS "player_rotation":
+                CAST rot STR
+                EDIT username = stringParts[1]
+                EDIT rot = stringParts[2]
+                EDIT skeletonID = misc:string_concat(username, "_skeleton")
+                CAST rot VEC3
+                EDIT isJoined = fe3d:model_is_existing(skeletonID)
+                IF isJoined IS <true>:
+                    fe3d:model_set_rotation(skeletonID, rot.x, rot.y, rot.z)
+        ELSE:
+            EDIT log = misc:string_concat("Received invalid message: ", message)
+            fe3d:print(log)
+            fe3d:game_stop()
+        INCR index 1

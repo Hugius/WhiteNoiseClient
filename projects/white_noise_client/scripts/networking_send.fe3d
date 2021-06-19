@@ -1,0 +1,22 @@
+6 18
+META script_type_update
+META script_execution_waiting
+
+/// Commonly used values
+CONST STR currentUsername = fe3d:client_get_username()
+
+/// Send skeleton position to server
+VEC3 position = fe3d:model_get_position("player_skeleton")
+CAST position STR
+STR posMessage = misc:string_concat("player_position:", currentUsername)
+EDIT posMessage = misc:string_concat(posMessage, ":")
+EDIT posMessage = misc:string_concat(posMessage, position)
+fe3d:client_send_udp_message(posMessage)
+
+/// Send skeleton rotation to server
+VEC3 rotation = fe3d:model_get_rotation("player_skeleton")
+CAST rotation STR
+STR rotMessage = misc:string_concat("player_rotation:", currentUsername)
+EDIT rotMessage = misc:string_concat(rotMessage, ":")
+EDIT rotMessage = misc:string_concat(rotMessage, rotation)
+fe3d:client_send_udp_message(rotMessage)
