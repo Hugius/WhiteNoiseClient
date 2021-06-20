@@ -1,4 +1,4 @@
-14 30
+37 54
 META script_type_update
 META script_execution_waiting
 
@@ -23,10 +23,18 @@ EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
 fe3d:client_send_udp_message(message)
 
-/// Send movement status to server
+/// Send moving status to server
 BOOL isMoving = _isMoving
 CAST isMoving STR
 EDIT message = misc:string_concat("player_moving:", currentUsername)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, isMoving)
+fe3d:client_send_udp_message(message)
+
+/// Send sprinting status to server
+BOOL isSprinting = _isSprinting
+CAST isSprinting STR
+EDIT message = misc:string_concat("player_sprinting:", currentUsername)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isSprinting)
 fe3d:client_send_udp_message(message)

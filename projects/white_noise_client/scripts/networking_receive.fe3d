@@ -1,21 +1,22 @@
-52 85
+11 24
 META script_type_update
 META script_execution_waiting
 
+/// Clear last messages
+EDIT _joinMessages = {}
+EDIT _leaveMessages = {}
+EDIT _positionMessages = {}
+EDIT _rotationMessages = {}
+EDIT _movingMessages = {}
+EDIT _sprintingMessages = {}
+
+/// Receive new messages
 LIST messages = fe3d:client_get_pending_messages()
 LIST stringParts = {}
-VEC3 pos = [0.0 0.0 0.0]
-VEC3 rot = [0.0 0.0 0.0]
 STR message = ""
-STR username = ""
-STR skeletonID = ""
-STR legsID = "skeleton_walk_legs"
 INT index = 0
 INT maxIndex = misc:list_get_size("messages")
 BOOL contains = <false>
-BOOL isJoined = <false>
-BOOL isMoving = <false>
-BOOL isLegsPlaying = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
@@ -25,38 +26,17 @@ LOOP:
         IF contains IS <true>:
             EDIT stringParts = misc:string_split(message, ":")
             IF stringParts[0] IS "player_join":
-                EDIT username = stringParts[1]
-                EDIT skeletonID = misc:string_concat(username, "_skeleton")
-                fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
+                PUSH _joinMessages message
+            ELIF stringParts[0] IS "player_leave":
+                PUSH _leaveMessages message
             ELIF stringParts[0] IS "player_position":
-                CAST pos STR
-                EDIT username = stringParts[1]
-                EDIT pos = stringParts[2]
-                EDIT skeletonID = misc:string_concat(username, "_skeleton")
-                CAST pos VEC3
-                EDIT isJoined = fe3d:model_is_existing(skeletonID)
-                IF isJoined IS <true>:
-                    fe3d:model_set_position(skeletonID, pos.x, pos.y, pos.z)
+                PUSH _positionMessages message
             ELIF stringParts[0] IS "player_rotation":
-                CAST rot STR
-                EDIT username = stringParts[1]
-                EDIT rot = stringParts[2]
-                EDIT skeletonID = misc:string_concat(username, "_skeleton")
-                CAST rot VEC3
-                EDIT isJoined = fe3d:model_is_existing(skeletonID)
-                IF isJoined IS <true>:
-                    fe3d:model_set_rotation(skeletonID, rot.x, rot.y, rot.z)
+                PUSH _rotationMessages message
             ELIF stringParts[0] IS "player_moving":
-                CAST isMoving STR
-                EDIT username = stringParts[1]
-                EDIT isMoving = stringParts[2]
-                EDIT skeletonID = misc:string_concat(username, "_skeleton")
-                EDIT isLegsPlaying = fe3d:model_is_animation_started(skeletonID, legsID)
-                CAST isMoving BOOL
-                IF isMoving IS <true> AND isLegsPlaying IS <false>:
-                    fe3d:model_start_animation(skeletonID, legsID, -1)
-                ELIF isMoving IS <false> AND isLegsPlaying IS <true>:
-                    fe3d:model_fade_animation(skeletonID, legsID, 1)
+                PUSH _movingMessages message
+            ELIF stringParts[0] IS "player_sprinting":
+                PUSH _sprintingMessages message
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)

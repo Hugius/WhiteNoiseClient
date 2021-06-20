@@ -1,0 +1,22 @@
+20 52
+META script_type_update
+META script_execution_waiting
+
+/// First person camera
+fe3d:camera_set_position(0.0, _defaultCameraHeight, 0.0)
+fe3d:camera_set_fov(_defaultFov)
+fe3d:camera_set_yaw(0.0)
+fe3d:camera_set_pitch(0.0)
+fe3d:camera_set_max_pitch(48.0)
+fe3d:camera_set_mouse_sensitivity(0.02)
+
+/// Models
+fe3d:model_place("player_skeleton", "skeleton", 0.0, 0.0, 0.0)
+fe3d:model_place("m1911", "m1911", 0.0, 0.0, 0.0)
+fe3d:model_place("ak47", "ak47", 0.0, 0.0, 0.0)
+fe3d:model_set_visible("m1911", <false>)
+fe3d:model_set_visible("ak47", <false>)
+
+/// Sounds
+fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)
+fe3d:sound_place_2D("ak47_shoot", "ak47_shoot", 1.0)

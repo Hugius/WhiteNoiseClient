@@ -1,0 +1,95 @@
+89 18
+META script_type_update
+META script_execution_waiting
+
+/// Commonly used values
+LIST stringParts = {}
+CONST STR legsID = "skeleton_walk_legs"
+STR username = ""
+STR payload = ""
+STR skeletonID = ""
+INT index = 0
+INT maxIndex = 0
+BOOL isJoined = <false>
+BOOL isLegsPlaying = <false>
+
+/// Position messages
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("_positionMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_positionMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            CAST payload VEC3
+            fe3d:model_set_position(skeletonID, payload.x, payload.y, payload.z)
+            CAST payload STR
+        INCR index 1
+
+/// Rotation messages
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("_rotationMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_rotationMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            CAST payload VEC3
+            fe3d:model_set_rotation(skeletonID, payload.x, payload.y, payload.z)
+            CAST payload STR
+        INCR index 1
+
+/// Moving messages
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("_movingMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_movingMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            EDIT isLegsPlaying = fe3d:model_is_animation_started(skeletonID, legsID)
+            CAST payload BOOL
+            IF payload IS <true> AND isLegsPlaying IS <false>:
+                fe3d:model_start_animation(skeletonID, legsID, -1)
+            ELIF payload IS <false> AND isLegsPlaying IS <true>:
+                fe3d:model_fade_animation(skeletonID, legsID, 1)
+            CAST payload STR
+        INCR index 1
+
+/// Sprinting messages
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("_sprintingMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_sprintingMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            EDIT isLegsPlaying = fe3d:model_is_animation_started(skeletonID, legsID)
+            CAST payload BOOL
+            IF isLegsPlaying IS <true>:
+                IF payload IS <true>:
+                    fe3d:model_set_animation_speed(skeletonID, legsID,_sprintMultiplier)
+                ELSE:
+                    fe3d:model_set_animation_speed(skeletonID, legsID, 1.0)
+            CAST payload STR
+        INCR index 1

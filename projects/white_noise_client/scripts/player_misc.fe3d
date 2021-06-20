@@ -1,8 +1,8 @@
-25 63
+6 40
 META script_type_update
 META script_execution_waiting
 
-/// Compose animation speed
+/// Calculate animation speed
 DEC animationSpeed = 1.0
 IF _isSprinting IS <true>:
     MUL animationSpeed _sprintMultiplier

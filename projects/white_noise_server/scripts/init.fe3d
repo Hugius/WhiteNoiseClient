@@ -5,4 +5,8 @@ META script_execution_entry
 fe3d:server_start(10)
 
 GLOB LIST _forwardTCPs = {}
-GLOB LIST _forwardUDPs = {"player_position", "player_rotation", "player_moving"}
+GLOB LIST _forwardUDPs = {}
+PUSH _forwardUDPs "player_position"
+PUSH _forwardUDPs "player_rotation"
+PUSH _forwardUDPs "player_moving"
+PUSH _forwardUDPs "player_sprinting"
