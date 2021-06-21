@@ -1,0 +1,37 @@
+8 7
+META script_type_update
+META script_execution_waiting
+
+/// Values
+LIST stringParts = {}
+STR username = ""
+STR payload = ""
+STR skeletonID = ""
+STR gunID = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("_playerMoveMessages")
+BOOL isJoined = <false>
+
+/// Handle player movement messages
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_playerMoveMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT gunID = misc:string_concat(username, "_m1911")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            CAST payload VEC3
+            IF stringParts[0] IS "player_skeleton_position":
+                fe3d:model_set_position(skeletonID, payload.x, payload.y, payload.z)
+            IF stringParts[0] IS "player_skeleton_rotation":
+                fe3d:model_set_rotation(skeletonID, payload.x, payload.y, payload.z)
+            IF stringParts[0] IS "player_gun_position":
+                fe3d:model_set_position(gunID, payload.x, payload.y, payload.z)
+            IF stringParts[0] IS "player_gun_rotation":
+                fe3d:model_set_rotation(gunID, payload.x, payload.y, payload.z)
+            CAST payload STR
+        INCR index 1

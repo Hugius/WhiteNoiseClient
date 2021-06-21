@@ -1,12 +1,11 @@
-11 24
+6 29
 META script_type_update
 META script_execution_waiting
 
 /// Clear last messages
 EDIT _joinMessages = {}
 EDIT _leaveMessages = {}
-EDIT _positionMessages = {}
-EDIT _rotationMessages = {}
+EDIT _playerMoveMessages = {}
 EDIT _movingMessages = {}
 EDIT _sprintingMessages = {}
 
@@ -29,10 +28,14 @@ LOOP:
                 PUSH _joinMessages message
             ELIF stringParts[0] IS "player_leave":
                 PUSH _leaveMessages message
-            ELIF stringParts[0] IS "player_position":
-                PUSH _positionMessages message
-            ELIF stringParts[0] IS "player_rotation":
-                PUSH _rotationMessages message
+            ELIF stringParts[0] IS "player_skeleton_position":
+                PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_skeleton_rotation":
+                PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_gun_position":
+                PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_gun_rotation":
+                PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_moving":
                 PUSH _movingMessages message
             ELIF stringParts[0] IS "player_sprinting":

@@ -1,17 +1,17 @@
-45 33
+2 0
 META script_type_update
 META script_execution_waiting
 
-/// Values
-STR gunID = _primaryGunID
-STR armEquipID = misc:string_concat("skeleton_", gunID)
+/// Commonly used values
+STR primaryGunModelID = misc:string_concat("player_", _primaryGun)
+STR armEquipID = misc:string_concat("skeleton_", _primaryGun)
 EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
 
 /// Update gun equipping - starting arm animation
 IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
     IF _isUnequippingGun IS <false>:
         fe3d:model_start_animation("player_skeleton", armEquipID, 0)
-        fe3d:model_set_visible(gunID, <true>)
+        fe3d:model_set_visible(primaryGunModelID, <true>)
         EDIT _isEquippingGun = <true>
 
 /// Update gun equipping - pausing arm animation
@@ -30,7 +30,7 @@ IF _isEquippingGun IS <true>:
 IF _isUnequippingGun IS <true>:
     BOOL isStarted = fe3d:model_is_animation_started("player_skeleton", armEquipID)
     IF isStarted IS <false>:
-        fe3d:model_set_visible(gunID, <false>)
+        fe3d:model_set_visible(primaryGunModelID, <false>)
         EDIT _gunHeightOffset = -1.0
         EDIT _isUnequippingGun = <false>
         EDIT _isGunEquipped = <false>
@@ -49,7 +49,7 @@ BOOL isArmsPlaying = fe3d:model_is_animation_started("player_skeleton", armsID)
 INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isEquippingGun IS <false> AND _isUnequippingGun IS <false>:
-        IF isArmsPlaying IS <false> AND _secondaryGunID NOT "":
+        IF isArmsPlaying IS <false> AND _secondaryGun NOT "":
             IF _isSwappingGun IS <false>:
                 fe3d:model_resume_animation("player_skeleton", armEquipID)
                 EDIT _isGunEquipped = <false>
@@ -58,10 +58,10 @@ IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
 
 /// Update gun swapping - finishing up
 IF _isSwappingGun IS <true> AND _isUnequippingGun IS <false>:
-    STR secondaryID = _secondaryGunID
+    STR secondaryID = _secondaryGun
     INT secondaryIndex = _secondaryGunIndex
-    EDIT _secondaryGunID = _primaryGunID
+    EDIT _secondaryGun = _primaryGun
     EDIT _secondaryGunIndex = _primaryGunIndex
-    EDIT _primaryGunID = secondaryID
+    EDIT _primaryGun = secondaryID
     EDIT _primaryGunIndex = secondaryIndex
     EDIT _isSwappingGun = <false>

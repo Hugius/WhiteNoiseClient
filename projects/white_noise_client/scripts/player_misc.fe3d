@@ -23,10 +23,10 @@ STR armsID = "skeleton_walk_arms"
 BOOL armsStarted = fe3d:model_is_animation_started("player_skeleton", armsID)
 IF armsStarted IS <true>:
     fe3d:model_set_animation_speed("player_skeleton", armsID, animationSpeed)
-    IF _isMoving IS <false> OR _primaryGunID NOT "":
+    IF _isMoving IS <false> OR _primaryGun NOT "":
         fe3d:model_fade_animation("player_skeleton", armsID, 1)
 ELSE:
-    IF _isMoving IS <true> AND _primaryGunID IS "" AND _isUnequippingGun IS <false>:
+    IF _isMoving IS <true> AND _primaryGun IS "" AND _isUnequippingGun IS <false>:
         fe3d:model_start_animation("player_skeleton", armsID, -1)
 
 /// Update view bobbing

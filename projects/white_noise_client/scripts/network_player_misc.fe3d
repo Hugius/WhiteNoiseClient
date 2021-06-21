@@ -1,40 +1,17 @@
-2 0
+11 23
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 LIST stringParts = {}
+CONST STR legsID = "skeleton_walk_legs"
 STR username = ""
 STR payload = ""
 STR skeletonID = ""
 INT index = 0
 INT maxIndex = 0
-
-/// Join messages
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("_joinMessages")
-LOOP:
-    IF index IS maxIndex:
-        BREAK
-    ELSE:
-        EDIT stringParts = misc:string_split(_joinMessages[index], ":")
-        EDIT username = stringParts[1]
-        EDIT skeletonID = misc:string_concat(username, "_skeleton")
-        fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
-        INCR index 1
-
-/// Leave messages
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("_leaveMessages")
-LOOP:
-    IF index IS maxIndex:
-        BREAK
-    ELSE:
-        EDIT stringParts = misc:string_split(_leaveMessages[index], ":")
-        EDIT username = stringParts[1]
-        EDIT skeletonID = misc:string_concat(username, "_skeleton")
-        fe3d:model_delete(skeletonID)
-        INCR index 1
+BOOL isJoined = <false>
+BOOL isLegsPlaying = <false>
 
 /// Moving messages
 EDIT index = 0

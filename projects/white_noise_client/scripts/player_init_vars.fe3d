@@ -22,8 +22,8 @@ GLOB CONST DEC _gunDistanceFactor = 0.9
 GLOB CONST DEC _defaultCameraHeight = 3.0
 
 /// Non-constants
-GLOB STR _primaryGunID = "m1911"
-GLOB STR _secondaryGunID = "ak47"
+GLOB STR _primaryGun = "m1911"
+GLOB STR _secondaryGun = "ak47"
 GLOB DEC _targetYawOffset = _defaultYawOffset
 GLOB DEC _yawOffset = _defaultYawOffset
 GLOB DEC _gunHeightOffset = -1.0

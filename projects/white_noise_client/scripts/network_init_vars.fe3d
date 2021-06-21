@@ -1,10 +1,9 @@
-0 21
+5 17
 META script_type_init
 META script_execution_waiting
 
 GLOB LIST _joinMessages = {}
 GLOB LIST _leaveMessages = {}
-GLOB LIST _positionMessages = {}
-GLOB LIST _rotationMessages = {}
+GLOB LIST _playerMoveMessages = {}
 GLOB LIST _movingMessages = {}
 GLOB LIST _sprintingMessages = {}

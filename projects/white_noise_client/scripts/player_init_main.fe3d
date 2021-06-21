@@ -1,4 +1,4 @@
-20 52
+16 31
 META script_type_update
 META script_execution_waiting
 
@@ -12,10 +12,10 @@ fe3d:camera_set_mouse_sensitivity(0.02)
 
 /// Models
 fe3d:model_place("player_skeleton", "skeleton", 0.0, 0.0, 0.0)
-fe3d:model_place("m1911", "m1911", 0.0, 0.0, 0.0)
-fe3d:model_place("ak47", "ak47", 0.0, 0.0, 0.0)
-fe3d:model_set_visible("m1911", <false>)
-fe3d:model_set_visible("ak47", <false>)
+fe3d:model_place("player_m1911", "m1911", 0.0, 0.0, 0.0)
+fe3d:model_place("player_ak47", "ak47", 0.0, 0.0, 0.0)
+fe3d:model_set_visible("player_m1911", <false>)
+fe3d:model_set_visible("player_ak47", <false>)
 
 /// Sounds
 fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)

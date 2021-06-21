@@ -1,4 +1,4 @@
-4 0
+9 39
 META script_type_init
 META script_execution_entry
 
@@ -6,7 +6,9 @@ fe3d:server_start(10)
 
 GLOB LIST _forwardTCPs = {}
 GLOB LIST _forwardUDPs = {}
-PUSH _forwardUDPs "player_position"
-PUSH _forwardUDPs "player_rotation"
+PUSH _forwardUDPs "player_skeleton_position"
+PUSH _forwardUDPs "player_skeleton_rotation"
+PUSH _forwardUDPs "player_gun_position"
+PUSH _forwardUDPs "player_gun_rotation"
 PUSH _forwardUDPs "player_moving"
 PUSH _forwardUDPs "player_sprinting"
