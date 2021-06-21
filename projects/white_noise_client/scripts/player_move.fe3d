@@ -1,4 +1,4 @@
-86 83
+88 0
 META script_type_update
 META script_execution_waiting
 
@@ -33,7 +33,7 @@ MUL _movementSpeedZ _gunDistanceFactor
 DEC movementSpeed = _maxMovementSpeed
 BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true>:
-    MUL movementSpeed _sprintMultiplier
+    MUL movementSpeed _sprintFactor
     EDIT isSprinting = <true>
 
 /// Update movement inputs

@@ -5,7 +5,7 @@ META script_execution_waiting
 /// Calculate animation speed
 DEC animationSpeed = 1.0
 IF _isSprinting IS <true>:
-    MUL animationSpeed _sprintMultiplier
+    MUL animationSpeed _sprintFactor
 
 /// Update legs animation
 STR legsID = "skeleton_walk_legs"
@@ -33,7 +33,7 @@ ELSE:
 IF _isMoving IS <true> OR _cameraHeightOffset NOT 0.0:
     DEC bobbingSpeed = _bobbingSpeed
     IF _isSprinting IS <true>:
-        MUL bobbingSpeed _sprintMultiplier
+        MUL bobbingSpeed _sprintFactor
     MUL bobbingSpeed _bobbingDirection
     INCR _cameraHeightOffset bobbingSpeed
     DEC absOffset = math:abs(_cameraHeightOffset)

@@ -1,18 +1,18 @@
-13 27
+6 20
 META script_type_update
 META script_execution_entry
 
 BOOL isConnected = fe3d:client_is_connected()
 
 IF isConnected IS <true>:
-    EXEC player_movement
+    EXEC player_move
     EXEC player_gunplay
     EXEC player_equip
     EXEC player_misc
-    EXEC networking_send
-    EXEC networking_receive
-    EXEC networking_movement
-    EXEC networking_gunplay
-    EXEC networking_misc
+    EXEC network_send
+    EXEC network_receive
+    EXEC network_ally_move
+    EXEC network_ally_gunplay
+    EXEC network_ally_misc
 ELSE:
     EXEC menu_update
