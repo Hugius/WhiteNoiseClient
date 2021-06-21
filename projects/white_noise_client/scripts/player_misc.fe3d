@@ -1,4 +1,4 @@
-6 40
+9 6
 META script_type_update
 META script_execution_waiting
 
@@ -7,27 +7,16 @@ DEC animationSpeed = 1.0
 IF _isSprinting IS <true>:
     MUL animationSpeed _sprintFactor
 
-/// Update legs animation
-STR legsID = "skeleton_walk_legs"
-BOOL legsStarted = fe3d:model_is_animation_started("player_skeleton", legsID)
-IF legsStarted IS <true>:
-    fe3d:model_set_animation_speed("player_skeleton", legsID, animationSpeed)
+/// Update walk animation
+CONST STR walkID = "skeleton_walk"
+BOOL walkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
+IF walkStarted IS <true>:
+    fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)
     IF _isMoving IS <false>:
-        fe3d:model_fade_animation("player_skeleton", legsID, 1)
+        fe3d:model_fade_animation("player_skeleton", walkID, 1)
 ELSE:
     IF _isMoving IS <true>:
-        fe3d:model_start_animation("player_skeleton", legsID, -1)
-
-/// Update arms animation
-STR armsID = "skeleton_walk_arms"
-BOOL armsStarted = fe3d:model_is_animation_started("player_skeleton", armsID)
-IF armsStarted IS <true>:
-    fe3d:model_set_animation_speed("player_skeleton", armsID, animationSpeed)
-    IF _isMoving IS <false> OR _primaryGun NOT "":
-        fe3d:model_fade_animation("player_skeleton", armsID, 1)
-ELSE:
-    IF _isMoving IS <true> AND _primaryGun IS "" AND _isUnequippingGun IS <false>:
-        fe3d:model_start_animation("player_skeleton", armsID, -1)
+        fe3d:model_start_animation("player_skeleton", walkID, -1)
 
 /// Update view bobbing
 IF _isMoving IS <true> OR _cameraHeightOffset NOT 0.0:

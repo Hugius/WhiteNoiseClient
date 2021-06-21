@@ -1,10 +1,10 @@
-11 23
+31 46
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Values
 LIST stringParts = {}
-CONST STR legsID = "skeleton_walk_legs"
+CONST STR walkID = "skeleton_walk"
 STR username = ""
 STR payload = ""
 STR skeletonID = ""
@@ -26,12 +26,12 @@ LOOP:
         EDIT skeletonID = misc:string_concat(username, "_skeleton")
         EDIT isJoined = fe3d:model_is_existing(skeletonID)
         IF isJoined IS <true>:
-            EDIT isLegsPlaying = fe3d:model_is_animation_started(skeletonID, legsID)
+            EDIT isWalkPlaying = fe3d:model_is_animation_started(skeletonID, walkID)
             CAST payload BOOL
-            IF payload IS <true> AND isLegsPlaying IS <false>:
-                fe3d:model_start_animation(skeletonID, legsID, -1)
-            ELIF payload IS <false> AND isLegsPlaying IS <true>:
-                fe3d:model_fade_animation(skeletonID, legsID, 1)
+            IF payload IS <true> AND isWalkPlaying IS <false>:
+                fe3d:model_start_animation(skeletonID, walkID, -1)
+            ELIF payload IS <false> AND isWalkPlaying IS <true>:
+                fe3d:model_fade_animation(skeletonID, walkID, 1)
             CAST payload STR
         INCR index 1
 
@@ -48,12 +48,12 @@ LOOP:
         EDIT skeletonID = misc:string_concat(username, "_skeleton")
         EDIT isJoined = fe3d:model_is_existing(skeletonID)
         IF isJoined IS <true>:
-            EDIT isLegsPlaying = fe3d:model_is_animation_started(skeletonID, legsID)
+            EDIT isWalkPlaying = fe3d:model_is_animation_started(skeletonID, walkID)
             CAST payload BOOL
-            IF isLegsPlaying IS <true>:
+            IF isWalkPlaying IS <true>:
                 IF payload IS <true>:
-                    fe3d:model_set_animation_speed(skeletonID, legsID, _sprintFactor)
+                    fe3d:model_set_animation_speed(skeletonID, walkID, _sprintFactor)
                 ELSE:
-                    fe3d:model_set_animation_speed(skeletonID, legsID, 1.0)
+                    fe3d:model_set_animation_speed(skeletonID, walkID, 1.0)
             CAST payload STR
         INCR index 1
