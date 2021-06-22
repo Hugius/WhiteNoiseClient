@@ -1,13 +1,11 @@
-20 9
+6 15
 META script_type_update
 META script_execution_waiting
 
 /// Clear last messages
-EDIT _joinMessages = {}
-EDIT _leaveMessages = {}
+EDIT _playerMainMessages = {}
 EDIT _playerMoveMessages = {}
-EDIT _movingMessages = {}
-EDIT _sprintingMessages = {}
+EDIT _playerGunMessages = {}
 
 /// Receive new messages
 LIST messages = fe3d:client_get_pending_messages()
@@ -25,21 +23,23 @@ LOOP:
         IF contains IS <true>:
             EDIT stringParts = misc:string_split(message, ":")
             IF stringParts[0] IS "player_join":
-                PUSH _joinMessages message
+                PUSH _playerMainMessages message
             ELIF stringParts[0] IS "player_leave":
-                PUSH _leaveMessages message
+                PUSH _playerMainMessages message
             ELIF stringParts[0] IS "player_skeleton_position":
                 PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_skeleton_rotation":
                 PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_skeleton_moving":
+                PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_skeleton_sprinting":
+                PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_gun_position":
-                PUSH _playerMoveMessages message
+                PUSH _playerGunMessages message
             ELIF stringParts[0] IS "player_gun_rotation":
-                PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_moving":
-                PUSH _movingMessages message
-            ELIF stringParts[0] IS "player_sprinting":
-                PUSH _sprintingMessages message
+                PUSH _playerGunMessages message
+            ELIF stringParts[0] IS "player_gun_type":
+                PUSH _playerGunMessages message
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)

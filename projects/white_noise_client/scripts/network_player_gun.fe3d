@@ -1,3 +1,44 @@
-0 0
+42 3
 META script_type_update
 META script_execution_waiting
+
+/// Values
+LIST stringParts = {}
+STR username = ""
+STR payload = ""
+STR skeletonID = ""
+STR gunID = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("_playerGunMessages")
+BOOL isJoined = <false>
+
+/// Handle player gun messages
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT stringParts = misc:string_split(_playerGunMessages[index], ":")
+        EDIT username = stringParts[1]
+        EDIT payload = stringParts[2]
+        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT gunID = misc:string_concat(username, "_m1911")
+        EDIT isJoined = fe3d:model_is_existing(skeletonID)
+        IF isJoined IS <true>:
+            IF stringParts[0] IS "player_gun_position":
+                CAST payload VEC3
+                fe3d:model_set_position(gunID, payload.x, payload.y, payload.z)
+                CAST payload STR
+            IF stringParts[0] IS "player_gun_rotation":
+                CAST payload VEC3
+                fe3d:model_set_rotation(gunID, payload.x, payload.y, payload.z)
+                CAST payload STR
+            IF stringParts[0] IS "player_gun_type":
+                STR armEquipID = misc:string_concat("skeleton_", payload)
+                EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
+                fe3d:model_set_position(gunID, payload.x, payload.y, payload.z)
+        INCR index 1
+
+/// Update gun equipping - starting arm animation
+///IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
+///    IF _isUnequippingGun IS <false>:
+///        fe3d:model_start_animation("player_skeleton", armEquipID, 0)

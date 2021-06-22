@@ -1,4 +1,4 @@
-9 39
+10 35
 META script_type_init
 META script_execution_entry
 
@@ -8,7 +8,8 @@ GLOB LIST _forwardTCPs = {}
 GLOB LIST _forwardUDPs = {}
 PUSH _forwardUDPs "player_skeleton_position"
 PUSH _forwardUDPs "player_skeleton_rotation"
+PUSH _forwardUDPs "player_skeleton_moving"
+PUSH _forwardUDPs "player_skeleton_sprinting"
 PUSH _forwardUDPs "player_gun_position"
 PUSH _forwardUDPs "player_gun_rotation"
-PUSH _forwardUDPs "player_moving"
-PUSH _forwardUDPs "player_sprinting"
+PUSH _forwardUDPs "player_gun_type"

@@ -1,43 +1,30 @@
-0 0
+3 10
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Values
 LIST stringParts = {}
 STR username = ""
 STR payload = ""
 STR skeletonID = ""
 STR m1911ID = ""
 INT index = 0
-INT maxIndex = 0
+INT maxIndex = misc:list_get_size("_playerMainMessages")
 
-/// Join messages
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("_joinMessages")
+/// Handle player main messages
 LOOP:
     IF index IS maxIndex:
         BREAK
     ELSE:
-        EDIT stringParts = misc:string_split(_joinMessages[index], ":")
+        EDIT stringParts = misc:string_split(_playerMainMessages[index], ":")
         EDIT username = stringParts[1]
         EDIT skeletonID = misc:string_concat(username, "_skeleton")
         EDIT m1911ID = misc:string_concat(username, "_m1911")
-        fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
-        fe3d:model_place(m1911ID, "m1911", 0.0, 0.0, 0.0)
-        ///fe3d:model_set_visible(m1911ID, <false>)
-        INCR index 1
-
-/// Leave messages
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("_leaveMessages")
-LOOP:
-    IF index IS maxIndex:
-        BREAK
-    ELSE:
-        EDIT stringParts = misc:string_split(_leaveMessages[index], ":")
-        EDIT username = stringParts[1]
-        EDIT skeletonID = misc:string_concat(username, "_skeleton")
-        EDIT m1911ID = misc:string_concat(username, "_m1911")
-        fe3d:model_delete(skeletonID)
-        fe3d:model_delete(m1911ID)
+        IF stringParts[0] IS "player_join":
+            fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
+            fe3d:model_place(m1911ID, "m1911", 0.0, 0.0, 0.0)
+            ///fe3d:model_set_visible(m1911ID, <false>)
+        ELIF stringParts[0] IS "player_join":
+            fe3d:model_delete(skeletonID)
+            fe3d:model_delete(m1911ID)
         INCR index 1

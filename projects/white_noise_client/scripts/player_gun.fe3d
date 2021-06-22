@@ -1,4 +1,4 @@
-0 0
+25 35
 META script_type_update
 META script_execution_waiting
 
@@ -9,12 +9,12 @@ BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
 BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Commonly used values
-STR primaryGunModelID = misc:string_concat("player_", _primaryGun)
-STR adsID = misc:string_concat("skeleton_", _primaryGun)
+STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
+STR adsID = misc:string_concat("skeleton_", _primaryGunType)
 EDIT adsID = misc:string_concat(adsID, "_ads")
-STR gunShootID = misc:string_concat(_primaryGun, "_shoot")
-STR gunReloadID = misc:string_concat(_primaryGun, "_reload")
-STR armReloadID = misc:string_concat("skeleton_", _primaryGun)
+STR gunShootID = misc:string_concat(_primaryGunType, "_shoot")
+STR gunReloadID = misc:string_concat(_primaryGunType, "_reload")
+STR armReloadID = misc:string_concat("skeleton_", _primaryGunType)
 EDIT armReloadID = misc:string_concat(armReloadID, "_rld")
 
 /// Update ADS - toggling
@@ -24,14 +24,15 @@ IF isAdsStarted  IS <true>:
     EDIT isAdsPlaying = fe3d:model_is_animation_playing("player_skeleton", adsID)
 IF rmbPressed IS <true> AND isAdsPlaying IS <false>:
     IF _isReloading IS <false> AND _isFreeLooking IS <false>:
-        IF _isADS IS <true>:
-            fe3d:model_resume_animation("player_skeleton", adsID)
-            EDIT _isADS = <false>
-            EDIT _targetYawOffset = _defaultYawOffset
-        ELSE:
-            fe3d:model_start_animation("player_skeleton", adsID, 0)
-            EDIT _isADS = <true>
-            EDIT _targetYawOffset = 0.0
+        IF _isGunEquipped IS <true>:
+            IF _isADS IS <true>:
+                fe3d:model_resume_animation("player_skeleton", adsID)
+                EDIT _isADS = <false>
+                EDIT _targetYawOffset = _defaultYawOffset
+            ELSE:
+                fe3d:model_start_animation("player_skeleton", adsID, 0)
+                EDIT _isADS = <true>
+                EDIT _targetYawOffset = 0.0
 
 /// Update ADS - aiming animation
 IF _yawOffset LESS _targetYawOffset:
@@ -65,7 +66,7 @@ IF _isADS IS <true>:
             fe3d:model_pause_animation("player_skeleton", adsID)
 
 /// Update shooting
-BOOL isSemi = _gunDataSemi[_primaryGunIndex]
+BOOL isSemi = _gunDataSemi[_primaryGunTypeIndex]
 BOOL isShootStarted = fe3d:model_is_animation_started(primaryGunModelID, gunShootID)
 IF isShootStarted IS <false> AND _isReloading IS <false>:
     IF _isGunEquipped IS <true> AND _isFreeLooking IS <false>:

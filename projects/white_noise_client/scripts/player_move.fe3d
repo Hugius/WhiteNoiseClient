@@ -61,7 +61,7 @@ fe3d:camera_follow_z(_movementSpeedZ)
 /// Update gun position & rotation
 VEC3 gunOffset = [0.0 0.0 0.0]
 EDIT gunOffset.x = _gunDistance
-EDIT gunOffset.y = _gunDataHeight[_primaryGunIndex]
+EDIT gunOffset.y = _gunDataHeight[_primaryGunTypeIndex]
 EDIT gunOffset.z = _gunDistance
 DEC yaw = fe3d:camera_get_yaw()
 INCR yaw _yawOffset
@@ -72,7 +72,7 @@ INCR gunOffset.y _gunHeightOffset
 MUL gunOffset.z sinYaw
 VEC3 gunPos = fe3d:camera_get_position()
 INCR gunPos gunOffset
-STR primaryGunModelID = misc:string_concat("player_", _primaryGun)
+STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
 VEC3 gunRot = fe3d:model_get_rotation(primaryGunModelID)
 EDIT gunRot.y = fe3d:camera_get_yaw()
 NEG gunRot.y
