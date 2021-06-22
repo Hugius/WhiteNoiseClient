@@ -1,20 +1,19 @@
-41 44
+49 18
 META script_type_update
 META script_execution_waiting
 
-/// Values
-LIST messageParts = {}
+/// Commonly used values
 CONST STR walkID = "skeleton_walk"
-STR part1 = ""
-STR part2 = ""
-STR part3 = ""
 STR skeletonID = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("_playerMoveMessages")
-BOOL isJoined = <false>
-BOOL isWalkPlaying = <false>
 
 /// Handle player movement messages
+LIST messageParts = {}
+STR part1 = ""
+STR part2 = ""
+STR part3 = ""
+BOOL isJoined = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
@@ -36,7 +35,7 @@ LOOP:
                 fe3d:model_set_rotation(skeletonID, part3.x, part3.y, part3.z)
                 CAST part3 STR
             ELIF part1 IS "player_skeleton_walk_start":
-                fe3d:model_start_animation(skeletonID, walkID, -1)
+                PUSH _playerWalksToStart part2
             ELIF part1 IS "player_skeleton_walk_stop":
                 fe3d:model_fade_animation(skeletonID, walkID, 1)
             ELIF part1 IS "player_skeleton_walk_speed":
@@ -44,4 +43,20 @@ LOOP:
                 CAST part3 DEC
                 fe3d:model_set_animation_speed(skeletonID, walkID, part3)
                 CAST part3 STR
+        INCR index 1
+
+/// Start player walk animations
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("_playerWalksToStart")
+BOOL isWalkStarted = <false>
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    ELSE:
+        EDIT skeletonID = misc:string_concat(_playerWalksToStart[index], "_skeleton")
+        EDIT isWalkStarted = fe3d:model_is_animation_started(skeletonID, walkID)
+        IF isWalkStarted IS <false>:
+            fe3d:model_start_animation(skeletonID, walkID, -1)
+            PULL _playerWalksToStart index
+            BREAK
         INCR index 1

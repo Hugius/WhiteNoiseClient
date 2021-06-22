@@ -1,4 +1,4 @@
-0 0
+9 22
 META script_type_update
 META script_execution_entry
 
@@ -8,6 +8,7 @@ IF isConnected IS <true>:
     EXEC player_move
     EXEC player_gun
     EXEC player_equip
+    EXEC player_camera
     EXEC player_misc
     EXEC network_send
     EXEC network_receive

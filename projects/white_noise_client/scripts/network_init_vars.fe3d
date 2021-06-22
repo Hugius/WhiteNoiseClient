@@ -1,7 +1,9 @@
-3 21
+6 0
 META script_type_init
 META script_execution_waiting
 
 GLOB LIST _playerMainMessages = {}
 GLOB LIST _playerMoveMessages = {}
 GLOB LIST _playerGunMessages = {}
+
+GLOB LIST _playerWalksToStart = {}
