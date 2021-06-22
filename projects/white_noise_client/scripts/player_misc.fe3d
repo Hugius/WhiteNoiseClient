@@ -1,67 +1,38 @@
-9 6
+35 55
 META script_type_update
 META script_execution_waiting
 
-/// Calculate animation speed
-DEC animationSpeed = 1.0
-IF _isSprinting IS <true>:
-    MUL animationSpeed _sprintFactor
-
-/// Update walk animation
+/// Commonly used values
+CONST STR username = fe3d:client_get_username()
 CONST STR walkID = "skeleton_walk"
-BOOL walkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
-IF walkStarted IS <true>:
-    fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)
-    IF _isMoving IS <false>:
-        fe3d:model_fade_animation("player_skeleton", walkID, 1)
-ELSE:
-    IF _isMoving IS <true>:
-        fe3d:model_start_animation("player_skeleton", walkID, -1)
+STR message = ""
+INT walkSpeed = fe3d:model_get_animation_speed("player_skeleton", walkID)
+BOOL isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
 
-/// Update view bobbing
-IF _isMoving IS <true> OR _cameraHeightOffset NOT 0.0:
-    DEC bobbingSpeed = _bobbingSpeed
-    IF _isSprinting IS <true>:
-        MUL bobbingSpeed _sprintFactor
-    MUL bobbingSpeed _bobbingDirection
-    INCR _cameraHeightOffset bobbingSpeed
-    DEC absOffset = math:abs(_cameraHeightOffset)
-    IF absOffset MORE _maxBobbingOffset:
-        MUL _bobbingDirection -1.0
-    ELIF _isMoving IS <false> AND absOffset LESS 0.000001:
-        EDIT _cameraHeightOffset = 0.0
-        EDIT _bobbingDirection = 1.0
+/// Start walking animation
+IF isWalkStarted IS <false> AND _isMoving IS <true>:
+    fe3d:model_start_animation("player_skeleton", walkID, -1)
+    EDIT message = misc:string_concat("player_skeleton_walk_start:", username)
+    fe3d:client_send_tcp_message(message)
 
-/// Update free looking
-BOOL fDown = fe3d:input_is_key_down("KEY_F")
-IF _isReloading IS <false> AND _isGunEquipped IS <true>:
-    EDIT _isFreeLooking = fDown
-ELSE:
-    EDIT _isFreeLooking = <false>
+/// Stop walking animation
+IF isWalkStarted IS <true> AND _isMoving IS <false>:
+    fe3d:model_fade_animation("player_skeleton", walkID, 1)
+    EDIT message = misc:string_concat("player_skeleton_walk_stop:", username)
+    fe3d:client_send_tcp_message(message)
 
-/// Update camera locking
-IF _isFreeLooking IS <true>:
-    fe3d:camera_unlock_pitch()
-    fe3d:image_set_visible("crosshair", <false>)
-ELSE:
-    fe3d:camera_lock_pitch()
-    DEC pitch = fe3d:camera_get_pitch()
-    DEC absPitch = math:abs(pitch)
-    DEC negSpeed = _pitchSpeed
-    NEG negSpeed
-    IF absPitch LESS 0.000001:
-        EDIT pitch = 0.0
-    ELIF pitch MORE _pitchSpeed:
-        DECR pitch _pitchSpeed
-    ELIF pitch LESS negSpeed:
-        INCR pitch _pitchSpeed
-    fe3d:camera_set_pitch(pitch)
-
-/// Update first-person view
-BOOL capsDown = fe3d:input_is_key_down("KEY_CAPSLOCK")
-IF capsDown IS <true>:
-    fe3d:camera_enable_first_person_view()
-    fe3d:cursor_hide()
-ELSE:
-    fe3d:camera_disable_first_person_view()
-    fe3d:cursor_show()
+/// Walking animation speed
+BOOL startedSprinting = (walkSpeed IS 1.0 AND _isSprinting IS <true>)
+BOOL stoppedSprinting = (walkSpeed IS 2.0 AND _isSprinting IS <false>)
+IF isWalkStarted IS <true>:
+    IF startedSprinting IS <true> OR stoppedSprinting IS <true>:
+        IF _isSprinting IS <true>:
+            DEC animationSpeed = _sprintFactor
+        ELSE:
+            DEC animationSpeed = 1.0
+        fe3d:model_set_animation_speed("player_skeleton", walkID, walkSpeed)
+        CAST walkSpeed STR
+        EDIT message = misc:string_concat("player_skeleton_walk_speed:", username)
+        EDIT message = misc:string_concat(message, ":")
+        EDIT message = misc:string_concat(message, walkSpeed)
+        fe3d:client_send_tcp_message(message)

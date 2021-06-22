@@ -1,8 +1,10 @@
-52 12
+16 18
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
+CONST STR username = fe3d:client_get_username()
+STR message = ""
 STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
 STR armEquipID = misc:string_concat("skeleton_", _primaryGunType)
 EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
@@ -13,6 +15,10 @@ IF _isGunEquipped IS <false> AND _isEquippingGun IS <false>:
         fe3d:model_start_animation("player_skeleton", armEquipID, 0)
         fe3d:model_set_visible(primaryGunModelID, <true>)
         EDIT _isEquippingGun = <true>
+        EDIT message = misc:string_concat("player_gun_equip_start:", username)
+        EDIT message = misc:string_concat(message, ":")
+        EDIT message = misc:string_concat(message, _primaryGunType)
+        fe3d:client_send_tcp_message(message)
 
 /// Update gun equipping - pausing arm animation
 IF _isEquippingGun IS <true>:
@@ -25,6 +31,10 @@ IF _isEquippingGun IS <true>:
             EDIT _gunHeightOffset = 0.0
             EDIT _isEquippingGun = <false>
             EDIT _isGunEquipped = <true>
+            EDIT message = misc:string_concat("player_gun_equip_stop:", username)
+            EDIT message = misc:string_concat(message, ":")
+            EDIT message = misc:string_concat(message, _primaryGunType)
+            fe3d:client_send_tcp_message(message)
 
 /// Update gun unequipping - finishing up
 IF _isUnequippingGun IS <true>:

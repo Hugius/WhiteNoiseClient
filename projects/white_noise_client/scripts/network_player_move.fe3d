@@ -1,14 +1,14 @@
-14 0
+41 44
 META script_type_update
 META script_execution_waiting
 
 /// Values
-LIST stringParts = {}
+LIST messageParts = {}
 CONST STR walkID = "skeleton_walk"
-STR username = ""
-STR payload = ""
+STR part1 = ""
+STR part2 = ""
+STR part3 = ""
 STR skeletonID = ""
-STR gunID = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("_playerMoveMessages")
 BOOL isJoined = <false>
@@ -19,36 +19,29 @@ LOOP:
     IF index IS maxIndex:
         BREAK
     ELSE:
-        EDIT stringParts = misc:string_split(_playerMoveMessages[index], ":")
-        EDIT username = stringParts[1]
-        EDIT payload = stringParts[2]
-        EDIT skeletonID = misc:string_concat(username, "_skeleton")
-        EDIT gunID = misc:string_concat(username, "_m1911")
+        EDIT messageParts = misc:string_split(_playerMoveMessages[index], ":")
+        EDIT part1 = messageParts[0]
+        EDIT part2 = messageParts[1]
+        EDIT skeletonID = misc:string_concat(part2, "_skeleton")
         EDIT isJoined = fe3d:model_is_existing(skeletonID)
         IF isJoined IS <true>:
-            IF stringParts[0] IS "player_skeleton_position":
-                CAST payload VEC3
-                fe3d:model_set_position(skeletonID, payload.x, payload.y, payload.z)
-                CAST payload STR
-            IF stringParts[0] IS "player_skeleton_rotation":
-                CAST payload VEC3
-                fe3d:model_set_rotation(skeletonID, payload.x, payload.y, payload.z)
-                CAST payload STR
-            IF stringParts[0] IS "player_skeleton_moving":
-                CAST payload BOOL
-                EDIT isWalkPlaying = fe3d:model_is_animation_started(skeletonID, walkID)
-                IF payload IS <true> AND isWalkPlaying IS <false>:
-                    fe3d:model_start_animation(skeletonID, walkID, -1)
-                ELIF payload IS <false> AND isWalkPlaying IS <true>:
-                    fe3d:model_fade_animation(skeletonID, walkID, 1)
-                CAST payload STR
-            IF stringParts[0] IS "player_skeleton_sprinting":
-                CAST payload BOOL
-                EDIT isWalkPlaying = fe3d:model_is_animation_started(skeletonID, walkID)
-                IF isWalkPlaying IS <true>:
-                    IF payload IS <true>:
-                    fe3d:model_set_animation_speed(skeletonID, walkID, _sprintFactor)
-                    ELSE:
-                        fe3d:model_set_animation_speed(skeletonID, walkID, 1.0)
-                CAST payload STR
+            IF part1 IS "player_skeleton_position":
+                EDIT part3 = messageParts[2]
+                CAST part3 VEC3
+                fe3d:model_set_position(skeletonID, part3.x, part3.y, part3.z)
+                CAST part3 STR
+            ELIF part1 IS "player_skeleton_rotation":
+                EDIT part3 = messageParts[2]
+                CAST part3 VEC3
+                fe3d:model_set_rotation(skeletonID, part3.x, part3.y, part3.z)
+                CAST part3 STR
+            ELIF part1 IS "player_skeleton_walk_start":
+                fe3d:model_start_animation(skeletonID, walkID, -1)
+            ELIF part1 IS "player_skeleton_walk_stop":
+                fe3d:model_fade_animation(skeletonID, walkID, 1)
+            ELIF part1 IS "player_skeleton_walk_speed":
+                EDIT part3 = messageParts[2]
+                CAST part3 DEC
+                fe3d:model_set_animation_speed(skeletonID, walkID, part3)
+                CAST part3 STR
         INCR index 1

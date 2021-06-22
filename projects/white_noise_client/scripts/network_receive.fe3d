@@ -1,4 +1,4 @@
-6 15
+35 62
 META script_type_update
 META script_execution_waiting
 
@@ -30,15 +30,19 @@ LOOP:
                 PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_skeleton_rotation":
                 PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_skeleton_moving":
+            ELIF stringParts[0] IS "player_skeleton_walk_start":
                 PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_skeleton_sprinting":
+            ELIF stringParts[0] IS "player_skeleton_walk_stop":
+                PUSH _playerMoveMessages message
+            ELIF stringParts[0] IS "player_skeleton_walk_speed":
                 PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_gun_position":
                 PUSH _playerGunMessages message
             ELIF stringParts[0] IS "player_gun_rotation":
                 PUSH _playerGunMessages message
-            ELIF stringParts[0] IS "player_gun_type":
+            ELIF stringParts[0] IS "player_gun_equip_start":
+                PUSH _playerGunMessages message
+            ELIF stringParts[0] IS "player_gun_equip_stop":
                 PUSH _playerGunMessages message
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)

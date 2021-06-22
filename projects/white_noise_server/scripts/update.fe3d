@@ -1,4 +1,4 @@
-19 50
+66 12
 META script_type_update
 META script_execution_entry
 
@@ -61,7 +61,9 @@ LOOP:
             ELSE:
                 EDIT log = misc:string_concat("Received unknown message: ", message)
                 fe3d:print(log)
+                fe3d:game_stop()
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)
+            fe3d:game_stop()
         INCR index 1
