@@ -1,4 +1,4 @@
-0 0
+25 36
 META script_type_update
 META script_execution_waiting
 
@@ -24,8 +24,8 @@ fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
 /// Update movement speed
 EDIT _isMoving = <false>
 EDIT _isSprinting = <false>
-MUL _movementSpeedX _gunDistanceFactor
-MUL _movementSpeedZ _gunDistanceFactor
+MUL _movementSpeedX _movementSlowingFactor
+MUL _movementSpeedZ _movementSlowingFactor
 DEC movementSpeed = _maxMovementSpeed
 BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true>:

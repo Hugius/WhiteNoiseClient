@@ -1,0 +1,43 @@
+41 37
+META script_type_update
+META script_execution_waiting
+
+/// Commonly used values
+CONST STR username = fe3d:client_get_username()
+STR message = ""
+
+/// Send skeleton position to server
+VEC3 position = fe3d:camera_get_position()
+EDIT position.y = 0.0
+CAST position STR
+EDIT message = misc:string_concat("player_skeleton_position:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, position)
+fe3d:client_send_udp_message(message)
+
+/// Send skeleton rotation to server
+VEC3 rotation = fe3d:model_get_rotation("player_skeleton")
+CAST rotation STR
+EDIT message = misc:string_concat("player_skeleton_rotation:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, rotation)
+fe3d:client_send_udp_message(message)
+
+/// Send skeleton movement status to server
+BOOL isMoving = _isMoving
+CAST isMoving STR
+EDIT message = misc:string_concat("player_skeleton_moving:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isMoving)
+fe3d:client_send_udp_message(message)
+
+/// Send skeleton speed to server
+IF _isSprinting IS <true>:
+    DEC animationSpeed = _sprintFactor
+ELSE:
+    DEC animationSpeed = 1.0
+CAST animationSpeed STR
+EDIT message = misc:string_concat("player_skeleton_speed:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, animationSpeed)
+fe3d:client_send_udp_message(message)

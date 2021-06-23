@@ -1,4 +1,4 @@
-0 0
+8 8
 META script_type_init
 META script_execution_entry
 
@@ -7,5 +7,5 @@ CAST random STR
 STR username = misc:string_concat("user", random)
 fe3d:client_start(username)
 
-EXEC network_init_vars
+EXEC net_init_vars
 EXEC player_init_vars
