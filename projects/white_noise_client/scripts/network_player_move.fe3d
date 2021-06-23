@@ -1,4 +1,4 @@
-49 18
+41 70
 META script_type_update
 META script_execution_waiting
 
@@ -14,6 +14,7 @@ STR part1 = ""
 STR part2 = ""
 STR part3 = ""
 BOOL isJoined = <false>
+BOOL isWalkStarted = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
@@ -34,29 +35,20 @@ LOOP:
                 CAST part3 VEC3
                 fe3d:model_set_rotation(skeletonID, part3.x, part3.y, part3.z)
                 CAST part3 STR
-            ELIF part1 IS "player_skeleton_walk_start":
-                PUSH _playerWalksToStart part2
-            ELIF part1 IS "player_skeleton_walk_stop":
-                fe3d:model_fade_animation(skeletonID, walkID, 1)
-            ELIF part1 IS "player_skeleton_walk_speed":
+            ELIF part1 IS "player_skeleton_moving":
                 EDIT part3 = messageParts[2]
-                CAST part3 DEC
-                fe3d:model_set_animation_speed(skeletonID, walkID, part3)
+                CAST part3 BOOL
+                EDIT isWalkStarted = fe3d:model_is_animation_started(skeletonID, walkID)
+                IF part3 IS <true> AND isWalkStarted IS <false>:
+                    fe3d:model_start_animation(skeletonID, walkID, -1)
+                IF part3 IS <false> AND isWalkStarted IS <true>:
+                    fe3d:model_fade_animation(skeletonID, walkID, 1)
                 CAST part3 STR
-        INCR index 1
-
-/// Start player walk animations
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("_playerWalksToStart")
-BOOL isWalkStarted = <false>
-LOOP:
-    IF index IS maxIndex:
-        BREAK
-    ELSE:
-        EDIT skeletonID = misc:string_concat(_playerWalksToStart[index], "_skeleton")
-        EDIT isWalkStarted = fe3d:model_is_animation_started(skeletonID, walkID)
-        IF isWalkStarted IS <false>:
-            fe3d:model_start_animation(skeletonID, walkID, -1)
-            PULL _playerWalksToStart index
-            BREAK
+            ELIF part1 IS "player_skeleton_speed":
+                EDIT isWalkStarted = fe3d:model_is_animation_started(skeletonID, walkID)
+                IF isWalkStarted IS <true>:
+                    EDIT part3 = messageParts[2]
+                    CAST part3 DEC
+                    fe3d:model_set_animation_speed(skeletonID, walkID, part3)
+                    CAST part3 STR
         INCR index 1

@@ -1,41 +1,26 @@
-18 31
+24 77
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
 CONST STR walkID = "skeleton_walk"
-STR message = ""
 BOOL isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
 
 /// Start walking animation
-IF isWalkStarted IS <false> AND _isMoving IS <true>:
+IF _isMoving IS <true> AND isWalkStarted IS <false>:
     fe3d:model_start_animation("player_skeleton", walkID, -1)
-    EDIT message = misc:string_concat("player_skeleton_walk_start:", username)
-    fe3d:client_send_tcp_message(message)
 
 /// Stop walking animation
-IF isWalkStarted IS <true> AND _isMoving IS <false>:
-    CONST BOOL isWalkFading = fe3d:model_is_animation_fading("player_skeleton", walkID)
+IF _isMoving IS <false> AND isWalkStarted IS <true>:
+    BOOL isWalkFading = fe3d:model_is_animation_fading("player_skeleton", walkID)
     IF isWalkFading IS <false>:
         fe3d:model_fade_animation("player_skeleton", walkID, 1)
-        EDIT message = misc:string_concat("player_skeleton_walk_stop:", username)
-        fe3d:client_send_tcp_message(message)
 
 /// Walking animation speed
-EDIT isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
 IF isWalkStarted IS <true>:
-    DEC walkSpeed = fe3d:model_get_animation_speed("player_skeleton", walkID)
-    BOOL startedSprinting = (walkSpeed IS 1.0 AND _isSprinting IS <true>)
-    BOOL stoppedSprinting = (walkSpeed IS 2.0 AND _isSprinting IS <false>)
-    IF startedSprinting IS <true> OR stoppedSprinting IS <true>:
-        IF _isSprinting IS <true>:
-            DEC animationSpeed = _sprintFactor
-        ELSE:
-            DEC animationSpeed = 1.0
-        fe3d:model_set_animation_speed("player_skeleton", walkID, walkSpeed)
-        CAST walkSpeed STR
-        EDIT message = misc:string_concat("player_skeleton_walk_speed:", username)
-        EDIT message = misc:string_concat(message, ":")
-        EDIT message = misc:string_concat(message, walkSpeed)
-        fe3d:client_send_tcp_message(message)
+    IF _isSprinting IS <true>:
+        DEC animationSpeed = _sprintFactor
+    ELSE:
+        DEC animationSpeed = 1.0
+    fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)

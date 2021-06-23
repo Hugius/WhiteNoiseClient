@@ -1,9 +1,9 @@
-27 37
+89 4
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
-CONST STR currentUsername = fe3d:client_get_username()
+CONST STR username = fe3d:client_get_username()
 STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
 STR message = ""
 VEC3 position = [0.0 0.0 0.0]
@@ -13,7 +13,7 @@ VEC3 rotation = [0.0 0.0 0.0]
 EDIT position = fe3d:camera_get_position()
 EDIT position.y = 0.0
 CAST position STR
-EDIT message = misc:string_concat("player_skeleton_position:", currentUsername)
+EDIT message = misc:string_concat("player_skeleton_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, position)
 CAST position VEC3
@@ -22,16 +22,35 @@ fe3d:client_send_udp_message(message)
 /// Send skeleton rotation to server
 EDIT rotation = fe3d:model_get_rotation("player_skeleton")
 CAST rotation STR
-EDIT message = misc:string_concat("player_skeleton_rotation:", currentUsername)
+EDIT message = misc:string_concat("player_skeleton_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
 CAST rotation VEC3
 fe3d:client_send_udp_message(message)
 
+/// Send skeleton movement status to server
+BOOL isMoving = _isMoving
+CAST isMoving STR
+EDIT message = misc:string_concat("player_skeleton_moving:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isMoving)
+fe3d:client_send_udp_message(message)
+
+/// Send skeleton speed to server
+IF _isSprinting IS <true>:
+    DEC animationSpeed = _sprintFactor
+ELSE:
+    DEC animationSpeed = 1.0
+CAST animationSpeed STR
+EDIT message = misc:string_concat("player_skeleton_speed:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, animationSpeed)
+fe3d:client_send_udp_message(message)
+
 /// Send gun position to server
 EDIT position = fe3d:model_get_position(primaryGunModelID)
 CAST position STR
-EDIT message = misc:string_concat("player_gun_position:", currentUsername)
+EDIT message = misc:string_concat("player_gun_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _primaryGunType)
 EDIT message = misc:string_concat(message, ":")
@@ -42,10 +61,31 @@ fe3d:client_send_udp_message(message)
 /// Send gun rotation to server
 EDIT rotation = fe3d:model_get_rotation(primaryGunModelID)
 CAST rotation STR
-EDIT message = misc:string_concat("player_gun_rotation:", currentUsername)
+EDIT message = misc:string_concat("player_gun_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _primaryGunType)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
 CAST rotation VEC3
 fe3d:client_send_udp_message(message)
+
+/// Send gun equipped status to server
+IF _isGunEquipped IS <true>:
+    EDIT message = misc:string_concat("player_gun_equipped:", username)
+    EDIT message = misc:string_concat(message, ":")
+    EDIT message = misc:string_concat(message, _primaryGunType)
+    fe3d:client_send_udp_message(message)
+
+/// Send gun equipping status to server
+IF _isEquippingGun IS <true>:
+    EDIT message = misc:string_concat("player_gun_equipping:", username)
+    EDIT message = misc:string_concat(message, ":")
+    EDIT message = misc:string_concat(message, _primaryGunType)
+    fe3d:client_send_udp_message(message)
+
+/// Send gun unequipping status to server
+IF _isUnequippingGun IS <true>:
+    EDIT message = misc:string_concat("player_gun_unequipping:", username)
+    EDIT message = misc:string_concat(message, ":")
+    EDIT message = misc:string_concat(message, _primaryGunType)
+    fe3d:client_send_udp_message(message)

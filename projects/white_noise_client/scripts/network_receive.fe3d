@@ -1,4 +1,4 @@
-35 62
+44 49
 META script_type_update
 META script_execution_waiting
 
@@ -11,6 +11,7 @@ EDIT _playerGunMessages = {}
 LIST messages = fe3d:client_get_pending_messages()
 LIST stringParts = {}
 STR message = ""
+STR log = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("messages")
 BOOL contains = <false>
@@ -30,22 +31,28 @@ LOOP:
                 PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_skeleton_rotation":
                 PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_skeleton_walk_start":
+            ELIF stringParts[0] IS "player_skeleton_moving":
                 PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_skeleton_walk_stop":
-                PUSH _playerMoveMessages message
-            ELIF stringParts[0] IS "player_skeleton_walk_speed":
+            ELIF stringParts[0] IS "player_skeleton_speed":
                 PUSH _playerMoveMessages message
             ELIF stringParts[0] IS "player_gun_position":
                 PUSH _playerGunMessages message
             ELIF stringParts[0] IS "player_gun_rotation":
                 PUSH _playerGunMessages message
-            ELIF stringParts[0] IS "player_gun_equip_start":
+            ELIF stringParts[0] IS "player_gun_equipped":
                 PUSH _playerGunMessages message
-            ELIF stringParts[0] IS "player_gun_equip_stop":
+            ELIF stringParts[0] IS "player_gun_equipping":
                 PUSH _playerGunMessages message
+            ELIF stringParts[0] IS "player_gun_unequipping":
+                PUSH _playerGunMessages message
+            ELSE:
+                EDIT log = misc:string_concat("Received unknown message: ", message)
+                fe3d:print(log)
+                fe3d:game_stop()
+                BREAK
         ELSE:
             EDIT log = misc:string_concat("Received invalid message: ", message)
             fe3d:print(log)
             fe3d:game_stop()
+            BREAK
         INCR index 1

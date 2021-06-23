@@ -1,18 +1,18 @@
-8 45
+16 41
 META script_type_init
 META script_execution_entry
 
 fe3d:server_start(10)
 
 GLOB LIST _forwardTCPs = {}
-PUSH _forwardTCPs "player_skeleton_walk_start"
-PUSH _forwardTCPs "player_skeleton_walk_stop"
-PUSH _forwardTCPs "player_skeleton_walk_speed"
-PUSH _forwardTCPs "player_gun_equip_start"
-PUSH _forwardTCPs "player_gun_equip_stop"
 
 GLOB LIST _forwardUDPs = {}
 PUSH _forwardUDPs "player_skeleton_position"
 PUSH _forwardUDPs "player_skeleton_rotation"
+PUSH _forwardUDPs "player_skeleton_moving"
+PUSH _forwardUDPs "player_skeleton_speed"
 PUSH _forwardUDPs "player_gun_position"
 PUSH _forwardUDPs "player_gun_rotation"
+PUSH _forwardUDPs "player_gun_equipped"
+PUSH _forwardTCPs "player_gun_equipping"
+PUSH _forwardTCPs "player_gun_unequipping"
