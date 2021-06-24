@@ -1,4 +1,4 @@
-10 35
+9 39
 META script_type_update
 META script_execution_waiting
 
@@ -8,7 +8,7 @@ CONST STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
 STR message = ""
 
 /// Send gun position to server
-VEC3 position = fe3d:model_get_position(primaryGunModelID)
+VEC3 position = _multiplayerGunPosition
 DECR position.y _cameraHeightOffset
 CAST position STR
 EDIT message = misc:string_concat("player_gun_position:", username)

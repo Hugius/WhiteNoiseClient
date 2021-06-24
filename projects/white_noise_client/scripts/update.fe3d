@@ -1,4 +1,4 @@
-11 26
+8 24
 META script_type_update
 META script_execution_entry
 
@@ -7,7 +7,7 @@ BOOL isConnected = fe3d:client_is_connected()
 IF isConnected IS <true>:
     EXEC player_camera
     EXEC player_equip
-    EXEC player_move
+    EXEC player_movement
     EXEC player_gun
     EXEC player_misc
     EXEC net_send_skeleton

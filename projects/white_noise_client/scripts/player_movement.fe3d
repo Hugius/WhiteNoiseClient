@@ -1,6 +1,9 @@
-25 36
+58 40
 META script_type_update
 META script_execution_waiting
+
+/// Commonly used values
+CONST STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
 
 /// Inputs
 BOOL wDown = fe3d:input_is_key_down("KEY_W")
@@ -10,55 +13,53 @@ BOOL dDown = fe3d:input_is_key_down("KEY_D")
 BOOL shiftDown = fe3d:input_is_key_down("KEY_LSHIFT")
 BOOL ctrlDown = fe3d:input_is_key_down("KEY_LCTRL")
 
-/// Revert back eye offset
+/// Move eye offset
 DEC offset = _skeletonEyeOffset
 NEG offset
 fe3d:camera_follow_z(offset)
-
-/// Update camera height
-VEC3 camPos = fe3d:camera_get_position()
-EDIT camPos.y = _defaultCameraHeight
-INCR camPos.y _cameraHeightOffset
-fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
 
 /// Update movement speed
 EDIT _isMoving = <false>
 EDIT _isSprinting = <false>
 MUL _movementSpeedX _movementSlowingFactor
 MUL _movementSpeedZ _movementSlowingFactor
-DEC movementSpeed = _maxMovementSpeed
+DEC minSpeed = _maxMovementSpeed
+NEG minSpeed
+DEC maxSpeed = _maxMovementSpeed
+DEC acceleration = _movementAcceleration
 BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true>:
-    MUL movementSpeed _sprintFactor
+    MUL acceleration _sprintFactor
+    MUL minSpeed _sprintFactor
+    MUL maxSpeed _sprintFactor
     EDIT isSprinting = <true>
 
 /// Update movement inputs
 IF wDown IS <true>:
-    EDIT _movementSpeedZ = movementSpeed
+    INCR _movementSpeedZ acceleration
     EDIT _isMoving = <true>
     EDIT _isSprinting = isSprinting
 IF sDown IS <true>:
-    NEG movementSpeed
-    EDIT _movementSpeedZ = movementSpeed
+    DECR _movementSpeedZ acceleration
     EDIT _isMoving = <true>
     EDIT _isSprinting = isSprinting
-    NEG movementSpeed
 IF dDown IS <true>:
-    EDIT _movementSpeedX = movementSpeed
+    INCR _movementSpeedX acceleration
     EDIT _isMoving = <true>
     EDIT _isSprinting = isSprinting
 IF aDown IS <true>:
-    NEG movementSpeed
-    EDIT _movementSpeedX = movementSpeed
+    DECR _movementSpeedX acceleration
     EDIT _isMoving = <true>
     EDIT _isSprinting = isSprinting
-    NEG movementSpeed
 
 /// Update movement
+EDIT _movementSpeedX = math:clamp(_movementSpeedX, minSpeed, maxSpeed)
+EDIT _movementSpeedZ = math:clamp(_movementSpeedZ, minSpeed, maxSpeed)
 fe3d:camera_follow_x(_movementSpeedX)
 fe3d:camera_follow_z(_movementSpeedZ)
+VEC3 camPos = fe3d:camera_get_position()
 
-/// Update gun position & rotation
+/// Update gun position
 VEC3 gunOffset = [0.0 0.0 0.0]
 EDIT gunOffset.x = _gunDistance
 EDIT gunOffset.y = _gunDataHeight[_primaryGunTypeIndex]
@@ -70,20 +71,25 @@ DEC sinYaw = math:sin(yaw)
 MUL gunOffset.x cosYaw
 INCR gunOffset.y _gunHeightOffset
 MUL gunOffset.z sinYaw
-VEC3 gunPos = fe3d:camera_get_position()
+VEC3 gunPos = camPos
 INCR gunPos gunOffset
-STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
+fe3d:model_set_position(primaryGunModelID, gunPos.x, gunPos.y, gunPos.z)
+
+/// Update gun rotation
 VEC3 gunRot = fe3d:model_get_rotation(primaryGunModelID)
 EDIT gunRot.y = fe3d:camera_get_yaw()
 NEG gunRot.y
 INCR gunRot.y 90.0
-fe3d:model_set_position(primaryGunModelID, gunPos.x, gunPos.y, gunPos.z)
 fe3d:model_set_rotation(primaryGunModelID, gunRot.x, gunRot.y, gunRot.z)
 
 /// Update skeleton position & rotation
-EDIT camPos = fe3d:camera_get_position()
 fe3d:model_set_position("player_skeleton", camPos.x, _cameraHeightOffset, camPos.z)
 fe3d:model_set_rotation("player_skeleton", 0.0, gunRot.y, 0.0)
 
-/// Move camera to eye position
+/// Revert eye offset
 fe3d:camera_follow_z(_skeletonEyeOffset)
+
+/// Save multiplayer world positions
+EDIT _multiplayerSkeletonPosition = fe3d:camera_get_position()
+EDIT _multiplayerGunPosition = fe3d:camera_get_position()
+INCR _multiplayerGunPosition gunOffset

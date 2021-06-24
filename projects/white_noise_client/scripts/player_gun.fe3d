@@ -1,12 +1,6 @@
-25 35
+11 0
 META script_type_update
 META script_execution_waiting
-
-/// Inputs
-BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
-BOOL lmbPressed = fe3d:input_is_mouse_pressed("BUTTON_LEFT")
-BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
-BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Commonly used values
 STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
@@ -16,6 +10,12 @@ STR gunShootID = misc:string_concat(_primaryGunType, "_shoot")
 STR gunReloadID = misc:string_concat(_primaryGunType, "_reload")
 STR armReloadID = misc:string_concat("skeleton_", _primaryGunType)
 EDIT armReloadID = misc:string_concat(armReloadID, "_rld")
+
+/// Inputs
+BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
+BOOL lmbPressed = fe3d:input_is_mouse_pressed("BUTTON_LEFT")
+BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
+BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Update ADS - toggling
 BOOL isAdsPlaying = <false>

@@ -1,4 +1,4 @@
-41 37
+8 44
 META script_type_update
 META script_execution_waiting
 
@@ -7,7 +7,7 @@ CONST STR username = fe3d:client_get_username()
 STR message = ""
 
 /// Send skeleton position to server
-VEC3 position = fe3d:camera_get_position()
+VEC3 position = _multiplayerSkeletonPosition
 EDIT position.y = 0.0
 CAST position STR
 EDIT message = misc:string_concat("player_skeleton_position:", username)

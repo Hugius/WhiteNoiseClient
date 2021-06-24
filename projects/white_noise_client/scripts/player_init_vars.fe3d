@@ -1,4 +1,4 @@
-19 37
+7 44
 META script_type_init
 META script_execution_waiting
 
@@ -6,8 +6,10 @@ META script_execution_waiting
 GLOB CONST LIST _gunDataHeight = {-0.365, -0.69}
 GLOB CONST LIST _gunDataSemi = {<true>, <false>}
 GLOB CONST DEC _gunDistance = 1.1
-GLOB CONST DEC _maxMovementSpeed = 0.025
+GLOB CONST DEC _movementAcceleration = 0.001
+GLOB CONST DEC _maxMovementSpeed = 0.02
 GLOB CONST DEC _sprintFactor = 2.0
+GLOB CONST DEC _movementSlowingFactor = 0.95
 GLOB CONST DEC _skeletonEyeOffset = 0.3
 GLOB CONST DEC _defaultFov = 80.0
 GLOB CONST DEC _adsFov = 60.0
@@ -18,12 +20,13 @@ GLOB CONST DEC _gunHeightOffsetSpeed = 0.02
 GLOB CONST DEC _bobbingSpeed = 0.005
 GLOB CONST DEC _maxBobbingOffset = 0.125
 GLOB CONST DEC _pitchSpeed = 2.5
-GLOB CONST DEC _movementSlowingFactor = 0.9
 GLOB CONST DEC _defaultCameraHeight = 3.0
 
 /// Non-constants
 GLOB STR _primaryGunType = "m1911"
 GLOB STR _secondaryGunType = "ak47"
+GLOB VEC3 _multiplayerSkeletonPosition = [0.0 0.0 0.0]
+GLOB VEC3 _multiplayerGunPosition = [0.0 0.0 0.0]
 GLOB DEC _targetYawOffset = _defaultYawOffset
 GLOB DEC _yawOffset = _defaultYawOffset
 GLOB DEC _gunHeightOffset = -1.0
