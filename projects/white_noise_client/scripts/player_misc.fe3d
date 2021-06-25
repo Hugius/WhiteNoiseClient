@@ -1,4 +1,4 @@
-10 69
+27 0
 META script_type_update
 META script_execution_waiting
 
@@ -24,3 +24,6 @@ IF isWalkStarted IS <true>:
     ELSE:
         DEC animationSpeed = 1.0
     fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)
+
+BOOL isCrosshairVisible = (_isADS IS <false> AND _isGunEquipped IS <true>)
+fe3d:image_set_visible("crosshair", isCrosshairVisible)

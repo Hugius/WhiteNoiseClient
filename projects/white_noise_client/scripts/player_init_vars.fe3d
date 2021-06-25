@@ -1,4 +1,4 @@
-46 5
+41 34
 META script_type_init
 META script_execution_waiting
 
@@ -23,8 +23,7 @@ GLOB CONST DEC _pitchSpeed = 2.5
 GLOB CONST DEC _defaultCameraHeight = 3.0
 
 /// Non-constants
-GLOB STR _primaryGunType = "m1911"
-GLOB STR _secondaryGunType = "ak47"
+GLOB STR _equippedGunType = "m1911"
 GLOB VEC3 _multiplayerSkeletonPosition = [0.0 0.0 0.0]
 GLOB VEC3 _multiplayerGunPosition = [0.0 0.0 0.0]
 GLOB DEC _targetYawOffset = _defaultYawOffset
@@ -34,8 +33,7 @@ GLOB DEC _cameraHeightOffset = 0.0
 GLOB DEC _movementSpeedX = 0.0
 GLOB DEC _movementSpeedZ = 0.0
 GLOB DEC _bobbingDirection = 1.0
-GLOB INT _primaryGunTypeIndex = 0
-GLOB INT _secondaryGunTypeIndex = 1
+GLOB INT _equippedGunIndex = 0
 GLOB BOOL _isFreeLooking = <false>
 GLOB BOOL _isReloading = <false>
 GLOB BOOL _isMoving = <false>
@@ -43,6 +41,5 @@ GLOB BOOL _isSprinting = <false>
 GLOB BOOL _isADS = <false>
 GLOB BOOL _isEquippingGun = <false>
 GLOB BOOL _isGunEquipped = <false>
-GLOB BOOL _isSwappingGun = <false>
 GLOB BOOL _isUnequippingGun = <false>
 GLOB BOOL _isSpawned = <false>

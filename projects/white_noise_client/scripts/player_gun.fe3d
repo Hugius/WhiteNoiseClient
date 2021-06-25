@@ -1,14 +1,14 @@
-85 77
+52 30
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
-STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
-STR adsID = misc:string_concat("skeleton_", _primaryGunType)
+STR equippedGunModelID = misc:string_concat("player_", _equippedGunType)
+STR adsID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT adsID = misc:string_concat(adsID, "_ads")
-STR gunShootID = misc:string_concat(_primaryGunType, "_shoot")
-STR gunReloadID = misc:string_concat(_primaryGunType, "_reload")
-STR armReloadID = misc:string_concat("skeleton_", _primaryGunType)
+STR gunShootID = misc:string_concat(_equippedGunType, "_shoot")
+STR gunReloadID = misc:string_concat(_equippedGunType, "_reload")
+STR armReloadID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT armReloadID = misc:string_concat(armReloadID, "_rld")
 
 /// Inputs
@@ -47,13 +47,11 @@ IF _isADS IS <true>:
         DECR fov _fovSpeed
     ELSE:
         EDIT fov = _adsFov
-    fe3d:image_set_visible("crosshair", <false>)
 ELSE:
     IF fov LESS _defaultFov:
         INCR fov _fovSpeed
     ELSE:
         EDIT fov = _defaultFov
-    fe3d:image_set_visible("crosshair", <true>)
 fe3d:camera_set_fov(fov)
 
 /// Update ADS - arm animation
@@ -66,24 +64,24 @@ IF _isADS IS <true>:
             fe3d:model_pause_animation("player_skeleton", adsID)
 
 /// Update shooting
-BOOL isSemi = _gunDataSemi[_primaryGunTypeIndex]
-BOOL isShootStarted = fe3d:model_is_animation_started(primaryGunModelID, gunShootID)
+BOOL isSemi = _gunDataSemi[_equippedGunIndex]
+BOOL isShootStarted = fe3d:model_is_animation_started(equippedGunModelID, gunShootID)
 IF isShootStarted IS <false> AND _isReloading IS <false>:
     IF _isGunEquipped IS <true> AND _isFreeLooking IS <false>:
         IF isSemi IS <true>:
             IF lmbPressed IS <true>:
-                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0, <false>)
+                fe3d:model_start_animation(equippedGunModelID, gunShootID, 0, <false>)
                 fe3d:sound_play_forced(gunShootID, 0, 0)
         ELSE:
             IF lmbDown IS <true>:
-                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0, <false>)
+                fe3d:model_start_animation(equippedGunModelID, gunShootID, 0, <false>)
                 fe3d:sound_play_forced(gunShootID, 0, 0)
 
 /// Update reloading - starting animations
 IF rPressed IS <true> AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isFreeLooking IS <false>:
         EDIT _isReloading = <true>
-        fe3d:model_start_animation(primaryGunModelID, gunReloadID, 0, <false>)
+        fe3d:model_start_animation(equippedGunModelID, gunReloadID, 0, <false>)
         fe3d:model_start_animation("player_skeleton", armReloadID, 0, <false>)
 
 /// Update reloading - cleanup

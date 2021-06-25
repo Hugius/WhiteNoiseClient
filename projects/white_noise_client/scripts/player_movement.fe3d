@@ -1,9 +1,9 @@
-58 40
+63 46
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
-CONST STR primaryGunModelID = misc:string_concat("player_", _primaryGunType)
+CONST STR equippedGunModelID = misc:string_concat("player_", _equippedGunType)
 
 /// Inputs
 BOOL wDown = fe3d:input_is_key_down("KEY_W")
@@ -62,7 +62,7 @@ VEC3 camPos = fe3d:camera_get_position()
 /// Update gun position
 VEC3 gunOffset = [0.0 0.0 0.0]
 EDIT gunOffset.x = _gunDistance
-EDIT gunOffset.y = _gunDataHeight[_primaryGunTypeIndex]
+EDIT gunOffset.y = _gunDataHeight[_equippedGunIndex]
 EDIT gunOffset.z = _gunDistance
 DEC yaw = fe3d:camera_get_yaw()
 INCR yaw _yawOffset
@@ -73,14 +73,14 @@ INCR gunOffset.y _gunHeightOffset
 MUL gunOffset.z sinYaw
 VEC3 gunPos = camPos
 INCR gunPos gunOffset
-fe3d:model_set_position(primaryGunModelID, gunPos.x, gunPos.y, gunPos.z)
+fe3d:model_set_position(equippedGunModelID, gunPos.x, gunPos.y, gunPos.z)
 
 /// Update gun rotation
-VEC3 gunRot = fe3d:model_get_rotation(primaryGunModelID)
+VEC3 gunRot = fe3d:model_get_rotation(equippedGunModelID)
 EDIT gunRot.y = fe3d:camera_get_yaw()
 NEG gunRot.y
 INCR gunRot.y 90.0
-fe3d:model_set_rotation(primaryGunModelID, gunRot.x, gunRot.y, gunRot.z)
+fe3d:model_set_rotation(equippedGunModelID, gunRot.x, gunRot.y, gunRot.z)
 
 /// Update skeleton position & rotation
 fe3d:model_set_position("player_skeleton", camPos.x, _cameraHeightOffset, camPos.z)
