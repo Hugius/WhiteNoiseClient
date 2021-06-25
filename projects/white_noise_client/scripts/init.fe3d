@@ -1,4 +1,4 @@
-9 21
+6 27
 META script_type_init
 META script_execution_entry
 
@@ -6,6 +6,7 @@ INT random = misc:get_random_integer(0, 1000)
 CAST random STR
 STR username = misc:string_concat("user", random)
 fe3d:client_start(username)
+GLOB BOOL _isConnected = <false>
 
 EXEC net_init_vars
 EXEC player_init_vars

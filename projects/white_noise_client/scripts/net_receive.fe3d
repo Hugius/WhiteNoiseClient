@@ -1,4 +1,4 @@
-55 1
+40 43
 META script_type_update
 META script_execution_waiting
 
@@ -38,11 +38,7 @@ LOOP:
             PUSH _playerGunMessages message
         ELIF stringParts[0] IS "player_gun_rotation":
             PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_equipped":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_equipping":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_unequipping":
+        ELIF stringParts[0] IS "player_gun_equip_status":
             PUSH _playerGunMessages message
         ELSE:
             EDIT log = misc:string_concat("Received unknown message: ", message)

@@ -1,4 +1,4 @@
-41 34
+17 45
 META script_type_init
 META script_execution_waiting
 
@@ -16,7 +16,7 @@ GLOB CONST DEC _adsFov = 60.0
 GLOB CONST DEC _fovSpeed = 0.5
 GLOB CONST DEC _defaultYawOffset = 25.0
 GLOB CONST DEC _yawOffsetSpeed = 1.0
-GLOB CONST DEC _gunHeightOffsetSpeed = 0.02
+GLOB CONST DEC _gunHeightOffsetSpeed = 0.0175
 GLOB CONST DEC _bobbingSpeed = 0.005
 GLOB CONST DEC _maxBobbingOffset = 0.125
 GLOB CONST DEC _pitchSpeed = 2.5
@@ -39,7 +39,7 @@ GLOB BOOL _isReloading = <false>
 GLOB BOOL _isMoving = <false>
 GLOB BOOL _isSprinting = <false>
 GLOB BOOL _isADS = <false>
-GLOB BOOL _isEquippingGun = <false>
+GLOB BOOL _isGunEquipping = <false>
 GLOB BOOL _isGunEquipped = <false>
-GLOB BOOL _isUnequippingGun = <false>
+GLOB BOOL _isGunUnequipping = <false>
 GLOB BOOL _isSpawned = <false>

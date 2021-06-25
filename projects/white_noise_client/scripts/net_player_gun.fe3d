@@ -1,4 +1,4 @@
-47 39
+62 26
 META script_type_update
 META script_execution_waiting
 
@@ -8,6 +8,7 @@ STR part1 = ""
 STR part2 = ""
 STR part3 = ""
 STR part4 = ""
+STR part5 = ""
 STR skeletonID = ""
 STR gunID = ""
 STR armID = ""
@@ -16,7 +17,6 @@ INT index = 0
 INT maxIndex = misc:list_get_size("_playerGunMessages")
 BOOL isJoined = <false>
 BOOL isArmStarted = <false>
-BOOL isArmPlaying = <false>
 BOOL isArmPaused = <false>
 
 /// Handle player gun messages
@@ -42,11 +42,24 @@ LOOP:
             CAST part4 VEC3
             fe3d:model_set_rotation(gunID, part4.x, part4.y, part4.z)
             CAST part4 STR
-        ELIF part1 IS "player_gun_equipped":
+        ELIF part1 IS "player_gun_equip_status":
+            EDIT part4 = messageParts[3]
+            EDIT part5 = messageParts[4]
+            CAST part4 BOOL
+            CAST part5 BOOL
             EDIT armID = misc:string_concat("skeleton_", part3)
             EDIT armID = misc:string_concat(armID, "_eqp")
             EDIT isArmStarted = fe3d:model_is_animation_started(skeletonID, armID)
-            IF isArmStarted IS <false>:
-                fe3d:model_set_visible(gunID, <true>)
+            /// Equipping gun
+            IF part4 IS <true> AND isArmStarted IS <false>:
                 fe3d:model_start_animation(skeletonID, armID, 0, <true>)
+            /// Unequipping gun
+            IF part5 IS <true> AND isArmStarted IS <true>:
+                EDIT isArmPaused = fe3d:model_is_animation_paused(skeletonID, armID)
+                IF isArmPaused IS <true>:
+                    fe3d:model_resume_animation(skeletonID, armID)
+            /// Gun visibility
+            fe3d:model_set_visible(gunID, isArmStarted)
+            CAST part4 STR
+            CAST part5 STR
     INCR index 1

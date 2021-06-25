@@ -1,4 +1,4 @@
-5 0
+8 43
 META script_type_update
 META script_execution_waiting
 
@@ -8,5 +8,3 @@ BOOL cPressed = fe3d:input_is_key_pressed("KEY_C")
 IF cPressed IS <true>:
     fe3d:client_connect("83.128.94.187")
     ///fe3d:client_connect("192.168.1.134")
-    fe3d:scene_load("scene")
-

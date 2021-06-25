@@ -1,4 +1,4 @@
-16 41
+14 42
 META script_type_init
 META script_execution_entry
 
@@ -13,6 +13,4 @@ PUSH _forwardUDPs "player_skeleton_moving"
 PUSH _forwardUDPs "player_skeleton_speed"
 PUSH _forwardUDPs "player_gun_position"
 PUSH _forwardUDPs "player_gun_rotation"
-PUSH _forwardUDPs "player_gun_equipped"
-PUSH _forwardTCPs "player_gun_equipping"
-PUSH _forwardTCPs "player_gun_unequipping"
+PUSH _forwardUDPs "player_gun_equip_status"
