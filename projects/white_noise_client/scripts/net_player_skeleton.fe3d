@@ -1,4 +1,4 @@
-54 16
+41 74
 META script_type_update
 META script_execution_waiting
 
@@ -40,7 +40,7 @@ LOOP:
             CAST part3 BOOL
             EDIT isWalkStarted = fe3d:model_is_animation_started(skeletonID, walkID)
             IF part3 IS <true> AND isWalkStarted IS <false>:
-                fe3d:model_start_animation(skeletonID, walkID, -1)
+                fe3d:model_start_animation(skeletonID, walkID, -1, <false>)
             IF part3 IS <false> AND isWalkStarted IS <true>:
                 EDIT isWalkFading = fe3d:model_is_animation_fading(skeletonID, walkID)
                 IF isWalkFading IS <false>:

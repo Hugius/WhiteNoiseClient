@@ -1,4 +1,4 @@
-24 77
+10 69
 META script_type_update
 META script_execution_waiting
 
@@ -9,7 +9,7 @@ BOOL isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
 
 /// Start walking animation
 IF _isMoving IS <true> AND isWalkStarted IS <false>:
-    fe3d:model_start_animation("player_skeleton", walkID, -1)
+    fe3d:model_start_animation("player_skeleton", walkID, -1, <false>)
 
 /// Stop walking animation
 IF _isMoving IS <false> AND isWalkStarted IS <true>:

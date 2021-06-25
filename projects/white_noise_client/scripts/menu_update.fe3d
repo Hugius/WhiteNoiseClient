@@ -1,4 +1,4 @@
-0 0
+5 0
 META script_type_update
 META script_execution_waiting
 
@@ -9,5 +9,4 @@ IF cPressed IS <true>:
     fe3d:client_connect("83.128.94.187")
     ///fe3d:client_connect("192.168.1.134")
     fe3d:scene_load("scene")
-    EXEC player_init_main
-    EXEC hud_init_main
+

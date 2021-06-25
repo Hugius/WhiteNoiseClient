@@ -1,4 +1,4 @@
-11 0
+85 77
 META script_type_update
 META script_execution_waiting
 
@@ -30,7 +30,7 @@ IF rmbPressed IS <true> AND isAdsPlaying IS <false>:
                 EDIT _isADS = <false>
                 EDIT _targetYawOffset = _defaultYawOffset
             ELSE:
-                fe3d:model_start_animation("player_skeleton", adsID, 0)
+                fe3d:model_start_animation("player_skeleton", adsID, 0, <false>)
                 EDIT _isADS = <true>
                 EDIT _targetYawOffset = 0.0
 
@@ -72,19 +72,19 @@ IF isShootStarted IS <false> AND _isReloading IS <false>:
     IF _isGunEquipped IS <true> AND _isFreeLooking IS <false>:
         IF isSemi IS <true>:
             IF lmbPressed IS <true>:
-                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0)
+                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0, <false>)
                 fe3d:sound_play_forced(gunShootID, 0, 0)
         ELSE:
             IF lmbDown IS <true>:
-                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0)
+                fe3d:model_start_animation(primaryGunModelID, gunShootID, 0, <false>)
                 fe3d:sound_play_forced(gunShootID, 0, 0)
 
 /// Update reloading - starting animations
 IF rPressed IS <true> AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isFreeLooking IS <false>:
         EDIT _isReloading = <true>
-        fe3d:model_start_animation(primaryGunModelID, gunReloadID, 0)
-        fe3d:model_start_animation("player_skeleton", armReloadID, 0)
+        fe3d:model_start_animation(primaryGunModelID, gunReloadID, 0, <false>)
+        fe3d:model_start_animation("player_skeleton", armReloadID, 0, <false>)
 
 /// Update reloading - cleanup
 BOOL isReloadStarted = fe3d:model_is_animation_started("player_skeleton", armReloadID)

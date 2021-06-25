@@ -1,4 +1,4 @@
-66 63
+47 37
 META script_type_update
 META script_execution_waiting
 
@@ -46,26 +46,7 @@ LOOP:
             EDIT armID = misc:string_concat("skeleton_", part3)
             EDIT armID = misc:string_concat(armID, "_eqp")
             EDIT isArmStarted = fe3d:model_is_animation_started(skeletonID, armID)
-            IF isArmStarted IS <true>:
-                EDIT isArmPlaying = fe3d:model_is_animation_playing(skeletonID, armID)
-                EDIT armIndex = fe3d:model_get_animation_frame_index(skeletonID, armID)
-                IF isArmPlaying IS <true> AND armIndex IS 2:
-                    fe3d:model_pause_animation(skeletonID, armID)
-        ELIF part1 IS "player_gun_equipping":
-            EDIT armID = misc:string_concat("skeleton_", part3)
-            EDIT armID = misc:string_concat(armID, "_eqp")
-            EDIT isArmStarted = fe3d:model_is_animation_started(skeletonID, armID)
             IF isArmStarted IS <false>:
                 fe3d:model_set_visible(gunID, <true>)
-                fe3d:model_start_animation(skeletonID, armID, 0)
-        ELIF part1 IS "player_gun_unequipping":
-            EDIT armID = misc:string_concat("skeleton_", part3)
-            EDIT armID = misc:string_concat(armID, "_eqp")
-            EDIT isArmStarted = fe3d:model_is_animation_started(skeletonID, armID)
-            IF isArmStarted IS <true>:
-                EDIT isArmPaused = fe3d:model_is_animation_paused(skeletonID, armID)
-                IF isArmPaused IS <true>:
-                    fe3d:model_resume_animation(skeletonID, armID)
-            ELSE:
-                fe3d:model_set_visible(gunID, <true>)
+                fe3d:model_start_animation(skeletonID, armID, 0, <true>)
     INCR index 1
