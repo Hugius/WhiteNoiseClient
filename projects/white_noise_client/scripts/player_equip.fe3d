@@ -1,30 +1,31 @@
-16 41
+21 15
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
 STR message = ""
-STR equippedGunModelID = misc:string_concat("player_", _equippedGunType)
-STR armEquipID = misc:string_concat("skeleton_", _equippedGunType)
-EDIT armEquipID = misc:string_concat(armEquipID, "_eqp")
+STR gunModelID = misc:string_concat("player_", _equippedGunType)
+STR armID = misc:string_concat("skeleton_", _equippedGunType)
+EDIT armID = misc:string_concat(armID, "_eqp")
 
 /// Update gun equipping - starting arm animation
 INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0 AND _isADS IS <false> AND _isReloading IS <false>:
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         IF _isGunEquipped IS <true>:
-            fe3d:model_resume_animation("player_skeleton", armEquipID)
+            fe3d:model_resume_animation("player_skeleton", armID)
             EDIT _isGunEquipped = <false>
             EDIT _isGunUnequipping = <true>
         ELSE:
-            fe3d:model_set_visible(equippedGunModelID, <true>)
-            fe3d:model_start_animation("player_skeleton", armEquipID, 0, <true>)
+            fe3d:model_set_visible(gunModelID, <true>)
+            fe3d:model_start_animation("player_skeleton", armID, 0)
+            fe3d:model_set_animation_autopaused("player_skeleton", armID, <true>)
             EDIT _isGunEquipping = <true>
 
 /// Update gun equipping
 IF _isGunEquipping IS <true>:
-    BOOL isPaused = fe3d:model_is_animation_paused("player_skeleton", armEquipID)
+    BOOL isPaused = fe3d:model_is_animation_paused("player_skeleton", armID)
     IF isPaused IS <true>:
         EDIT _gunHeightOffset = 0.0
         EDIT _isGunEquipping = <false>
@@ -32,11 +33,11 @@ IF _isGunEquipping IS <true>:
 
 /// Update gun unequipping
 IF _isGunUnequipping IS <true>:
-    BOOL isStarted = fe3d:model_is_animation_started("player_skeleton", armEquipID)
+    BOOL isStarted = fe3d:model_is_animation_started("player_skeleton", armID)
     IF isStarted IS <false>:
         EDIT _gunHeightOffset = -1.0
         EDIT _isGunUnequipping = <false>
-        fe3d:model_set_visible(equippedGunModelID, <false>)
+        fe3d:model_set_visible(gunModelID, <false>)
 
 /// Update gun height
 IF _isGunEquipping IS <true>:

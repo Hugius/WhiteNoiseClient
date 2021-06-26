@@ -1,4 +1,4 @@
-20 21
+7 48
 META script_type_update
 META script_execution_waiting
 
@@ -6,8 +6,8 @@ IF _isConnected IS <false>:
     fe3d:scene_load("scene")
     EDIT _isConnected = <true>
 
-BOOL sPressed = fe3d:input_is_key_pressed("KEY_S")
-IF _isSpawned IS <false> AND sPressed IS <true>:
+BOOL jPressed = fe3d:input_is_key_pressed("KEY_J")
+IF _isSpawned IS <false> AND jPressed IS <true>:
     EDIT _isSpawned = <true>
     EXEC player_init_main
     EXEC hud_init_main

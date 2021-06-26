@@ -1,4 +1,4 @@
-27 0
+9 52
 META script_type_update
 META script_execution_waiting
 
@@ -9,7 +9,7 @@ BOOL isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
 
 /// Start walking animation
 IF _isMoving IS <true> AND isWalkStarted IS <false>:
-    fe3d:model_start_animation("player_skeleton", walkID, -1, <false>)
+    fe3d:model_start_animation("player_skeleton", walkID, -1)
 
 /// Stop walking animation
 IF _isMoving IS <false> AND isWalkStarted IS <true>:
@@ -25,5 +25,6 @@ IF isWalkStarted IS <true>:
         DEC animationSpeed = 1.0
     fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)
 
+/// Crosshair visibility
 BOOL isCrosshairVisible = (_isADS IS <false> AND _isGunEquipped IS <true>)
 fe3d:image_set_visible("crosshair", isCrosshairVisible)

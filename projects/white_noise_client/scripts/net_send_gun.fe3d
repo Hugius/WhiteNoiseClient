@@ -4,7 +4,7 @@ META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
-CONST STR equippedGunModelID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunModelID = misc:string_concat("player_", _equippedGunType)
 STR message = ""
 
 /// Send gun position to server
@@ -19,7 +19,7 @@ EDIT message = misc:string_concat(message, position)
 fe3d:client_send_udp_message(message)
 
 /// Send gun rotation to server
-VEC3 rotation = fe3d:model_get_rotation(equippedGunModelID)
+VEC3 rotation = fe3d:model_get_rotation(gunModelID)
 EDIT rotation.x = 0.0
 EDIT rotation.z = 0.0
 CAST rotation STR
