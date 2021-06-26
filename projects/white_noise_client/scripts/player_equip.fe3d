@@ -1,4 +1,4 @@
-21 45
+32 0
 META script_type_update
 META script_execution_waiting
 
@@ -6,23 +6,31 @@ META script_execution_waiting
 CONST STR username = fe3d:client_get_username()
 CONST STR skelID = "player_skeleton"
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+CONST STR armsID = "skeleton_walk_arms"
 STR armID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT armID = misc:string_concat(armID, "_eqp")
 STR message = ""
+BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
+
+/// Inputs
+INT scrollDir = fe3d:input_get_mousewheel_direction()
+IF scrollDir NOT 0:
+    EDIT _isMouseScrolled = <true>
 
 /// Update gun equip/unequip trigger
-INT scrollDir = fe3d:input_get_mousewheel_direction()
-IF scrollDir NOT 0 AND _isGunAds IS <false> AND _isGunReloading IS <false>:
+IF _isMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <false>:
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
-        IF _isGunEquipped IS <true>:
-            fe3d:model_resume_animation(skelID, armID)
-            EDIT _isGunEquipped = <false>
-            EDIT _isGunUnequipping = <true>
-        ELSE:
-            fe3d:model_set_visible(gunID, <true>)
-            fe3d:model_start_animation(skelID, armID, 0)
-            fe3d:model_set_animation_autopaused(skelID, armID, <true>)
-            EDIT _isGunEquipping = <true>
+        IF isArmsStarted IS <false>:
+            IF _isGunEquipped IS <true>:
+                fe3d:model_resume_animation(skelID, armID)
+                EDIT _isGunEquipped = <false>
+                EDIT _isGunUnequipping = <true>
+            ELSE:
+                fe3d:model_set_visible(gunID, <true>)
+                fe3d:model_start_animation(skelID, armID, 0)
+                fe3d:model_set_animation_autopaused(skelID, armID, <true>)
+                EDIT _isGunEquipping = <true>
+            EDIT _isMouseScrolled = <false>
 
 /// Update gun equipping
 IF _isGunEquipping IS <true>:

@@ -1,10 +1,12 @@
-41 36
+7 20
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
 STR message = ""
+BOOL isSprinting = _isSprinting
+CAST isSprinting STR
 
 /// Send skeleton position to server
 VEC3 position = _multiplayerSkeletonPosition
@@ -23,21 +25,32 @@ EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
 fe3d:client_send_udp_message(message)
 
-/// Send skeleton movement status to server
-BOOL isMoving = _isMoving
-CAST isMoving STR
-EDIT message = misc:string_concat("player_skeleton_moving:", username)
+/// Send skeleton legs status to server
+BOOL mustLegsStart = (_isMoving IS <true>)
+BOOL mustLegsStop = (_isMoving IS <false>)
+CAST mustLegsStart STR
+CAST mustLegsStop STR
+EDIT message = misc:string_concat("player_skeleton_legs_status:", username)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, isMoving)
+EDIT message = misc:string_concat(message, mustLegsStart)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, mustLegsStop)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isSprinting)
 fe3d:client_send_udp_message(message)
 
-/// Send skeleton speed to server
-IF _isSprinting IS <true>:
-    DEC animationSpeed = _sprintFactor
-ELSE:
-    DEC animationSpeed = 1.0
-CAST animationSpeed STR
-EDIT message = misc:string_concat("player_skeleton_speed:", username)
+/// Send skeleton arms status to server
+BOOL mustArmsStart = (_isGunEquipping IS <false> AND _isGunUnequipping IS <false>)
+EDIT mustArmsStart = (mustArmsStart IS <true> AND _isGunEquipped IS <false>)
+EDIT mustArmsStart = (mustArmsStart IS <true> AND _isMoving IS <true>)
+BOOL mustArmsStop = (_isMoving IS <false> OR _isMouseScrolled IS <true>)
+CAST mustArmsStart STR
+CAST mustArmsStop STR
+EDIT message = misc:string_concat("player_skeleton_arms_status:", username)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, animationSpeed)
+EDIT message = misc:string_concat(message, mustArmsStart)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, mustArmsStop)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isSprinting)
 fe3d:client_send_udp_message(message)

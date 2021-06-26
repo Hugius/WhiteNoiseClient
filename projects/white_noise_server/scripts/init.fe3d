@@ -9,8 +9,11 @@ GLOB LIST _forwardTCPs = {}
 GLOB LIST _forwardUDPs = {}
 PUSH _forwardUDPs "player_skeleton_position"
 PUSH _forwardUDPs "player_skeleton_rotation"
-PUSH _forwardUDPs "player_skeleton_moving"
-PUSH _forwardUDPs "player_skeleton_speed"
+PUSH _forwardUDPs "player_skeleton_arms_status"
+PUSH _forwardUDPs "player_skeleton_legs_status"
 PUSH _forwardUDPs "player_gun_position"
 PUSH _forwardUDPs "player_gun_rotation"
 PUSH _forwardUDPs "player_gun_equip_status"
+PUSH _forwardUDPs "player_gun_ads_status"
+PUSH _forwardUDPs "player_gun_shoot_status"
+PUSH _forwardUDPs "player_gun_reload_status"

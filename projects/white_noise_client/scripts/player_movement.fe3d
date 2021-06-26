@@ -1,4 +1,4 @@
-86 30
+31 67
 META script_type_update
 META script_execution_waiting
 
@@ -30,10 +30,11 @@ DEC maxSpeed = _maxMovementSpeed
 DEC acceleration = _movementAcceleration
 BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true> AND _isGunEquipped IS <false>:
-    MUL acceleration _sprintFactor
-    MUL minSpeed _sprintFactor
-    MUL maxSpeed _sprintFactor
-    EDIT isSprinting = <true>
+    IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
+        MUL acceleration _sprintFactor
+        MUL minSpeed _sprintFactor
+        MUL maxSpeed _sprintFactor
+        EDIT isSprinting = <true>
 
 /// Update movement inputs
 IF wDown IS <true>:

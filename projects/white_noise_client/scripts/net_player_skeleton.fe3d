@@ -1,15 +1,18 @@
-6 18
+62 63
 META script_type_update
 META script_execution_waiting
 
 /// Constant values
-CONST STR walkID = "skeleton_walk"
+CONST STR legsID = "skeleton_walk_legs"
+CONST STR armsID = "skeleton_walk_arms"
 
 /// Non-constant values
 LIST messageParts = {}
 STR part1 = ""
 STR part2 = ""
 STR part3 = ""
+STR part4 = ""
+STR part5 = ""
 STR skelID = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("_playerMoveMessages")
@@ -37,22 +40,54 @@ LOOP:
             CAST part3 VEC3
             fe3d:model_set_rotation(skelID, part3.x, part3.y, part3.z)
             CAST part3 STR
-        ELIF part1 IS "player_skeleton_moving":
+        ELIF part1 IS "player_skeleton_legs_status":
             EDIT part3 = messageParts[2]
+            EDIT part4 = messageParts[3]
+            EDIT part5 = messageParts[4]
             CAST part3 BOOL
-            EDIT isStarted = fe3d:model_is_animation_started(skelID, walkID)
-            IF part3 IS <true> AND isStarted IS <false>:
-                fe3d:model_start_animation(skelID, walkID, -1)
-            IF part3 IS <false> AND isStarted IS <true>:
-                EDIT isFading = fe3d:model_is_animation_fading(skelID, walkID)
+            CAST part4 BOOL
+            CAST part5 BOOL
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
+            /// Starting animation
+            IF isStarted IS <false> AND part3 IS <true>:
+                fe3d:model_start_animation(skelID, legsID, -1)
+            /// Stopping animation
+            IF isStarted IS <true> AND part4 IS <true>:
+                EDIT isFading = fe3d:model_is_animation_fading(skelID, legsID)
                 IF isFading IS <false>:
-                    fe3d:model_fade_animation(skelID, walkID, 1)
-            CAST part3 STR
-        ELIF part1 IS "player_skeleton_speed":
-            EDIT part3 = messageParts[2]
-            CAST part3 DEC
-            EDIT isStarted = fe3d:model_is_animation_started(skelID, walkID)
+                    fe3d:model_fade_animation(skelID, legsID, 1)
+            /// Animation speed
             IF isStarted IS <true>:
-                fe3d:model_set_animation_speed(skelID, walkID, part3)
+                IF part5 IS <true>:
+                    fe3d:model_set_animation_speed(skelID, legsID, _sprintFactor)
+                ELSE:
+                    fe3d:model_set_animation_speed(skelID, legsID, 1.0)
             CAST part3 STR
+            CAST part4 STR
+            CAST part5 STR
+        ELIF part1 IS "player_skeleton_arms_status":
+            EDIT part3 = messageParts[2]
+            EDIT part4 = messageParts[3]
+            EDIT part5 = messageParts[4]
+            CAST part3 BOOL
+            CAST part4 BOOL
+            CAST part5 BOOL
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
+            /// Starting animation
+            IF isStarted IS <false> AND part3 IS <true>:
+                fe3d:model_start_animation(skelID, armsID, -1)
+            /// Stopping animation
+            IF isStarted IS <true> AND part4 IS <true>:
+                EDIT isFading = fe3d:model_is_animation_fading(skelID, armsID)
+                IF isFading IS <false>:
+                    fe3d:model_fade_animation(skelID, armsID, 1)
+            /// Animation speed
+            IF isStarted IS <true>:
+                IF part5 IS <true>:
+                    fe3d:model_set_animation_speed(skelID, armsID, _sprintFactor)
+                ELSE:
+                    fe3d:model_set_animation_speed(skelID, armsID, 1.0)
+            CAST part3 STR
+            CAST part4 STR
+            CAST part5 STR
     INCR index 1
