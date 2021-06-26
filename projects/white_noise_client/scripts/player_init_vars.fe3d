@@ -1,4 +1,4 @@
-19 37
+19 38
 META script_type_init
 META script_execution_waiting
 
@@ -18,7 +18,7 @@ GLOB CONST DEC _defaultGunOffsetX = 21.5
 GLOB CONST DEC _adsGunOffsetX = 0.0
 GLOB CONST DEC _equippedGunOffsetY = 0.0
 GLOB CONST DEC _unequippedGunOffsetY = -1.0
-GLOB CONST DEC _gunOffsetSpeedX = 1.0
+GLOB CONST DEC _gunOffsetSpeedX = 0.925
 GLOB CONST DEC _gunOffsetSpeedY = 0.0175
 GLOB CONST DEC _bobbingSpeed = 0.005
 GLOB CONST DEC _maxBobbingOffset = 0.125

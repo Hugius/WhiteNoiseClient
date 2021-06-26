@@ -1,4 +1,4 @@
-33 18
+50 51
 META script_type_update
 META script_execution_waiting
 
@@ -29,21 +29,27 @@ EDIT message = misc:string_concat(message, rotation)
 fe3d:client_send_udp_message(message)
 
 /// Send gun equip status to server
-BOOL isGunEquipped = _isGunEquipped
 BOOL isGunEquipping = _isGunEquipping
-BOOL isGunUnequipping = _isGunUnequipping
-CAST isGunEquipped STR
+BOOL isGunEquipped = _isGunEquipped
 CAST isGunEquipping STR
-CAST isGunUnequipping STR
+CAST isGunEquipped STR
 EDIT message = misc:string_concat("player_gun_equip_status:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, isGunEquipped)
-EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, isGunEquipping)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, isGunUnequipping)
+EDIT message = misc:string_concat(message, isGunEquipped)
+fe3d:client_send_udp_message(message)
+
+/// Send gun ADS status to server
+BOOL isGunAds = _isGunAds
+CAST isGunAds STR
+EDIT message = misc:string_concat("player_gun_ads_status:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, _equippedGunType)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isGunAds)
 fe3d:client_send_udp_message(message)
 
 /// Send gun shoot status to server

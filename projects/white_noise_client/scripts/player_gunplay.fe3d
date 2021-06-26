@@ -1,4 +1,4 @@
-32 73
+32 35
 META script_type_update
 META script_execution_waiting
 
@@ -28,12 +28,10 @@ IF rmbPressed IS <true> AND isAdsPlaying IS <false>:
         IF _isGunAds IS <true>:
             fe3d:model_resume_animation(skelID, skelAdsID)
             EDIT _isGunAds = <false>
-            EDIT _gunOffsetX = _adsGunOffsetX
         ELSE:
             fe3d:model_start_animation(skelID, skelAdsID, 0)
             fe3d:model_set_animation_autopaused(skelID, skelAdsID, <true>)
             EDIT _isGunAds = <true>
-            EDIT _gunOffsetX = _defaultGunOffsetX
 
 /// Update ADS - aiming animation
 IF isAdsStarted IS <true>:
@@ -44,6 +42,8 @@ IF isAdsStarted IS <true>:
             INCR _gunOffsetX _gunOffsetSpeedX
     ELSE:
         EDIT _gunOffsetX = _adsGunOffsetX
+ELSE:
+    EDIT _gunOffsetX = _defaultGunOffsetX
 
 /// Update ADS - crosshair & FOV
 DEC fov = fe3d:camera_get_fov()
