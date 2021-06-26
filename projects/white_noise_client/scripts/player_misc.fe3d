@@ -1,21 +1,22 @@
-9 52
+25 41
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
+CONST STR skelID = "player_skeleton"
 CONST STR walkID = "skeleton_walk"
-BOOL isWalkStarted = fe3d:model_is_animation_started("player_skeleton", walkID)
+BOOL isWalkStarted = fe3d:model_is_animation_started(skelID, walkID)
 
 /// Start walking animation
 IF _isMoving IS <true> AND isWalkStarted IS <false>:
-    fe3d:model_start_animation("player_skeleton", walkID, -1)
+    fe3d:model_start_animation(skelID, walkID, -1)
 
 /// Stop walking animation
 IF _isMoving IS <false> AND isWalkStarted IS <true>:
-    BOOL isWalkFading = fe3d:model_is_animation_fading("player_skeleton", walkID)
+    BOOL isWalkFading = fe3d:model_is_animation_fading(skelID, walkID)
     IF isWalkFading IS <false>:
-        fe3d:model_fade_animation("player_skeleton", walkID, 1)
+        fe3d:model_fade_animation(skelID, walkID, 1)
 
 /// Walking animation speed
 IF isWalkStarted IS <true>:
@@ -23,8 +24,8 @@ IF isWalkStarted IS <true>:
         DEC animationSpeed = _sprintFactor
     ELSE:
         DEC animationSpeed = 1.0
-    fe3d:model_set_animation_speed("player_skeleton", walkID, animationSpeed)
+    fe3d:model_set_animation_speed(skelID, walkID, animationSpeed)
 
 /// Crosshair visibility
-BOOL isCrosshairVisible = (_isADS IS <false> AND _isGunEquipped IS <true>)
+BOOL isCrosshairVisible = (_isGunAds IS <false> AND _isGunEquipped IS <true>)
 fe3d:image_set_visible("crosshair", isCrosshairVisible)

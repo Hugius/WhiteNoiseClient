@@ -1,4 +1,4 @@
-29 44
+30 34
 META script_type_update
 META script_execution_waiting
 
@@ -6,7 +6,7 @@ META script_execution_waiting
 LIST stringParts = {}
 STR username = ""
 STR payload = ""
-STR skeletonID = ""
+STR skelID = ""
 STR m1911ID = ""
 STR ak47ID = ""
 INT index = 0
@@ -19,17 +19,17 @@ LOOP:
     ELSE:
         EDIT stringParts = misc:string_split(_playerMainMessages[index], ":")
         EDIT username = stringParts[1]
-        EDIT skeletonID = misc:string_concat(username, "_skeleton")
+        EDIT skelID = misc:string_concat(username, "_skeleton")
         EDIT m1911ID = misc:string_concat(username, "_m1911")
         EDIT ak47ID = misc:string_concat(username, "_ak47")
         IF stringParts[0] IS "player_join":
-            fe3d:model_place(skeletonID, "skeleton", 0.0, 0.0, 0.0)
+            fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
             fe3d:model_place(m1911ID, "m1911", 0.0, 0.0, 0.0)
             fe3d:model_place(ak47ID, "ak47", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(m1911ID, <false>)
             fe3d:model_set_visible(ak47ID, <false>)
         ELIF stringParts[0] IS "player_leave":
-            fe3d:model_delete(skeletonID)
+            fe3d:model_delete(skelID)
             fe3d:model_delete(m1911ID)
             fe3d:model_delete(ak47ID)
         INCR index 1

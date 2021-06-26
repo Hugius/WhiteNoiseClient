@@ -1,10 +1,10 @@
-35 13
+33 18
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR username = fe3d:client_get_username()
-CONST STR gunModelID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunID = misc:string_concat("player_", _equippedGunType)
 STR message = ""
 
 /// Send gun position to server
@@ -19,9 +19,7 @@ EDIT message = misc:string_concat(message, position)
 fe3d:client_send_udp_message(message)
 
 /// Send gun rotation to server
-VEC3 rotation = fe3d:model_get_rotation(gunModelID)
-EDIT rotation.x = 0.0
-EDIT rotation.z = 0.0
+VEC3 rotation = fe3d:model_get_rotation(gunID)
 CAST rotation STR
 EDIT message = misc:string_concat("player_gun_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
@@ -31,15 +29,39 @@ EDIT message = misc:string_concat(message, rotation)
 fe3d:client_send_udp_message(message)
 
 /// Send gun equip status to server
+BOOL isGunEquipped = _isGunEquipped
 BOOL isGunEquipping = _isGunEquipping
 BOOL isGunUnequipping = _isGunUnequipping
+CAST isGunEquipped STR
 CAST isGunEquipping STR
 CAST isGunUnequipping STR
 EDIT message = misc:string_concat("player_gun_equip_status:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isGunEquipped)
+EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, isGunEquipping)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, isGunUnequipping)
+fe3d:client_send_udp_message(message)
+
+/// Send gun shoot status to server
+BOOL isGunShooting = _isGunShooting
+CAST isGunShooting STR
+EDIT message = misc:string_concat("player_gun_shoot_status:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, _equippedGunType)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isGunShooting)
+fe3d:client_send_udp_message(message)
+
+/// Send gun reload status to server
+BOOL isGunReloading = _isGunReloading
+CAST isGunReloading STR
+EDIT message = misc:string_concat("player_gun_reload_status:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, _equippedGunType)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, isGunReloading)
 fe3d:client_send_udp_message(message)
