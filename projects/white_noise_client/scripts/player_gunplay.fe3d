@@ -1,16 +1,16 @@
-24 43
+82 53
 META script_type_update
 META script_execution_waiting
 
 /// Commonly used values
 CONST STR skelID = "player_skeleton"
-CONST STR gunID = misc:string_concat("player_", _equippedGunType)
 STR skelAdsID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT skelAdsID = misc:string_concat(skelAdsID, "_ads")
-STR gunShootID = misc:string_concat(_equippedGunType, "_shoot")
-STR gunReloadID = misc:string_concat(_equippedGunType, "_reload")
 STR skelReloadID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT skelReloadID = misc:string_concat(skelReloadID, "_rld")
+CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+STR gunShootID = misc:string_concat(_equippedGunType, "_shoot")
+STR gunReloadID = misc:string_concat(_equippedGunType, "_reload")
 
 /// Inputs
 BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
@@ -19,12 +19,12 @@ BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
 BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Update ADS - toggling
-BOOL isAdsStarted = fe3d:model_is_animation_started(skelID, skelAdsID)
-BOOL isAdsPlaying = <false>
-IF isAdsStarted  IS <true>:
-    EDIT isAdsPlaying = fe3d:model_is_animation_playing(skelID, skelAdsID)
+BOOL isSkelAdsStarted = fe3d:model_is_animation_started(skelID, skelAdsID)
+BOOL isSkelAdsPlaying = <false>
+IF isSkelAdsStarted IS <true>:
+    EDIT isSkelAdsPlaying = fe3d:model_is_animation_playing(skelID, skelAdsID)
 IF rmbPressed IS <true> OR _wasMouseScrolled IS <true>:
-    IF isAdsPlaying IS <false>:
+    IF isSkelAdsPlaying IS <false>:
         IF _isGunReloading IS <false> AND _isGunEquipped IS <true>:
             IF _isGunAds IS <true>:
                 fe3d:model_resume_animation(skelID, skelAdsID)
@@ -35,8 +35,8 @@ IF rmbPressed IS <true> OR _wasMouseScrolled IS <true>:
                 EDIT _isGunAds = <true>
 
 /// Update ADS - aiming animation
-IF isAdsStarted IS <true>:
-    IF isAdsPlaying IS <true>:
+IF isSkelAdsStarted IS <true>:
+    IF isSkelAdsPlaying IS <true>:
         IF _isGunAds IS <true>:
             DECR _gunOffsetX _gunOffsetSpeedX
         ELSE:
@@ -46,7 +46,7 @@ IF isAdsStarted IS <true>:
 ELSE:
     EDIT _gunOffsetX = _defaultGunOffsetX
 
-/// Update ADS - crosshair & FOV
+/// Update ADS - camera FOV
 DEC fov = fe3d:camera_get_fov()
 IF _isGunAds IS <true>:
     IF fov MORE _adsFov:
@@ -63,8 +63,8 @@ fe3d:camera_set_fov(fov)
 /// Update shooting
 EDIT _isGunShooting = <false>
 BOOL isSemi = _gunDataSemi[_equippedGunIndex]
-BOOL isShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
-IF isShootStarted IS <false> AND _isGunReloading IS <false>:
+BOOL isGunShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
+IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
     IF _isGunEquipped IS <true>:
         IF isSemi IS <true>:
             IF lmbPressed IS <true>:
@@ -77,14 +77,19 @@ IF isShootStarted IS <false> AND _isGunReloading IS <false>:
                 fe3d:sound_play_forced(gunShootID, 0, 0)
                 EDIT _isGunShooting = <true>
 
-/// Update reloading - starting animations
-IF rPressed IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <false>:
-    IF _isGunEquipped IS <true>:
-        EDIT _isGunReloading = <true>
-        fe3d:model_start_animation(gunID, gunReloadID, 0)
-        fe3d:model_start_animation(skelID, skelReloadID, 0)
+/// Update reloading - start
+IF rPressed IS <true> AND _isGunReloading IS <false> AND _isGunEquipped IS <true>:
+    EDIT _isGunReloading = <true>
+    fe3d:model_start_animation(skelID, skelReloadID, 0)
+    fe3d:model_start_animation(gunID, gunReloadID, 0)
+    /// Stop ADS
+    IF _isGunAds IS <true>:
+        fe3d:model_resume_animation(skelID, skelAdsID)
+        EDIT _isGunAds = <false>
 
-/// Update reloading - cleanup
-BOOL isReloadStarted = fe3d:model_is_animation_started(skelID, skelReloadID)
-IF _isGunReloading IS <true> AND isReloadStarted IS <false>:
-    EDIT _isGunReloading = <false>
+/// Update reloading - stop
+BOOL isSkelReloadStarted = fe3d:model_is_animation_started(skelID, skelReloadID)
+BOOL isGunReloadStarted = fe3d:model_is_animation_started(gunID, gunReloadID)
+IF _isGunReloading IS <true>:
+    IF isSkelReloadStarted IS <false> AND isGunReloadStarted IS <false>:
+        EDIT _isGunReloading = <false>

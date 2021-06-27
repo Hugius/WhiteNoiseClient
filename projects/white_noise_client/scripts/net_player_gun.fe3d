@@ -1,4 +1,4 @@
-84 27
+54 16
 META script_type_update
 META script_execution_waiting
 
@@ -51,12 +51,11 @@ LOOP:
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             /// Equipping gun animation
-            IF part4 IS <true> OR part5 IS <true>:
-                IF isStarted IS <false>:
-                    fe3d:model_start_animation(skelID, skelAnimID, 0)
-                    fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
+            IF part4 IS <true> AND isStarted IS <false>:
+                fe3d:model_start_animation(skelID, skelAnimID, 0)
+                fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
             /// Unequipping gun animation
-            IF part5 IS <false> AND isStarted IS <true>:
+            IF part5 IS <true> AND isStarted IS <true>:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
                 IF isPaused IS <true>:
                     fe3d:model_resume_animation(skelID, skelAnimID)
