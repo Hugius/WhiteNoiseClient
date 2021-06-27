@@ -1,4 +1,4 @@
-15 20
+29 19
 META script_type_update
 META script_execution_waiting
 
@@ -29,4 +29,3 @@ EXEC net_classify
 EXEC net_player_main
 EXEC net_player_skeleton
 EXEC net_player_gun
-EXEC net_player_misc

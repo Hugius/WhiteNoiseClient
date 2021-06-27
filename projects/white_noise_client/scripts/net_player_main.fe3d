@@ -1,8 +1,8 @@
-30 34
+3 17
 META script_type_update
 META script_execution_waiting
 
-/// Values
+/// Non-constants
 LIST stringParts = {}
 STR username = ""
 STR payload = ""

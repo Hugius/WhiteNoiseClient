@@ -1,8 +1,8 @@
-75 16
+33 41
 META script_type_update
 META script_execution_waiting
 
-/// Values
+/// Non-constants
 LIST messageParts = {}
 STR part1 = ""
 STR part2 = ""
@@ -32,36 +32,30 @@ LOOP:
     EDIT gunID = misc:string_concat(gunID, part3)
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
-        IF part1 IS "player_gun_position" AND gunID NOT "":
+        IF part1 IS "player_gun_position":
             EDIT part4 = messageParts[3]
             CAST part4 VEC3
             fe3d:model_set_position(gunID, part4.x, part4.y, part4.z)
             CAST part4 STR
-        ELIF part1 IS "player_gun_rotation" AND gunID NOT "":
+        ELIF part1 IS "player_gun_rotation":
             EDIT part4 = messageParts[3]
             CAST part4 VEC3
             fe3d:model_set_rotation(gunID, part4.x, part4.y, part4.z)
             CAST part4 STR
-        ELIF part1 IS "player_gun_equip_status":
+        ELIF part1 IS "player_gun_visibility":
             EDIT part4 = messageParts[3]
-            EDIT part5 = messageParts[4]
             CAST part4 BOOL
-            CAST part5 BOOL
+            fe3d:model_set_visible(gunID, part4)
+            CAST part4 STR
+        ELIF part1 IS "player_gun_equip":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
-            EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
-            /// Equipping gun animation
-            IF part4 IS <true> AND isStarted IS <false>:
-                fe3d:model_start_animation(skelID, skelAnimID, 0)
-                fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
-            /// Unequipping gun animation
-            IF part5 IS <true> AND isStarted IS <true>:
-                EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
-                IF isPaused IS <true>:
-                    fe3d:model_resume_animation(skelID, skelAnimID)
-            fe3d:model_set_visible(gunID, isStarted)
-            CAST part4 STR
-            CAST part5 STR
+            fe3d:model_start_animation(skelID, skelAnimID, 0)
+            fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
+        ELIF part1 IS "player_gun_unequip":
+            EDIT skelAnimID = misc:string_concat("skeleton_", part3)
+            EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
+            fe3d:model_resume_animation(skelID, skelAnimID)
         ELIF part1 IS "player_gun_ads":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_ads")

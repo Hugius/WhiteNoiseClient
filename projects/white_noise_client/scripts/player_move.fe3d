@@ -1,18 +1,16 @@
-31 67
+11 6
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Constants
 CONST STR skelID = "player_skeleton"
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
-
-/// Inputs
-BOOL wDown = fe3d:input_is_key_down("KEY_W")
-BOOL aDown = fe3d:input_is_key_down("KEY_A")
-BOOL sDown = fe3d:input_is_key_down("KEY_S")
-BOOL dDown = fe3d:input_is_key_down("KEY_D")
-BOOL shiftDown = fe3d:input_is_key_down("KEY_LSHIFT")
-BOOL ctrlDown = fe3d:input_is_key_down("KEY_LCTRL")
+CONST BOOL wDown = fe3d:input_is_key_down("KEY_W")
+CONST BOOL aDown = fe3d:input_is_key_down("KEY_A")
+CONST BOOL sDown = fe3d:input_is_key_down("KEY_S")
+CONST BOOL dDown = fe3d:input_is_key_down("KEY_D")
+CONST BOOL shiftDown = fe3d:input_is_key_down("KEY_LSHIFT")
+CONST BOOL ctrlDown = fe3d:input_is_key_down("KEY_LCTRL")
 
 /// Move eye offset
 DEC offset = _skeletonEyeOffset

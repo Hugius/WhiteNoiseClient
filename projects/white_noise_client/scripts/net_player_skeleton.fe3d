@@ -1,12 +1,12 @@
-62 63
+18 24
 META script_type_update
 META script_execution_waiting
 
-/// Constant values
+/// Constants
 CONST STR legsID = "skeleton_walk_legs"
 CONST STR armsID = "skeleton_walk_arms"
 
-/// Non-constant values
+/// Non-constants
 LIST messageParts = {}
 STR part1 = ""
 STR part2 = ""

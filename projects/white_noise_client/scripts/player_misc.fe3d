@@ -1,14 +1,14 @@
-9 68
+9 6
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Constants
 CONST STR username = fe3d:client_get_username()
 CONST STR skelID = "player_skeleton"
 CONST STR legsID = "skeleton_walk_legs"
 CONST STR armsID = "skeleton_walk_arms"
-BOOL isLegsStarted = fe3d:model_is_animation_started(skelID, legsID)
-BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
+CONST BOOL isLegsStarted = fe3d:model_is_animation_started(skelID, legsID)
+CONST BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
 
 /// Start legs animation
 IF _isMoving IS <true> AND isLegsStarted IS <false>:

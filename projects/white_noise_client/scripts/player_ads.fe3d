@@ -1,20 +1,20 @@
-8 42
+6 47
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Constants
 CONST STR skelID = "player_skeleton"
-STR skelAdsID = misc:string_concat("skeleton_", _equippedGunType)
-EDIT skelAdsID = misc:string_concat(skelAdsID, "_ads")
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
 CONST STR username = fe3d:client_get_username()
+CONST BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
+
+/// Non-constants
+STR skelAdsID = misc:string_concat("skeleton_", _equippedGunType)
+EDIT skelAdsID = misc:string_concat(skelAdsID, "_ads")
 BOOL isSkelAdsStarted = fe3d:model_is_animation_started(skelID, skelAdsID)
 BOOL isSkelAdsPlaying = <false>
 IF isSkelAdsStarted IS <true>:
     EDIT isSkelAdsPlaying = fe3d:model_is_animation_playing(skelID, skelAdsID)
-
-/// Inputs
-BOOL rmbPressed = fe3d:input_is_mouse_pressed("BUTTON_RIGHT")
 
 /// Update ADS - toggling
 IF rmbPressed IS <true> OR _wasMouseScrolled IS <true>:

@@ -1,4 +1,4 @@
-40 44
+40 41
 META script_type_update
 META script_execution_waiting
 
@@ -35,7 +35,11 @@ LOOP:
         PUSH _playerGunMessages message
     ELIF stringParts[0] IS "player_gun_rotation":
         PUSH _playerGunMessages message
-    ELIF stringParts[0] IS "player_gun_equip_status":
+    ELIF stringParts[0] IS "player_gun_visibility":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_equip":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_unequip":
         PUSH _playerGunMessages message
     ELIF stringParts[0] IS "player_gun_ads":
         PUSH _playerGunMessages message
@@ -46,6 +50,5 @@ LOOP:
     ELSE:
         EDIT log = misc:string_concat("Received unknown message: ", message)
         fe3d:print(log)
-        fe3d:game_stop()
-        BREAK
+        fe3d:application_stop()
     INCR index 1

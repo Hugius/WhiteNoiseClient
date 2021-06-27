@@ -1,4 +1,4 @@
-43 5
+32 24
 META script_type_update
 META script_execution_waiting
 
@@ -31,8 +31,7 @@ LOOP:
     ELSE:
         EDIT log = misc:string_concat("Received invalid message: ", messages[index])
         fe3d:print(log)
-        fe3d:game_stop()
-        BREAK
+        fe3d:application_stop()
     INCR index 1
 
 /// Filter UDP messages

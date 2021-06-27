@@ -1,12 +1,14 @@
-33 52
+34 17
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
-CONST STR username = fe3d:client_get_username()
+/// Constants
 CONST STR skelID = "player_skeleton"
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
 CONST STR armsID = "skeleton_walk_arms"
+CONST STR username = fe3d:client_get_username()
+
+/// Non-constants
 STR armID = misc:string_concat("skeleton_", _equippedGunType)
 EDIT armID = misc:string_concat(armID, "_eqp")
 STR message = ""
@@ -22,14 +24,26 @@ IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         IF isArmsStarted IS <false>:
             IF _isGunEquipped IS <true>:
+                /// Unequip gun
                 fe3d:model_resume_animation(skelID, armID)
                 EDIT _isGunEquipped = <false>
                 EDIT _isGunUnequipping = <true>
+                /// Send unequip message to server
+                EDIT message = misc:string_concat("player_gun_unequip:", username)
+                EDIT message = misc:string_concat(message, ":")
+                EDIT message = misc:string_concat(message, _equippedGunType)
+                fe3d:client_send_tcp_message(message)
             ELSE:
+                /// Equip gun
                 fe3d:model_set_visible(gunID, <true>)
                 fe3d:model_start_animation(skelID, armID, 0)
                 fe3d:model_set_animation_autopaused(skelID, armID, <true>)
                 EDIT _isGunEquipping = <true>
+                /// Send equip message to server
+                EDIT message = misc:string_concat("player_gun_equip:", username)
+                EDIT message = misc:string_concat(message, ":")
+                EDIT message = misc:string_concat(message, _equippedGunType)
+                fe3d:client_send_tcp_message(message)
 
 /// Reset mouse scroll state
 IF isArmsStarted IS <false> AND _isGunAds IS <false>:

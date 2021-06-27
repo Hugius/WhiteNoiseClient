@@ -2,18 +2,18 @@
 META script_type_init
 META script_execution_entry
 
-fe3d:server_start(10)
+fe3d:server_start(3)
 
-GLOB LIST _forwardTCPs = {}
-
-GLOB LIST _forwardUDPs = {}
-PUSH _forwardUDPs "player_skeleton_position"
-PUSH _forwardUDPs "player_skeleton_rotation"
-PUSH _forwardUDPs "player_skeleton_arms_status"
-PUSH _forwardUDPs "player_skeleton_legs_status"
-PUSH _forwardUDPs "player_gun_position"
-PUSH _forwardUDPs "player_gun_rotation"
-PUSH _forwardUDPs "player_gun_equip_status"
-PUSH _forwardUDPs "player_gun_ads_status"
-PUSH _forwardUDPs "player_gun_shoot_status"
-PUSH _forwardUDPs "player_gun_reload_status"
+GLOB LIST _forwardMessages = {}
+PUSH _forwardMessages "player_skeleton_position"
+PUSH _forwardMessages "player_skeleton_rotation"
+PUSH _forwardMessages "player_skeleton_arms_status"
+PUSH _forwardMessages "player_skeleton_legs_status"
+PUSH _forwardMessages "player_gun_position"
+PUSH _forwardMessages "player_gun_rotation"
+PUSH _forwardMessages "player_gun_visibility"
+PUSH _forwardMessages "player_gun_equip"
+PUSH _forwardMessages "player_gun_unequip"
+PUSH _forwardMessages "player_gun_ads"
+PUSH _forwardMessages "player_gun_shoot"
+PUSH _forwardMessages "player_gun_reload"
