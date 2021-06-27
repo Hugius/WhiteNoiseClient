@@ -1,4 +1,4 @@
-5 10
+43 5
 META script_type_update
 META script_execution_waiting
 
@@ -22,7 +22,7 @@ EDIT maxIndex = misc:list_get_size("messages")
 LOOP:
     IF index IS maxIndex:
         BREAK
-    EDIT contains = misc:string_contains(message, ":")
+    EDIT contains = misc:string_contains(messages[index], ":")
     IF contains IS <true>:
         IF protocols[index] IS "TCP":
             PUSH _receivedMessages messages[index]
@@ -33,11 +33,13 @@ LOOP:
         fe3d:print(log)
         fe3d:game_stop()
         BREAK
+    INCR index 1
 
 /// Filter UDP messages
 LIST messageParts = {}
 LIST udpHeaders = {}
 EDIT udpMessages = misc:list_reverse("udpMessages")
+STR udpHeader = ""
 EDIT index = 0
 EDIT maxIndex = misc:list_get_size("udpMessages")
 LOOP:
@@ -47,4 +49,6 @@ LOOP:
     EDIT udpHeader = misc:string_concat(messageParts[0], messageParts[1])
     EDIT contains = misc:list_contains("udpHeaders", udpHeader)
     IF contains IS <false>:
+        PUSH udpHeaders udpHeader
         PUSH _receivedMessages udpMessages[index]
+    INCR index 1

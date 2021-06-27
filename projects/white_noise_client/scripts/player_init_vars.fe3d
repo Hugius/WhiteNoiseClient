@@ -1,4 +1,4 @@
-46 36
+42 37
 META script_type_init
 META script_execution_waiting
 
@@ -42,7 +42,6 @@ GLOB BOOL _isGunAds = <false>
 GLOB BOOL _isGunEquipped = <false>
 GLOB BOOL _isGunEquipping = <false>
 GLOB BOOL _isGunUnequipping = <false>
-GLOB BOOL _isGunShooting = <false>
 GLOB BOOL _isGunReloading = <false>
 GLOB BOOL _isSpawned = <false>
 GLOB BOOL _wasMouseScrolled = <false>

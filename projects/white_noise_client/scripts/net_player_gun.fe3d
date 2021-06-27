@@ -1,4 +1,4 @@
-42 26
+75 16
 META script_type_update
 META script_execution_waiting
 
@@ -62,33 +62,24 @@ LOOP:
             fe3d:model_set_visible(gunID, isStarted)
             CAST part4 STR
             CAST part5 STR
-        ELIF part1 IS "player_gun_ads_status":
-            EDIT part4 = messageParts[3]
-            CAST part4 BOOL
+        ELIF part1 IS "player_gun_ads":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_ads")
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
-            IF part4 IS <true> AND isStarted IS <false>:
-                fe3d:model_start_animation(skelID, skelAnimID, 0)
-                fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
-            IF part4 IS <false> AND isStarted IS <true>:
+            IF isStarted IS <true>:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
                 IF isPaused IS <true>:
                     fe3d:model_resume_animation(skelID, skelAnimID)
-            CAST part4 STR
-        ELIF part1 IS "player_gun_shoot_status":
-            EDIT part4 = messageParts[3]
-            CAST part4 BOOL
-            CAST part4 STR
-        ELIF part1 IS "player_gun_reload_status":
-            EDIT part4 = messageParts[3]
-            CAST part4 BOOL
+            ELSE:
+                fe3d:model_start_animation(skelID, skelAnimID, 0)
+                fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
+        ELIF part1 IS "player_gun_shoot":
+            PASS
+        ELIF part1 IS "player_gun_reload":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_rld")
             EDIT gunAnimID = misc:string_concat(part3, "_reload")
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
-            IF part4 IS <true> AND isStarted IS <false>:
-                fe3d:model_start_animation(skelID, skelAnimID, 0)
-                fe3d:model_start_animation(gunID, gunAnimID, 0)
-            CAST part4 STR
+            fe3d:model_start_animation(skelID, skelAnimID, 0)
+            fe3d:model_start_animation(gunID, gunAnimID, 0)
     INCR index 1
