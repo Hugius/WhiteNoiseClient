@@ -1,0 +1,51 @@
+3 29
+META script_type_update
+META script_execution_waiting
+
+/// Clear classified messages
+EDIT _playerMainMessages = {}
+EDIT _playerMoveMessages = {}
+EDIT _playerGunMessages = {}
+
+/// Classify received messages
+LIST stringParts = {}
+STR message = ""
+STR log = ""
+INT index = 0
+INT maxIndex = misc:list_get_size("_receivedMessages")
+BOOL contains = <false>
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT message = _receivedMessages[index]
+    EDIT stringParts = misc:string_split(message, ":")
+    IF stringParts[0] IS "player_join":
+        PUSH _playerMainMessages message
+    ELIF stringParts[0] IS "player_leave":
+        PUSH _playerMainMessages message
+    ELIF stringParts[0] IS "player_skeleton_position":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_rotation":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_legs_status":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_status":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_gun_position":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_rotation":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_equip_status":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_ads_status":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_shoot_status":
+        PUSH _playerGunMessages message
+    ELIF stringParts[0] IS "player_gun_reload_status":
+        PUSH _playerGunMessages message
+    ELSE:
+        EDIT log = misc:string_concat("Received unknown message: ", message)
+        fe3d:print(log)
+        fe3d:game_stop()
+        BREAK
+    INCR index 1

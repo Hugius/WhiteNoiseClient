@@ -1,59 +1,50 @@
-33 59
+5 10
 META script_type_update
 META script_execution_waiting
 
-/// Clear last messages
-EDIT _playerMainMessages = {}
-EDIT _playerMoveMessages = {}
-EDIT _playerGunMessages = {}
+/// Constants
+CONST LIST protocols = fe3d:client_get_pending_protocols()
+CONST LIST messages = fe3d:client_get_pending_contents()
 
-/// Receive new messages
-LIST messages = fe3d:client_get_pending_messages()
-LIST stringParts = {}
-STR message = ""
-STR log = ""
+/// Commonly used values
+LIST udpMessages = {}
 INT index = 0
-INT maxIndex = misc:list_get_size("messages")
+INT maxIndex = 0
 BOOL contains = <false>
+
+/// Clear messages
+EDIT _receivedMessages = {}
+
+/// Sort messages based on protocol
+STR log = ""
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("messages")
 LOOP:
     IF index IS maxIndex:
         BREAK
-    EDIT message = messages[index]
     EDIT contains = misc:string_contains(message, ":")
     IF contains IS <true>:
-        EDIT stringParts = misc:string_split(message, ":")
-        IF stringParts[0] IS "player_join":
-            PUSH _playerMainMessages message
-        ELIF stringParts[0] IS "player_leave":
-            PUSH _playerMainMessages message
-        ELIF stringParts[0] IS "player_skeleton_position":
-            PUSH _playerMoveMessages message
-        ELIF stringParts[0] IS "player_skeleton_rotation":
-            PUSH _playerMoveMessages message
-        ELIF stringParts[0] IS "player_skeleton_legs_status":
-            PUSH _playerMoveMessages message
-        ELIF stringParts[0] IS "player_skeleton_arms_status":
-            PUSH _playerMoveMessages message
-        ELIF stringParts[0] IS "player_gun_position":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_rotation":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_equip_status":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_ads_status":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_shoot_status":
-            PUSH _playerGunMessages message
-        ELIF stringParts[0] IS "player_gun_reload_status":
-            PUSH _playerGunMessages message
+        IF protocols[index] IS "TCP":
+            PUSH _receivedMessages messages[index]
         ELSE:
-            EDIT log = misc:string_concat("Received unknown message: ", message)
-            fe3d:print(log)
-            fe3d:game_stop()
-            BREAK
+            PUSH udpMessages messages[index]
     ELSE:
-        EDIT log = misc:string_concat("Received invalid message: ", message)
+        EDIT log = misc:string_concat("Received invalid message: ", messages[index])
         fe3d:print(log)
         fe3d:game_stop()
         BREAK
-    INCR index 1
+
+/// Filter UDP messages
+LIST messageParts = {}
+LIST udpHeaders = {}
+EDIT udpMessages = misc:list_reverse("udpMessages")
+EDIT index = 0
+EDIT maxIndex = misc:list_get_size("udpMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT messageParts = misc:string_split(udpMessages[index], ":")
+    EDIT udpHeader = misc:string_concat(messageParts[0], messageParts[1])
+    EDIT contains = misc:list_contains("udpHeaders", udpHeader)
+    IF contains IS <false>:
+        PUSH _receivedMessages udpMessages[index]
