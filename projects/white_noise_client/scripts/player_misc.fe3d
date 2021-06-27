@@ -27,7 +27,7 @@ IF isLegsStarted IS <true> AND _isMoving IS <false>:
 
 /// Stop arms animation
 IF isArmsStarted IS <true>:
-    IF _isMoving IS <false> OR _isMouseScrolled IS <true>:
+    IF _isMoving IS <false> OR _wasMouseScrolled IS <true>:
         BOOL isArmsFading = fe3d:model_is_animation_fading(skelID, armsID)
         IF isArmsFading IS <false>:
             fe3d:model_fade_animation(skelID, armsID, 1)

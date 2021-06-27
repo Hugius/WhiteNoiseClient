@@ -1,4 +1,4 @@
-32 0
+33 52
 META script_type_update
 META script_execution_waiting
 
@@ -15,10 +15,10 @@ BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
 /// Inputs
 INT scrollDir = fe3d:input_get_mousewheel_direction()
 IF scrollDir NOT 0:
-    EDIT _isMouseScrolled = <true>
+    EDIT _wasMouseScrolled = <true>
 
 /// Update gun equip/unequip trigger
-IF _isMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <false>:
+IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <false>:
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         IF isArmsStarted IS <false>:
             IF _isGunEquipped IS <true>:
@@ -30,7 +30,10 @@ IF _isMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <f
                 fe3d:model_start_animation(skelID, armID, 0)
                 fe3d:model_set_animation_autopaused(skelID, armID, <true>)
                 EDIT _isGunEquipping = <true>
-            EDIT _isMouseScrolled = <false>
+
+/// Reset mouse scroll state
+IF isArmsStarted IS <false> AND _isGunAds IS <false>:
+    EDIT _wasMouseScrolled = <false>
 
 /// Update gun equipping
 IF _isGunEquipping IS <true>:

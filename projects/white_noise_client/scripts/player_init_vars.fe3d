@@ -45,4 +45,4 @@ GLOB BOOL _isGunUnequipping = <false>
 GLOB BOOL _isGunShooting = <false>
 GLOB BOOL _isGunReloading = <false>
 GLOB BOOL _isSpawned = <false>
-GLOB BOOL _isMouseScrolled = <false>
+GLOB BOOL _wasMouseScrolled = <false>

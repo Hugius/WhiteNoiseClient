@@ -43,7 +43,7 @@ fe3d:client_send_udp_message(message)
 BOOL mustArmsStart = (_isGunEquipping IS <false> AND _isGunUnequipping IS <false>)
 EDIT mustArmsStart = (mustArmsStart IS <true> AND _isGunEquipped IS <false>)
 EDIT mustArmsStart = (mustArmsStart IS <true> AND _isMoving IS <true>)
-BOOL mustArmsStop = (_isMoving IS <false> OR _isMouseScrolled IS <true>)
+BOOL mustArmsStop = (_isMoving IS <false> OR _wasMouseScrolled IS <true>)
 CAST mustArmsStart STR
 CAST mustArmsStop STR
 EDIT message = misc:string_concat("player_skeleton_arms_status:", username)
