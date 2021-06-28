@@ -1,71 +1,7 @@
-60 69
+4 19
 META script_type_update
 META script_execution_entry
 
-/// Constants
-CONST LIST messageUsernames = fe3d:server_get_pending_usernames()
-CONST LIST messageProtocols = fe3d:server_get_pending_protocols()
-CONST LIST messageContents = fe3d:server_get_pending_contents()
-CONST STR newUsername = fe3d:server_get_new_username()
-CONST STR oldUsername = fe3d:server_get_old_username()
-
-/// Commonly used values
-STR message = ""
-INT index = 0
-INT maxIndex = 0
-
-/// Notify all other players that a player joined the game
-IF newUsername NOT "":
-    EDIT message = misc:string_concat("player_join:", newUsername)
-    fe3d:server_broadcast_tcp_message(message, newUsername)
-
-/// Notify all other players that a player left the game
-IF oldUsername NOT "":
-    EDIT message = misc:string_concat("player_leave:", oldUsername)
-    fe3d:server_broadcast_tcp_message(message, oldUsername)
-
-/// Send all connected usernames to the joined player
-IF newUsername NOT "":
-    LIST connectedUsernames = fe3d:server_get_connected_usernames()
-    EDIT index = 0
-    EDIT maxIndex = misc:list_get_size("connectedUsernames")
-    LOOP:
-        IF index IS maxIndex:
-            BREAK
-        ELIF connectedUsernames[index] NOT newUsername:
-            EDIT message = misc:string_concat("player_join:", connectedUsernames[index])
-            fe3d:server_send_tcp_message(newUsername, message)
-        INCR index 1
-
-/// Extract messages
-LIST stringParts = {}
-STR log = ""
-EDIT index = 0
-EDIT maxIndex = misc:list_get_size("messageContents")
-BOOL contains = <false>
-BOOL isForwardMessage = <false>
-LOOP:
-    IF index IS maxIndex:
-        BREAK
-    ELSE:
-        /// Retrieve current message data
-        EDIT contains = misc:string_contains(messageContents[index], ":")
-        /// Check if message is valid
-        IF contains IS <true>:
-            EDIT stringParts = misc:string_split(messageContents[index], ":")
-            EDIT isForwardMessage = misc:list_contains("_forwardMessages", stringParts[0])
-            /// Check if message needs to be forwarded to all clients
-            IF isForwardMessage IS <true>:
-                IF messageProtocols[index] IS "TCP":
-                    fe3d:server_broadcast_tcp_message(messageContents[index], messageUsernames[index])
-                ELSE:
-                    fe3d:server_broadcast_udp_message(messageContents[index], messageUsernames[index])
-            ELSE:
-                EDIT log = misc:string_concat("Received unknown message: ", messageContents[index])
-                fe3d:print(log)
-                fe3d:application_stop()
-        ELSE:
-            EDIT log = misc:string_concat("Received invalid message: ", messageContents[index])
-            fe3d:print(log)
-            fe3d:application_stop()
-        INCR index 1
+EXEC update_main
+EXEC update_receive
+EXEC update_resend

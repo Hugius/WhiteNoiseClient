@@ -1,19 +1,40 @@
-14 42
+7 10
 META script_type_init
 META script_execution_entry
 
 fe3d:server_start(3)
 
-GLOB LIST _forwardMessages = {}
-PUSH _forwardMessages "player_skeleton_position"
-PUSH _forwardMessages "player_skeleton_rotation"
-PUSH _forwardMessages "player_skeleton_arms_status"
-PUSH _forwardMessages "player_skeleton_legs_status"
-PUSH _forwardMessages "player_gun_position"
-PUSH _forwardMessages "player_gun_rotation"
-PUSH _forwardMessages "player_gun_visibility"
-PUSH _forwardMessages "player_gun_equip"
-PUSH _forwardMessages "player_gun_unequip"
-PUSH _forwardMessages "player_gun_ads"
-PUSH _forwardMessages "player_gun_shoot"
-PUSH _forwardMessages "player_gun_reload"
+GLOB LIST _savedUsernames = {}
+GLOB LIST _savedProtocols = {}
+GLOB LIST _savedContents = {}
+
+GLOB LIST _saveMessageTypes = {}
+PUSH _saveMessageTypes "player_skeleton_legs_start"
+PUSH _saveMessageTypes "player_skeleton_legs_stop"
+PUSH _saveMessageTypes "player_skeleton_legs_speed"
+PUSH _saveMessageTypes "player_skeleton_arms_start"
+PUSH _saveMessageTypes "player_skeleton_arms_stop"
+PUSH _saveMessageTypes "player_skeleton_arms_speed"
+PUSH _saveMessageTypes "player_gun_equip"
+PUSH _saveMessageTypes "player_gun_unequip"
+PUSH _saveMessageTypes "player_gun_ads"
+PUSH _saveMessageTypes "player_gun_shoot"
+PUSH _saveMessageTypes "player_gun_reload"
+
+GLOB LIST _forwardMessageTypes = {}
+PUSH _forwardMessageTypes "player_skeleton_position"
+PUSH _forwardMessageTypes "player_skeleton_rotation"
+PUSH _forwardMessageTypes "player_skeleton_legs_start"
+PUSH _forwardMessageTypes "player_skeleton_legs_stop"
+PUSH _forwardMessageTypes "player_skeleton_legs_speed"
+PUSH _forwardMessageTypes "player_skeleton_arms_start"
+PUSH _forwardMessageTypes "player_skeleton_arms_stop"
+PUSH _forwardMessageTypes "player_skeleton_arms_speed"
+PUSH _forwardMessageTypes "player_gun_position"
+PUSH _forwardMessageTypes "player_gun_rotation"
+PUSH _forwardMessageTypes "player_gun_visibility"
+PUSH _forwardMessageTypes "player_gun_equip"
+PUSH _forwardMessageTypes "player_gun_unequip"
+PUSH _forwardMessageTypes "player_gun_ads"
+PUSH _forwardMessageTypes "player_gun_shoot"
+PUSH _forwardMessageTypes "player_gun_reload"
