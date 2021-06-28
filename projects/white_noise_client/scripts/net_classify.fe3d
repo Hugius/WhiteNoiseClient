@@ -1,4 +1,4 @@
-40 41
+38 48
 META script_type_update
 META script_execution_waiting
 
@@ -27,9 +27,17 @@ LOOP:
         PUSH _playerMoveMessages message
     ELIF stringParts[0] IS "player_skeleton_rotation":
         PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_legs_status":
+    ELIF stringParts[0] IS "player_skeleton_legs_start":
         PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_arms_status":
+    ELIF stringParts[0] IS "player_skeleton_legs_stop":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_legs_speed":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_start":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_stop":
+        PUSH _playerMoveMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_speed":
         PUSH _playerMoveMessages message
     ELIF stringParts[0] IS "player_gun_position":
         PUSH _playerGunMessages message

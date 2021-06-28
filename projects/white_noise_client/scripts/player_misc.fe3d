@@ -1,50 +1,6 @@
-9 6
+1 29
 META script_type_update
 META script_execution_waiting
-
-/// Constants
-CONST STR username = fe3d:client_get_username()
-CONST STR skelID = "player_skeleton"
-CONST STR legsID = "skeleton_walk_legs"
-CONST STR armsID = "skeleton_walk_arms"
-CONST BOOL isLegsStarted = fe3d:model_is_animation_started(skelID, legsID)
-CONST BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
-
-/// Start legs animation
-IF _isMoving IS <true> AND isLegsStarted IS <false>:
-    fe3d:model_start_animation(skelID, legsID, -1)
-
-/// Start arms animation
-IF _isMoving IS <true> AND isArmsStarted IS <false> AND _isGunEquipped IS <false>:
-    IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
-        fe3d:model_start_animation(skelID, armsID, -1)
-
-/// Stop legs animation
-IF isLegsStarted IS <true> AND _isMoving IS <false>:
-    BOOL isLegsFading = fe3d:model_is_animation_fading(skelID, legsID)
-    IF isLegsFading IS <false>:
-        fe3d:model_fade_animation(skelID, legsID, 1)
-
-/// Stop arms animation
-IF isArmsStarted IS <true>:
-    IF _isMoving IS <false> OR _wasMouseScrolled IS <true>:
-        BOOL isArmsFading = fe3d:model_is_animation_fading(skelID, armsID)
-        IF isArmsFading IS <false>:
-            fe3d:model_fade_animation(skelID, armsID, 1)
-
-/// Update legs animation speed
-IF isLegsStarted IS <true>:
-    IF _isSprinting IS <true>:
-        fe3d:model_set_animation_speed(skelID, legsID, _sprintFactor)
-    ELSE:
-        fe3d:model_set_animation_speed(skelID, legsID, 1.0)
-
-/// Update arms animation speed
-IF isArmsStarted IS <true>:
-    IF _isSprinting IS <true>:
-        fe3d:model_set_animation_speed(skelID, armsID, _sprintFactor)
-    ELSE:
-        fe3d:model_set_animation_speed(skelID, armsID, 1.0)
 
 /// Crosshair visibility
 BOOL isCrosshairVisible = (_isGunAds IS <false> AND _isGunEquipped IS <true>)
