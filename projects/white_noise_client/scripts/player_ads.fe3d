@@ -28,7 +28,7 @@ IF rmbPressed IS <true> OR _wasMouseScrolled IS <true>:
                 fe3d:model_set_animation_autopaused(skelID, skelAdsID, <true>)
                 EDIT _isGunAds = <true>
             /// Send gun ADS status to server
-            STR message = misc:string_concat("player_gun_ads:", username)
+            STR message = misc:string_concat("forward:player_gun_ads:", username)
             EDIT message = misc:string_concat(message, ":")
             EDIT message = misc:string_concat(message, _equippedGunType)
             fe3d:client_send_tcp_message(message)

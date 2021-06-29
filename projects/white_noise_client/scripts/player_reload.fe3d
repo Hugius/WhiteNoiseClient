@@ -23,7 +23,7 @@ IF rPressed IS <true> AND _isGunReloading IS <false> AND _isGunEquipped IS <true
     fe3d:model_start_animation(skelID, skelReloadID, 0)
     fe3d:model_start_animation(gunID, gunReloadID, 0)
     /// Send reload message to server
-    EDIT message = misc:string_concat("player_gun_reload:", username)
+    EDIT message = misc:string_concat("forward:player_gun_reload:", username)
     EDIT message = misc:string_concat(message, ":")
     EDIT message = misc:string_concat(message, _equippedGunType)
     fe3d:client_send_tcp_message(message)
@@ -33,7 +33,7 @@ IF rPressed IS <true> AND _isGunReloading IS <false> AND _isGunEquipped IS <true
         fe3d:model_resume_animation(skelID, skelAdsID)
         EDIT _isGunAds = <false>
         /// Send ADS message to server
-        EDIT message = misc:string_concat("player_gun_ads:", username)
+        EDIT message = misc:string_concat("forward:player_gun_ads:", username)
         EDIT message = misc:string_concat(message, ":")
         EDIT message = misc:string_concat(message, _equippedGunType)
         fe3d:client_send_tcp_message(message)

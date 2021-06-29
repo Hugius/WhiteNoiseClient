@@ -1,7 +1,6 @@
-4 19
+3 22
 META script_type_update
 META script_execution_entry
 
-EXEC update_main
+EXEC update_connection
 EXEC update_receive
-EXEC update_resend

@@ -1,4 +1,4 @@
-2 0
+24 7
 META script_type_update
 META script_execution_waiting
 
@@ -6,10 +6,8 @@ META script_execution_waiting
 CONST STR newUsername = fe3d:server_get_new_username()
 CONST STR oldUsername = fe3d:server_get_old_username()
 
-/// Commonly used values
+/// Non-constants
 STR message = ""
-INT index = 0
-INT maxIndex = 0
 
 /// Notify all other players that a player joined the game
 IF newUsername NOT "":
@@ -24,8 +22,8 @@ IF oldUsername NOT "":
 /// Send all connected usernames to the joined player
 IF newUsername NOT "":
     LIST connectedUsernames = fe3d:server_get_connected_usernames()
-    EDIT index = 0
-    EDIT maxIndex = misc:list_get_size("connectedUsernames")
+    INT index = 0
+    INT maxIndex = misc:list_get_size("connectedUsernames")
     LOOP:
         IF index IS maxIndex:
             BREAK

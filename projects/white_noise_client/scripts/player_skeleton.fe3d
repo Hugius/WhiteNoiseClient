@@ -1,4 +1,4 @@
-17 30
+10 0
 META script_type_update
 META script_execution_waiting
 
@@ -17,7 +17,7 @@ STR message = ""
 IF _isMoving IS <true> AND isLegsStarted IS <false>:
     fe3d:model_start_animation(skelID, legsID, -1)
     /// Send message to server
-    EDIT message = misc:string_concat("player_skeleton_legs_start:", username)
+    EDIT message = misc:string_concat("forward:player_skeleton_legs_start:", username)
     fe3d:client_send_tcp_message(message)
 
 /// Start arms animation
@@ -25,7 +25,7 @@ IF _isMoving IS <true> AND isArmsStarted IS <false> AND _isGunEquipped IS <false
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         fe3d:model_start_animation(skelID, armsID, -1)
         /// Send message to server
-        EDIT message = misc:string_concat("player_skeleton_arms_start:", username)
+        EDIT message = misc:string_concat("forward:player_skeleton_arms_start:", username)
         fe3d:client_send_tcp_message(message)
 
 /// Stop legs animation
@@ -34,7 +34,7 @@ IF isLegsStarted IS <true> AND _isMoving IS <false>:
     IF isLegsFading IS <false>:
         fe3d:model_fade_animation(skelID, legsID, 1)
         /// Send message to server
-        EDIT message = misc:string_concat("player_skeleton_legs_stop:", username)
+        EDIT message = misc:string_concat("forward:player_skeleton_legs_stop:", username)
         fe3d:client_send_tcp_message(message)
 
 /// Stop arms animation
@@ -44,7 +44,7 @@ IF isArmsStarted IS <true>:
         IF isArmsFading IS <false>:
             fe3d:model_fade_animation(skelID, armsID, 1)
             /// Send message to server
-            EDIT message = misc:string_concat("player_skeleton_arms_stop:", username)
+            EDIT message = misc:string_concat("forward:player_skeleton_arms_stop:", username)
             fe3d:client_send_tcp_message(message)
 
 /// Update legs animation speed
@@ -54,12 +54,6 @@ IF isLegsStarted IS <true>:
     ELSE:
         DEC legsSpeed = 1.0
     fe3d:model_set_animation_speed(skelID, legsID, legsSpeed)
-    /// Send message to server
-    CAST legsSpeed STR
-    EDIT message = misc:string_concat("player_skeleton_legs_speed:", username)
-    EDIT message = misc:string_concat(message, ":")
-    EDIT message = misc:string_concat(message, legsSpeed)
-    fe3d:client_send_tcp_message(message)
 
 /// Update arms animation speed
 IF isArmsStarted IS <true>:
@@ -68,9 +62,3 @@ IF isArmsStarted IS <true>:
     ELSE:
         DEC armsSpeed = 1.0
     fe3d:model_set_animation_speed(skelID, armsID, armsSpeed)
-    /// Send message to server
-    CAST armsSpeed STR
-    EDIT message = misc:string_concat("player_skeleton_arms_speed:", username)
-    EDIT message = misc:string_concat(message, ":")
-    EDIT message = misc:string_concat(message, armsSpeed)
-    fe3d:client_send_tcp_message(message)

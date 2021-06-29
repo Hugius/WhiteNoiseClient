@@ -1,20 +1,23 @@
-33 41
+56 80
 META script_type_update
 META script_execution_waiting
 
+/// Constants
+INT maxIndex = misc:list_get_size("_playerGunMessages")
+
 /// Non-constants
 LIST messageParts = {}
+STR message = ""
+STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
 STR part3 = ""
 STR part4 = ""
-STR part5 = ""
 STR skelID = ""
 STR gunID = ""
 STR skelAnimID = ""
 STR gunAnimID = ""
 INT index = 0
-INT maxIndex = misc:list_get_size("_playerGunMessages")
 BOOL isJoined = <false>
 BOOL isStarted = <false>
 BOOL isPaused = <false>
@@ -23,6 +26,8 @@ BOOL isPaused = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
+    EDIT message = _playerGunMessages[index]
+    EDIT rejectMessage = misc:string_concat("reject:", message)
     EDIT messageParts = misc:string_split(_playerGunMessages[index], ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
@@ -50,12 +55,24 @@ LOOP:
         ELIF part1 IS "player_gun_equip":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
-            fe3d:model_start_animation(skelID, skelAnimID, 0)
-            fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
+            IF isStarted IS <false>:
+                fe3d:model_start_animation(skelID, skelAnimID, 0)
+                fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
+            ELSE:
+                fe3d:client_send_tcp_message(rejectMessage)
         ELIF part1 IS "player_gun_unequip":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
-            fe3d:model_resume_animation(skelID, skelAnimID)
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
+            IF isStarted IS <true>:
+                EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
+                IF isPaused IS <true>:
+                    fe3d:model_resume_animation(skelID, skelAnimID)
+                ELSE:
+                    fe3d:client_send_tcp_message(rejectMessage)
+            ELSE:
+                fe3d:client_send_tcp_message(rejectMessage)
         ELIF part1 IS "player_gun_ads":
             EDIT skelAnimID = misc:string_concat("skeleton_", part3)
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_ads")
@@ -64,6 +81,8 @@ LOOP:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
                 IF isPaused IS <true>:
                     fe3d:model_resume_animation(skelID, skelAnimID)
+                ELSE:
+                    fe3d:client_send_tcp_message(rejectMessage)
             ELSE:
                 fe3d:model_start_animation(skelID, skelAnimID, 0)
                 fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
@@ -74,6 +93,7 @@ LOOP:
             EDIT skelAnimID = misc:string_concat(skelAnimID, "_rld")
             EDIT gunAnimID = misc:string_concat(part3, "_reload")
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
-            fe3d:model_start_animation(skelID, skelAnimID, 0)
-            fe3d:model_start_animation(gunID, gunAnimID, 0)
+            IF isStarted IS <false>:
+                fe3d:model_start_animation(skelID, skelAnimID, 0)
+                fe3d:model_start_animation(gunID, gunAnimID, 0)
     INCR index 1

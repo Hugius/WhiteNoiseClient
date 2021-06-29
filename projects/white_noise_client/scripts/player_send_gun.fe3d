@@ -1,17 +1,19 @@
-8 31
+28 52
 META script_type_update
 META script_execution_waiting
 
-/// Commonly used values
+/// Constants
 CONST STR username = fe3d:client_get_username()
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+
+/// Non-constants
 STR message = ""
 
 /// Send gun position to server
 VEC3 position = _multiplayerGunPosition
 DECR position.y _cameraHeightOffset
 CAST position STR
-EDIT message = misc:string_concat("player_gun_position:", username)
+EDIT message = misc:string_concat("forward:player_gun_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
@@ -21,7 +23,7 @@ fe3d:client_send_udp_message(message)
 /// Send gun rotation to server
 VEC3 rotation = fe3d:model_get_rotation(gunID)
 CAST rotation STR
-EDIT message = misc:string_concat("player_gun_rotation:", username)
+EDIT message = misc:string_concat("forward:player_gun_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
@@ -31,7 +33,7 @@ fe3d:client_send_udp_message(message)
 /// Send gun visibility to server
 BOOL isVisible = fe3d:model_is_visible(gunID)
 CAST isVisible STR
-EDIT message = misc:string_concat("player_gun_visibility:", username)
+EDIT message = misc:string_concat("forward:player_gun_visibility:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")

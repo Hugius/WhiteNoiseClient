@@ -29,7 +29,7 @@ IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <
                 EDIT _isGunEquipped = <false>
                 EDIT _isGunUnequipping = <true>
                 /// Send unequip message to server
-                EDIT message = misc:string_concat("player_gun_unequip:", username)
+                EDIT message = misc:string_concat("forward:player_gun_unequip:", username)
                 EDIT message = misc:string_concat(message, ":")
                 EDIT message = misc:string_concat(message, _equippedGunType)
                 fe3d:client_send_tcp_message(message)
@@ -40,7 +40,7 @@ IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <
                 fe3d:model_set_animation_autopaused(skelID, armID, <true>)
                 EDIT _isGunEquipping = <true>
                 /// Send equip message to server
-                EDIT message = misc:string_concat("player_gun_equip:", username)
+                EDIT message = misc:string_concat("forward:player_gun_equip:", username)
                 EDIT message = misc:string_concat(message, ":")
                 EDIT message = misc:string_concat(message, _equippedGunType)
                 fe3d:client_send_tcp_message(message)

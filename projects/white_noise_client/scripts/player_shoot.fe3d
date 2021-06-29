@@ -22,7 +22,7 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
             fe3d:model_start_animation(gunID, gunShootID, 0)
             fe3d:sound_play_forced(gunShootID, 0, 0)
             /// Send shoot message to server
-            STR message = misc:string_concat("player_gun_shoot:", username)
+            STR message = misc:string_concat("forward:player_gun_shoot:", username)
             EDIT message = misc:string_concat(message, ":")
             EDIT message = misc:string_concat(message, _equippedGunType)
             fe3d:client_send_tcp_message(message)

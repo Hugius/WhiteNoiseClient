@@ -1,4 +1,4 @@
-20 25
+22 24
 META script_type_update
 META script_execution_waiting
 
@@ -19,10 +19,10 @@ IF _isSpawned IS <true>:
     EXEC player_ads
     EXEC player_shoot
     EXEC player_reload
-    EXEC player_animation
+    EXEC player_skeleton
+    EXEC player_send_skeleton
+    EXEC player_send_gun
     EXEC player_misc
-    EXEC net_send_skeleton
-    EXEC net_send_gun
 
 /// Always receive network data
 EXEC net_receive
