@@ -1,4 +1,4 @@
-75 17
+43 49
 META script_type_update
 META script_execution_waiting
 
@@ -16,6 +16,7 @@ STR part2 = ""
 STR part3 = ""
 STR part4 = ""
 STR part5 = ""
+STR tagID = ""
 STR skelID = ""
 INT index = 0
 BOOL isJoined = <false>
@@ -41,6 +42,9 @@ LOOP:
             EDIT part3 = messageParts[2]
             CAST part3 VEC3
             fe3d:model_set_position(skelID, part3.x, part3.y, part3.z)
+            EDIT tagID = misc:string_concat(part2, "_tag")
+            INCR part3.y 3.5
+            fe3d:billboard_set_position(tagID, part3.x, part3.y, part3.z)
             CAST part3 STR
         ELIF part1 IS "player_skeleton_rotation":
             EDIT part3 = messageParts[2]
