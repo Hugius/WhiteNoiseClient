@@ -1,18 +1,18 @@
-45 35
+24 46
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST STR username = fe3d:client_get_username()
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunfire1ID = "player_gunfire1"
+CONST STR gunfire2ID = "player_gunfire2"
 
 /// Non-constants
 STR message = ""
-VEC3 position = [0.0 0.0 0.0]
-VEC3 rotation = [0.0 0.0 0.0]
 
 /// Send gun position to server
-EDIT position = _multiplayerGunPosition
+VEC3 position = _multiplayerGunPosition
 DECR position.y _cameraHeightOffset
 CAST position STR
 EDIT message = misc:string_concat("forward:player_gun_position:", username)
@@ -20,18 +20,16 @@ EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, position)
-CAST position VEC3
 fe3d:client_send_udp_message(message)
 
 /// Send gun rotation to server
-EDIT rotation = _multiplayerGunfirePosition
+VEC3 rotation = fe3d:model_get_rotation(gunID)
 CAST rotation STR
 EDIT message = misc:string_concat("forward:player_gun_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
-CAST rotation VEC3
 fe3d:client_send_udp_message(message)
 
 /// Send gun visibility to server
@@ -45,24 +43,31 @@ EDIT message = misc:string_concat(message, isVisible)
 fe3d:client_send_udp_message(message)
 
 /// Send gunfire position to server
-EDIT position = _multiplayerGunfirePosition
-DECR position.y _cameraHeightOffset
-CAST position STR
+VEC3 position1 = _multiplayerGunfirePosition
+VEC3 position2 = _multiplayerGunfirePosition
+DECR position1.y _cameraHeightOffset
+DECR position2.y _cameraHeightOffset
+CAST position1 STR
+CAST position2 STR
 EDIT message = misc:string_concat("forward:player_gunfire_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, position)
-CAST position VEC3
+EDIT message = misc:string_concat(message, position1)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, position2)
 fe3d:client_send_udp_message(message)
 
 /// Send gunfire rotation to server
-EDIT rotation = _multiplayerGunfireRotation
-CAST rotation STR
+VEC3 rotation1 = fe3d:billboard_get_rotation(gunfire1ID)
+VEC3 rotation2 = fe3d:billboard_get_rotation(gunfire2ID)
+CAST rotation1 STR
+CAST rotation2 STR
 EDIT message = misc:string_concat("forward:player_gunfire_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, _equippedGunType)
 EDIT message = misc:string_concat(message, ":")
-EDIT message = misc:string_concat(message, rotation)
-CAST rotation VEC3
+EDIT message = misc:string_concat(message, rotation1)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, rotation2)
 fe3d:client_send_udp_message(message)

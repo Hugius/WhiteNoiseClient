@@ -1,20 +1,23 @@
-77 42
+54 9
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST STR skelID = "player_skeleton"
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
-CONST STR gunfireID = "player_gunfire"
+CONST STR gunfire1ID = "player_gunfire1"
+CONST STR gunfire2ID = "player_gunfire2"
 CONST DEC yaw = fe3d:camera_get_yaw()
 
-/// Update gun position
+/// Non-constants
 VEC3 camPos = fe3d:camera_get_position()
+
+/// Update gun position
 VEC3 gunOffset = [0.0 0.0 0.0]
-EDIT gunOffset.x = _gunDistance
+EDIT gunOffset.x = _gunDataDistance[_equippedGunIndex]
 EDIT gunOffset.y = _gunDataHeight[_equippedGunIndex]
+EDIT gunOffset.z = _gunDataDistance[_equippedGunIndex]
 INCR gunOffset.y _gunOffsetY
-EDIT gunOffset.z = _gunDistance
 DEC gunYaw = yaw
 INCR gunYaw _gunOffsetX
 DEC cosGunYaw = math:cos(gunYaw)
@@ -28,20 +31,25 @@ fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
 
 /// Update gunfire position
 VEC3 gunfireOffset = gunOffset
-INCR gunfireOffset.x 0.4
-INCR gunfireOffset.y 0.1
-INCR gunfireOffset.z 0.4
+INCR gunfireOffset.x _gunfireDataDistance[_equippedGunIndex]
+INCR gunfireOffset.y _gunfireDataHeight[_equippedGunIndex]
+INCR gunfireOffset.z _gunfireDataDistance[_equippedGunIndex]
 DEC gunfireYaw = yaw
 INCR gunfireYaw _gunOffsetX
-DECR gunfireYaw 7.5
+DEC adsPercentage = _gunOffsetX
+DIV adsPercentage _defaultGunOffsetX
+DEC gunfireOffsetX = _gunfireDataOffsetX[_equippedGunIndex]
+MUL gunfireOffsetX adsPercentage
+DECR gunfireYaw gunfireOffsetX
 DEC cosGunfireYaw = math:cos(gunfireYaw)
 DEC sinGunfireYaw = math:sin(gunfireYaw)
-VEC3 finalGunfireOffset = gunOffset
+VEC3 finalGunfireOffset = gunfireOffset
 MUL finalGunfireOffset.x cosGunfireYaw
 MUL finalGunfireOffset.z sinGunfireYaw
 VEC3 gunfirePos = camPos
 INCR gunfirePos finalGunfireOffset
-fe3d:billboard_set_position(gunfireID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
+fe3d:billboard_set_position(gunfire1ID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
+fe3d:billboard_set_position(gunfire2ID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
 
 /// Update skeleton position
 VEC3 skelPos = camPos
@@ -58,11 +66,11 @@ fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
 /// Update gunfire rotation
 VEC3 gunfireRot = gunRot
 DECR gunfireRot.y 90.0
-fe3d:billboard_set_rotation(gunfireID, 0.0, gunfireRot.y, 0.0)
+fe3d:billboard_set_rotation(gunfire1ID, 0.0, gunfireRot.y, 45.0)
+fe3d:billboard_set_rotation(gunfire2ID, 0.0, gunfireRot.y, -45.0)
 
 /// Update skeleton rotation
-VEC3 skelRot = gunRot
-fe3d:model_set_rotation(skelID, 0.0, skelRot.y, 0.0)
+fe3d:model_set_rotation(skelID, 0.0, gunRot.y, 0.0)
 
 /// Revert eye offset
 fe3d:camera_follow_z(_skeletonEyeOffset)
@@ -70,10 +78,7 @@ fe3d:camera_follow_z(_skeletonEyeOffset)
 /// Save multiplayer world positions
 EDIT camPos = fe3d:camera_get_position()
 EDIT _multiplayerSkeletonPosition = camPos
-EDIT _multiplayerSkeletonRotation = skelRot
 EDIT _multiplayerGunPosition = camPos
 INCR _multiplayerGunPosition finalGunOffset
-EDIT _multiplayerGunRotation = gunRot
 EDIT _multiplayerGunfirePosition = camPos
 INCR _multiplayerGunfirePosition finalGunfireOffset
-EDIT _multiplayerGunfireRotation = gunfireRot

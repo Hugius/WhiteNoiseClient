@@ -1,4 +1,4 @@
-24 44
+24 39
 META script_type_update
 META script_execution_waiting
 
@@ -23,7 +23,7 @@ EDIT message = misc:string_concat(message, position)
 fe3d:client_send_udp_message(message)
 
 /// Send skeleton rotation to server
-VEC3 rotation = _multiplayerSkeletonRotation
+VEC3 rotation = fe3d:model_get_rotation(skelID)
 CAST rotation STR
 EDIT message = misc:string_concat("forward:player_skeleton_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
