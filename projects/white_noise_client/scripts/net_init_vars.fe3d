@@ -1,4 +1,4 @@
-3 32
+10 25
 META script_type_init
 META script_execution_waiting
 
@@ -8,4 +8,5 @@ GLOB LIST _receivedMessages = {}
 
 GLOB LIST _playerMainMessages = {}
 GLOB LIST _playerMoveMessages = {}
-GLOB LIST _playerGunMessages = {}
+GLOB LIST _playerGunMainMessages = {}
+GLOB LIST _playerGunEventMessages = {}

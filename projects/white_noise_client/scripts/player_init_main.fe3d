@@ -1,4 +1,4 @@
-12 62
+19 49
 META script_type_update
 META script_execution_waiting
 
@@ -16,6 +16,9 @@ fe3d:model_place("player_m1911", "m1911", 0.0, 0.0, 0.0)
 fe3d:model_place("player_ak47", "ak47", 0.0, 0.0, 0.0)
 fe3d:model_set_visible("player_m1911", <false>)
 fe3d:model_set_visible("player_ak47", <false>)
+
+/// Billboards
+fe3d:billboard_place("player_gunfire", "gunfire", 0.0, 0.0, 0.0)
 
 /// Sounds
 fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)

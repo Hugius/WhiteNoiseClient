@@ -1,4 +1,4 @@
-4 25
+49 52
 META script_type_update
 META script_execution_waiting
 
@@ -13,6 +13,7 @@ STR tagID = ""
 STR skelID = ""
 STR m1911ID = ""
 STR ak47ID = ""
+STR gunfireID = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("_playerMainMessages")
 INT usernameLength = 0
@@ -30,19 +31,24 @@ LOOP:
         EDIT skelID = misc:string_concat(username, "_skeleton")
         EDIT m1911ID = misc:string_concat(username, "_m1911")
         EDIT ak47ID = misc:string_concat(username, "_ak47")
+        EDIT gunfireID = misc:string_concat(username, "gunfire")
         IF stringParts[0] IS "player_join":
-            EDIT tagWidth = charWidth
-            CAST usernameLength DEC
-            MUL tagWidth usernameLength
-            CAST usernameLength INT
-            fe3d:billboard_place(tagID, "playertag", 0.0, 3.5, 0.0)
-            fe3d:billboard_set_text(tagID, username)
-            fe3d:billboard_set_size(tagID, tagWidth, charHeight)
+            /// Skeleton + guns
             fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
             fe3d:model_place(m1911ID, "m1911", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(m1911ID, <false>)
             fe3d:model_place(ak47ID, "ak47", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(ak47ID, <false>)
+            /// Playertag
+            EDIT tagWidth = charWidth
+            CAST usernameLength DEC
+            MUL tagWidth usernameLength
+            CAST usernameLength INT
+            fe3d:billboard_place(tagID, "tag", 0.0, 0.0, 0.0)
+            fe3d:billboard_set_text(tagID, username)
+            fe3d:billboard_set_size(tagID, tagWidth, charHeight)
+            /// Gunfire
+            fe3d:billboard_place(gunfireID, "gunfire", 0.0, 0, 0.0)
         ELIF stringParts[0] IS "player_leave":
             fe3d:billboard_delete(tagID)
             fe3d:model_delete(skelID)

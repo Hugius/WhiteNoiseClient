@@ -1,11 +1,12 @@
-38 48
+7 20
 META script_type_update
 META script_execution_waiting
 
 /// Clear classified messages
 EDIT _playerMainMessages = {}
 EDIT _playerMoveMessages = {}
-EDIT _playerGunMessages = {}
+EDIT _playerGunMainMessages = {}
+EDIT _playerGunEventMessages = {}
 
 /// Classify received messages
 LIST stringParts = {}
@@ -40,21 +41,25 @@ LOOP:
     ELIF stringParts[0] IS "player_skeleton_arms_speed":
         PUSH _playerMoveMessages message
     ELIF stringParts[0] IS "player_gun_position":
-        PUSH _playerGunMessages message
+        PUSH _playerGunMainMessages message
     ELIF stringParts[0] IS "player_gun_rotation":
-        PUSH _playerGunMessages message
+        PUSH _playerGunMainMessages message
     ELIF stringParts[0] IS "player_gun_visibility":
-        PUSH _playerGunMessages message
+        PUSH _playerGunMainMessages message
+    ELIF stringParts[0] IS "player_gunfire_position":
+        PUSH _playerGunMainMessages message
+    ELIF stringParts[0] IS "player_gunfire_rotation":
+        PUSH _playerGunMainMessages message
     ELIF stringParts[0] IS "player_gun_equip":
-        PUSH _playerGunMessages message
+        PUSH _playerGunEventMessages message
     ELIF stringParts[0] IS "player_gun_unequip":
-        PUSH _playerGunMessages message
+        PUSH _playerGunEventMessages message
     ELIF stringParts[0] IS "player_gun_ads":
-        PUSH _playerGunMessages message
+        PUSH _playerGunEventMessages message
     ELIF stringParts[0] IS "player_gun_shoot":
-        PUSH _playerGunMessages message
+        PUSH _playerGunEventMessages message
     ELIF stringParts[0] IS "player_gun_reload":
-        PUSH _playerGunMessages message
+        PUSH _playerGunEventMessages message
     ELSE:
         EDIT log = misc:string_concat("Received unknown message: ", message)
         fe3d:print(log)

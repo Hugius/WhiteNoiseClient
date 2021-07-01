@@ -1,4 +1,4 @@
-42 37
+32 37
 META script_type_init
 META script_execution_waiting
 
@@ -28,7 +28,11 @@ GLOB CONST DEC _pitchSpeed = 2.5
 /// Non-constants
 GLOB STR _equippedGunType = "m1911"
 GLOB VEC3 _multiplayerSkeletonPosition = [0.0 0.0 0.0]
+GLOB VEC3 _multiplayerSkeletonRotation = [0.0 0.0 0.0]
 GLOB VEC3 _multiplayerGunPosition = [0.0 0.0 0.0]
+GLOB VEC3 _multiplayerGunRotation = [0.0 0.0 0.0]
+GLOB VEC3 _multiplayerGunfirePosition = [0.0 0.0 0.0]
+GLOB VEC3 _multiplayerGunfireRotation = [0.0 0.0 0.0]
 GLOB DEC _gunOffsetX = _defaultGunOffsetX
 GLOB DEC _gunOffsetY = _unequippedGunOffsetY
 GLOB DEC _cameraHeightOffset = 0.0

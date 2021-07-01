@@ -1,0 +1,79 @@
+77 42
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST STR skelID = "player_skeleton"
+CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunfireID = "player_gunfire"
+CONST DEC yaw = fe3d:camera_get_yaw()
+
+/// Update gun position
+VEC3 camPos = fe3d:camera_get_position()
+VEC3 gunOffset = [0.0 0.0 0.0]
+EDIT gunOffset.x = _gunDistance
+EDIT gunOffset.y = _gunDataHeight[_equippedGunIndex]
+INCR gunOffset.y _gunOffsetY
+EDIT gunOffset.z = _gunDistance
+DEC gunYaw = yaw
+INCR gunYaw _gunOffsetX
+DEC cosGunYaw = math:cos(gunYaw)
+DEC sinGunYaw = math:sin(gunYaw)
+VEC3 finalGunOffset = gunOffset
+MUL finalGunOffset.x cosGunYaw
+MUL finalGunOffset.z sinGunYaw
+VEC3 gunPos = camPos
+INCR gunPos finalGunOffset
+fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
+
+/// Update gunfire position
+VEC3 gunfireOffset = gunOffset
+INCR gunfireOffset.x 0.4
+INCR gunfireOffset.y 0.1
+INCR gunfireOffset.z 0.4
+DEC gunfireYaw = yaw
+INCR gunfireYaw _gunOffsetX
+DECR gunfireYaw 7.5
+DEC cosGunfireYaw = math:cos(gunfireYaw)
+DEC sinGunfireYaw = math:sin(gunfireYaw)
+VEC3 finalGunfireOffset = gunOffset
+MUL finalGunfireOffset.x cosGunfireYaw
+MUL finalGunfireOffset.z sinGunfireYaw
+VEC3 gunfirePos = camPos
+INCR gunfirePos finalGunfireOffset
+fe3d:billboard_set_position(gunfireID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
+
+/// Update skeleton position
+VEC3 skelPos = camPos
+EDIT skelPos.y = _cameraHeightOffset
+fe3d:model_set_position(skelID, skelPos.x, skelPos.y, skelPos.z)
+
+/// Update gun rotation
+VEC3 gunRot = fe3d:model_get_rotation(gunID)
+EDIT gunRot.y = yaw
+NEG gunRot.y
+INCR gunRot.y 90.0
+fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
+
+/// Update gunfire rotation
+VEC3 gunfireRot = gunRot
+DECR gunfireRot.y 90.0
+fe3d:billboard_set_rotation(gunfireID, 0.0, gunfireRot.y, 0.0)
+
+/// Update skeleton rotation
+VEC3 skelRot = gunRot
+fe3d:model_set_rotation(skelID, 0.0, skelRot.y, 0.0)
+
+/// Revert eye offset
+fe3d:camera_follow_z(_skeletonEyeOffset)
+
+/// Save multiplayer world positions
+EDIT camPos = fe3d:camera_get_position()
+EDIT _multiplayerSkeletonPosition = camPos
+EDIT _multiplayerSkeletonRotation = skelRot
+EDIT _multiplayerGunPosition = camPos
+INCR _multiplayerGunPosition finalGunOffset
+EDIT _multiplayerGunRotation = gunRot
+EDIT _multiplayerGunfirePosition = camPos
+INCR _multiplayerGunfirePosition finalGunfireOffset
+EDIT _multiplayerGunfireRotation = gunfireRot

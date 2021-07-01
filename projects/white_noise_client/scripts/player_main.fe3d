@@ -1,4 +1,4 @@
-22 24
+16 20
 META script_type_update
 META script_execution_waiting
 
@@ -15,6 +15,7 @@ IF _isSpawned IS <false> AND sPressed IS <true>:
 IF _isSpawned IS <true>:
     EXEC player_camera
     EXEC player_move
+    EXEC player_eyes
     EXEC player_equip
     EXEC player_ads
     EXEC player_shoot
@@ -29,4 +30,5 @@ EXEC net_receive
 EXEC net_classify
 EXEC net_player_main
 EXEC net_player_skeleton
-EXEC net_player_gun
+EXEC net_player_gun_main
+EXEC net_player_gun_event
