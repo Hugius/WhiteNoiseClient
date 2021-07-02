@@ -1,4 +1,4 @@
-43 49
+34 50
 META script_type_update
 META script_execution_waiting
 
@@ -27,16 +27,13 @@ BOOL isFading = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
-    /// Extract message
     EDIT message = _playerMoveMessages[index]
     EDIT rejectMessage = misc:string_concat("reject:", message)
     EDIT messageParts = misc:string_split(message, ":")
-    /// Extract data
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
     EDIT skelID = misc:string_concat(part2, "_skeleton")
     EDIT isJoined = fe3d:model_is_existing(skelID)
-    /// Must be joined first
     IF isJoined IS <true>:
         IF part1 IS "player_skeleton_position":
             EDIT part3 = messageParts[2]

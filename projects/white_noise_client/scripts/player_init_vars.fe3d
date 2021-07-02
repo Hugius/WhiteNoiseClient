@@ -1,4 +1,4 @@
-7 41
+9 47
 META script_type_init
 META script_execution_waiting
 
@@ -7,9 +7,9 @@ GLOB CONST LIST _gunDataDistance = {1.3, 0.0}
 GLOB CONST LIST _gunDataHeight = {-0.365, 0.0}
 GLOB CONST LIST _gunDataSemi = {<true>, <false>}
 GLOB CONST LIST _gunfireDataHeight = {0.1, 0.0}
-GLOB CONST LIST _gunfireDataDistance = {0.475, 0.0}
-GLOB CONST LIST _gunfireDataDistanceAds = {0.5, 0.0}
-GLOB CONST LIST _gunfireDataOffset = {6.25, 0.0}
+GLOB CONST LIST _gunfireDataDistance = {0.5, 0.0}
+GLOB CONST LIST _gunfireDataDistanceAds = {0.525, 0.0}
+GLOB CONST LIST _gunfireDataOffset = {6.5, 0.0}
 GLOB CONST LIST _gunfireDataOffsetAds = {0.2, 0.0}
 GLOB CONST DEC _movementAcceleration = 0.001
 GLOB CONST DEC _maxMovementSpeed = 0.02

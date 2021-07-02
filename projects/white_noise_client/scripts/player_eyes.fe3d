@@ -1,4 +1,4 @@
-35 12
+68 41
 META script_type_update
 META script_execution_waiting
 
@@ -67,8 +67,8 @@ fe3d:model_set_rotation(gunID, gunRot.x, gunRot.y, gunRot.z)
 /// Update gunfire rotation
 VEC3 gunfireRot = gunRot
 DECR gunfireRot.y 90.0
-fe3d:billboard_set_rotation(gunfire1ID, 0.0, gunfireRot.y, 45.0)
-fe3d:billboard_set_rotation(gunfire2ID, 0.0, gunfireRot.y, -45.0)
+fe3d:billboard_set_rotation(gunfire1ID, 5.0, gunfireRot.y, 45.0)
+fe3d:billboard_set_rotation(gunfire2ID, 5.0, gunfireRot.y, -45.0)
 
 /// Update skeleton rotation
 fe3d:model_set_rotation(skelID, 0.0, gunRot.y, 0.0)

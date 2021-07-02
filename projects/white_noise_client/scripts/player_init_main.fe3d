@@ -1,8 +1,8 @@
-20 37
+3 10
 META script_type_update
 META script_execution_waiting
 
-/// First person camera
+/// Camera
 fe3d:camera_set_position(0.0, _defaultCameraHeight, 0.0)
 fe3d:camera_set_fov(_defaultFov)
 fe3d:camera_set_yaw(0.0)
