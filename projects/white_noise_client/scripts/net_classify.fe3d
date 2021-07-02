@@ -1,4 +1,4 @@
-7 20
+51 42
 META script_type_update
 META script_execution_waiting
 
@@ -49,6 +49,8 @@ LOOP:
     ELIF stringParts[0] IS "player_gunfire_position":
         PUSH _playerGunMainMessages message
     ELIF stringParts[0] IS "player_gunfire_rotation":
+        PUSH _playerGunMainMessages message
+    ELIF stringParts[0] IS "player_gunfire_visibility":
         PUSH _playerGunMainMessages message
     ELIF stringParts[0] IS "player_gun_equip":
         PUSH _playerGunEventMessages message

@@ -1,4 +1,4 @@
-54 9
+35 12
 META script_type_update
 META script_execution_waiting
 
@@ -31,16 +31,17 @@ fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
 
 /// Update gunfire position
 VEC3 gunfireOffset = gunOffset
-INCR gunfireOffset.x _gunfireDataDistance[_equippedGunIndex]
 INCR gunfireOffset.y _gunfireDataHeight[_equippedGunIndex]
-INCR gunfireOffset.z _gunfireDataDistance[_equippedGunIndex]
 DEC gunfireYaw = yaw
 INCR gunfireYaw _gunOffsetX
-DEC adsPercentage = _gunOffsetX
-DIV adsPercentage _defaultGunOffsetX
-DEC gunfireOffsetX = _gunfireDataOffsetX[_equippedGunIndex]
-MUL gunfireOffsetX adsPercentage
-DECR gunfireYaw gunfireOffsetX
+IF _isGunAds IS <true>:
+    INCR gunfireOffset.x _gunfireDataDistanceAds[_equippedGunIndex]
+    INCR gunfireOffset.z _gunfireDataDistanceAds[_equippedGunIndex]
+    DECR gunfireYaw _gunfireDataOffsetAds[_equippedGunIndex]
+ELSE:
+    INCR gunfireOffset.x _gunfireDataDistance[_equippedGunIndex]
+    INCR gunfireOffset.z _gunfireDataDistance[_equippedGunIndex]
+    DECR gunfireYaw _gunfireDataOffset[_equippedGunIndex]
 DEC cosGunfireYaw = math:cos(gunfireYaw)
 DEC sinGunfireYaw = math:sin(gunfireYaw)
 VEC3 finalGunfireOffset = gunfireOffset

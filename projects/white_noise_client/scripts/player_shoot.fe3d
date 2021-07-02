@@ -1,4 +1,4 @@
-6 18
+31 38
 META script_type_update
 META script_execution_waiting
 
@@ -17,8 +17,11 @@ CONST BOOL mustFireAuto = (isSemi IS <false> AND lmbDown IS <true>)
 CONST BOOL isGunShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
 
 /// Update shooting
-///fe3d:billboard_set_visible(gunfire1ID, <false>)
-///fe3d:billboard_set_visible(gunfire2ID, <false>)
+IF _gunfireTickCount IS _maxGunfireTickCount:
+    fe3d:billboard_set_visible(gunfire1ID, <false>)
+    fe3d:billboard_set_visible(gunfire2ID, <false>)
+ELSE:
+    INCR _gunfireTickCount 1
 IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
     IF _isGunEquipped IS <true>:
         IF mustFireSemi IS <true> OR mustFireAuto IS <true>:
@@ -27,6 +30,7 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
             fe3d:sound_play_forced(gunShootID, 0, 0)
             fe3d:billboard_set_visible(gunfire1ID, <true>)
             fe3d:billboard_set_visible(gunfire2ID, <true>)
+            EDIT _gunfireTickCount = 0
             /// Send shoot message to server
             STR message = misc:string_concat("forward:player_gun_shoot:", username)
             EDIT message = misc:string_concat(message, ":")
