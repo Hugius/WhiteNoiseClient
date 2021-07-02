@@ -1,4 +1,4 @@
-19 4
+21 20
 META script_type_update
 META script_execution_waiting
 
@@ -16,23 +16,34 @@ CONST BOOL mustFireSemi = (isSemi IS <true> AND lmbPressed IS <true>)
 CONST BOOL mustFireAuto = (isSemi IS <false> AND lmbDown IS <true>)
 CONST BOOL isGunShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
 
-/// Update shooting
+/// Non-constants
+STR skelAdsID = misc:string_concat("skeleton_", _equippedGunType)
+EDIT skelAdsID = misc:string_concat(skelAdsID, "_ads")
+BOOL isSkelAdsStarted = fe3d:model_is_animation_started(skelID, skelAdsID)
+BOOL isSkelAdsPaused = <false>
+IF isSkelAdsStarted IS <true>:
+    EDIT isSkelAdsPaused = fe3d:model_is_animation_paused(skelID, skelAdsID)
+
+/// Update gunfire
 IF _gunfireTickCount IS _maxGunfireTickCount:
     fe3d:billboard_set_visible(gunfire1ID, <false>)
     fe3d:billboard_set_visible(gunfire2ID, <false>)
 ELSE:
     INCR _gunfireTickCount 1
+
+/// Update shooting
 IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
     IF _isGunEquipped IS <true>:
-        IF mustFireSemi IS <true> OR mustFireAuto IS <true>:
-            /// Fire a bullet
-            fe3d:model_start_animation(gunID, gunShootID, 0)
-            fe3d:sound_play_forced(gunShootID, 0, 0)
-            fe3d:billboard_set_visible(gunfire1ID, <true>)
-            fe3d:billboard_set_visible(gunfire2ID, <true>)
-            EDIT _gunfireTickCount = 0
-            /// Send shoot message to server
-            STR message = misc:string_concat("forward:player_gun_shoot:", username)
-            EDIT message = misc:string_concat(message, ":")
-            EDIT message = misc:string_concat(message, _equippedGunType)
-            fe3d:client_send_tcp_message(message)
+        IF isSkelAdsStarted IS <false> OR isSkelAdsPaused IS <true>:
+            IF mustFireSemi IS <true> OR mustFireAuto IS <true>:
+                /// Fire a bullet
+                fe3d:model_start_animation(gunID, gunShootID, 0)
+                fe3d:sound_play_forced(gunShootID, 0, 0)
+                fe3d:billboard_set_visible(gunfire1ID, <true>)
+                fe3d:billboard_set_visible(gunfire2ID, <true>)
+                EDIT _gunfireTickCount = 0
+                /// Send shoot message to server
+                STR message = misc:string_concat("forward:player_gun_shoot:", username)
+                EDIT message = misc:string_concat(message, ":")
+                EDIT message = misc:string_concat(message, _equippedGunType)
+                fe3d:client_send_tcp_message(message)
