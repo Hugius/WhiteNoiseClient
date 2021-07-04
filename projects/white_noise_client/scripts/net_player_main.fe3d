@@ -1,4 +1,4 @@
-58 42
+51 38
 META script_type_update
 META script_execution_waiting
 
@@ -12,7 +12,6 @@ STR username = ""
 STR tagID = ""
 STR skelID = ""
 STR m1911ID = ""
-STR ak47ID = ""
 STR gunfire1ID = ""
 STR gunfire2ID = ""
 INT index = 0
@@ -31,7 +30,6 @@ LOOP:
         EDIT tagID = misc:string_concat(username, "_tag")
         EDIT skelID = misc:string_concat(username, "_skeleton")
         EDIT m1911ID = misc:string_concat(username, "_m1911")
-        EDIT ak47ID = misc:string_concat(username, "_ak47")
         EDIT gunfire1ID = misc:string_concat(username, "_gunfire1")
         EDIT gunfire2ID = misc:string_concat(username, "_gunfire2")
         IF stringParts[0] IS "player_join":
@@ -39,8 +37,6 @@ LOOP:
             fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
             fe3d:model_place(m1911ID, "m1911", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(m1911ID, <false>)
-            fe3d:model_place(ak47ID, "ak47", 0.0, 0.0, 0.0)
-            fe3d:model_set_visible(ak47ID, <false>)
             /// Playertag
             EDIT tagWidth = charWidth
             CAST usernameLength DEC
@@ -55,7 +51,6 @@ LOOP:
         ELIF stringParts[0] IS "player_leave":
             fe3d:model_delete(skelID)
             fe3d:model_delete(m1911ID)
-            fe3d:model_delete(ak47ID)
             fe3d:billboard_delete(tagID)
             fe3d:billboard_delete(gunfire1ID)
             fe3d:billboard_delete(gunfire2ID)

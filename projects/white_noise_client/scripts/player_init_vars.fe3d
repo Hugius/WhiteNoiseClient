@@ -1,4 +1,4 @@
-9 47
+13 40
 META script_type_init
 META script_execution_waiting
 
@@ -12,7 +12,7 @@ GLOB CONST LIST _gunfireDataDistanceAds = {0.525, 0.0}
 GLOB CONST LIST _gunfireDataOffset = {6.5, 0.0}
 GLOB CONST LIST _gunfireDataOffsetAds = {0.2, 0.0}
 GLOB CONST DEC _movementAcceleration = 0.001
-GLOB CONST DEC _maxMovementSpeed = 0.02
+GLOB CONST DEC _maxMovementSpeed = 0.015
 GLOB CONST DEC _movementSlowingFactor = 0.925
 GLOB CONST DEC _sprintFactor = 2.0
 GLOB CONST DEC _skeletonEyeOffset = 0.3
