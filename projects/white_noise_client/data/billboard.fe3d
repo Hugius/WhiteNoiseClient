@@ -1,2 +1,2 @@
-@gunfire 0.5 0.5 1 1 1 0 0 game_assets\textures\billboard_maps\fire.png 1 1 1 ? ? 0 0 0 0 0.75
-@tag 1 1 1 1 1 0 1 ? 1 0 0 game_assets\fonts\font.ttf text 0 0 0 0 1
+@gunfire 0.5 0.5 1 1 1 0 0 game_assets\textures\billboard_maps\fire.png 1 1 1 ? ? 0 0 0 0 0.5 1
+@tag 1 1 1 1 1 0 1 ? 1 0 0 game_assets\fonts\font.ttf text 0 0 0 0 1 1
