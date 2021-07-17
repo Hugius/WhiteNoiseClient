@@ -1,4 +1,4 @@
-21 55
+9 41
 META script_type_update
 META script_execution_waiting
 
@@ -7,7 +7,8 @@ fe3d:camera_set_position(0.0, _defaultCameraHeight, 0.0)
 fe3d:camera_set_fov(_defaultFov)
 fe3d:camera_set_yaw(0.0)
 fe3d:camera_set_pitch(0.0)
-fe3d:camera_set_max_pitch(48.0)
+fe3d:camera_set_min_first_person_pitch(50.0)
+fe3d:camera_set_max_first_person_pitch(50.0)
 fe3d:camera_set_mouse_sensitivity(0.02)
 
 /// Models
