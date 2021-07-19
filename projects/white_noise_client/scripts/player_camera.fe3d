@@ -1,4 +1,4 @@
-50 38
+36 49
 META script_type_update
 META script_execution_waiting
 
@@ -24,7 +24,6 @@ fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
 
 /// Update camera pitch locking
 IF _isGunEquipped IS <true> OR _isGunEquipping IS <true>:
-    fe3d:camera_lock_pitch()
     DEC pitch = fe3d:camera_get_pitch()
     DEC absPitch = math:abs(pitch)
     DEC negSpeed = _pitchSpeed
@@ -36,8 +35,11 @@ IF _isGunEquipped IS <true> OR _isGunEquipping IS <true>:
     ELIF pitch LESS negSpeed:
         INCR pitch _pitchSpeed
     fe3d:camera_set_pitch(pitch)
+    fe3d:camera_set_min_first_person_pitch(pitch)
+    fe3d:camera_set_max_first_person_pitch(pitch)
 ELSE:
-    fe3d:camera_unlock_pitch()
+    fe3d:camera_set_min_first_person_pitch(-50.0)
+    fe3d:camera_set_max_first_person_pitch(50.0)
 
 /// Update first-person view
 BOOL capsDown = fe3d:input_is_key_down("KEY_CAPSLOCK")
