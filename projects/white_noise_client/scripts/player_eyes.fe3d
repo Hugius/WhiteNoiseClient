@@ -1,10 +1,11 @@
-68 41
+6 37
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST STR skelID = "player_skeleton"
 CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunfireID = "player_gunfire"
 CONST STR gunfire1ID = "player_gunfire1"
 CONST STR gunfire2ID = "player_gunfire2"
 CONST DEC yaw = fe3d:camera_get_yaw()
@@ -51,6 +52,7 @@ VEC3 gunfirePos = camPos
 INCR gunfirePos finalGunfireOffset
 fe3d:billboard_set_position(gunfire1ID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
 fe3d:billboard_set_position(gunfire2ID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
+fe3d:light_set_position(gunfireID, gunfirePos.x, gunfirePos.y, gunfirePos.z)
 
 /// Update skeleton position
 VEC3 skelPos = camPos
