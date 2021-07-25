@@ -1,4 +1,4 @@
-23 68
+23 88
 META script_type_update
 META script_execution_waiting
 
@@ -22,4 +22,4 @@ fe3d:billboard_place("player_gunfire2", "gunfire", 0.0, 0.0, 0.0)
 fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)
 
 /// Lights
-fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 1.0, 0.85, 0.7, 10.0, 1.5)
+fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 1.0, 0.85, 0.7, 7.5)

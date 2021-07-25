@@ -1,4 +1,4 @@
-51 77
+50 70
 META script_type_update
 META script_execution_waiting
 
@@ -50,7 +50,7 @@ LOOP:
             /// Gunfire
             fe3d:billboard_place(gunfire1ID, "gunfire", 0.0, 0.0, 0.0)
             fe3d:billboard_place(gunfire2ID, "gunfire", 0.0, 0.0, 0.0)
-            fe3d:light_place(gunfireID, 0.0, 0.0, 0.0, 1.0, 0.85, 0.7, 5.0, 1.5)
+            fe3d:light_place(gunfireID,0.0,0.0,0.0,15.0,15.0,15.0,1.0,0.85,0.7,7.5)
         ELIF stringParts[0] IS "player_leave":
             fe3d:model_delete(skelID)
             fe3d:model_delete(m1911ID)

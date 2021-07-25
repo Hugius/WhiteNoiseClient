@@ -1,8 +1,9 @@
-12 45
+46 24
 META script_type_init
 META script_execution_waiting
 
 /// Constants
+GLOB CONST LIST _gunDataMagSize = {8, 30}
 GLOB CONST LIST _gunDataDistance = {1.3, 0.0}
 GLOB CONST LIST _gunDataHeight = {-0.365, 0.0}
 GLOB CONST LIST _gunDataSemi = {<true>, <false>}
@@ -44,6 +45,8 @@ GLOB DEC _movementSpeedZ = 0.0
 GLOB DEC _bobbingDirection = 1.0
 GLOB INT _equippedGunIndex = 0
 GLOB INT _gunfireTickCount = 0
+GLOB INT _bulletCount = 8
+GLOB INT _magCount = 2
 GLOB BOOL _isMoving = <false>
 GLOB BOOL _isSprinting = <false>
 GLOB BOOL _isGunAds = <false>

@@ -1,33 +1,36 @@
 SKY space @space
+MODEL pillar_1816718312 @pillar 5 0 -5 0 0 0 5 5 5 0 ?
 MODEL pillar_811990549 @pillar 5 0 -15 0 0 0 5 5 5 0 ?
-MODEL pillar_1464196205 @pillar 5 0 5 0 0 0 5 5 5 0 ?
 MODEL floor_1981910920 @floor 30 0 0 0 0 0 5 5 5 0 ?
+MODEL pillar_1464196205 @pillar 5 0 5 0 0 0 5 5 5 0 ?
 MODEL pillar_1225908574 @pillar -15 0 5 0 0 0 5 5 5 0 ?
 MODEL ceiling_738816877 @ceiling 20 5 0 0 0 0 5 5 5 0 ?
-MODEL pillar_1816718312 @pillar 5 0 -5 0 0 0 5 5 5 0 ?
 MODEL wall_814988933 @wall 20 0 5 0 90 0 5 5 5 0 ?
 MODEL ceiling_1691292244 @ceiling 0 5 -10 0 0 0 5 5 5 0 ?
 MODEL floor_831075311 @floor 10 0 0 0 0 0 5 5 5 0 ?
 MODEL floor_534479866 @floor 0 0 0 0 0 0 5 5 5 0 ?
 MODEL floor_305585930 @floor 0 0 10 0 0 0 5 5 5 0 ?
-MODEL pillar_851567318 @pillar 15 0 5 0 0 0 5 5 5 0 ?
 MODEL floor_1025211161 @floor 0 0 20 0 0 0 5 5 5 0 ?
+MODEL pillar_851567318 @pillar 15 0 5 0 0 0 5 5 5 0 ?
 MODEL wall_windowed_841158087 @wall_windowed -10 0 5 0 90 0 5 5 5 0 ?
 MODEL wall_windowed_414793229 @wall_windowed 10 0 5 0 90 0 5 5 5 0 ?
 MODEL wall_windowed_1078439459 @wall_windowed 5 0 10 0 0 0 5 5 5 0 ?
+MODEL lamp2_1012564088 @lamp2 0 5.06 -20 180 0 0 3.5 3.5 3.5 0 ?
 MODEL wall_windowed_804403028 @wall_windowed -5 0 10 0 0 0 5 5 5 0 ?
-MODEL lamp2_1012564088 @lamp2 0 5.06 0 180 0 0 3.5 3.5 3.5 0 ?
+MODEL wall_365822333 @wall 5 0 20 0 0 0 5 5 5 0 ?
 MODEL ceiling_1400826209 @ceiling 0 5 0 0 0 0 5 5 5 0 ?
 MODEL ceiling_985394576 @ceiling 0 5 10 0 0 0 5 5 5 0 ?
 MODEL ceiling_1858458459 @ceiling 0 5 -20 0 0 0 5 5 5 0 ?
 MODEL ceiling_1850801970 @ceiling 0 5 20 0 0 0 5 5 5 0 ?
+MODEL wall_851607043 @wall -5 0 -20 0 0 0 5 5 5 0 ?
 MODEL pillar_1750603125 @pillar -5 0 -15 0 0 0 5 5 5 0 ?
+MODEL wall_1746738204 @wall -20 0 5 0 90 0 5 5 5 0 ?
 MODEL floor_1198649679 @floor -20 0 0 0 0 0 5 5 5 0 ?
 MODEL wall_windowed_1390620698 @wall_windowed -5 0 -10 0 0 0 5 5 5 0 ?
 MODEL floor_384420838 @floor -10 0 0 0 0 0 5 5 5 0 ?
 MODEL wall_windowed_1812644776 @wall_windowed -10 0 -5 0 90 0 5 5 5 0 ?
-MODEL floor_926537073 @floor -30 0 0 0 0 0 5 5 5 0 ?
 MODEL floor_1991742904 @floor 0 0 -10 0 0 0 5 5 5 0 ?
+MODEL floor_926537073 @floor -30 0 0 0 0 0 5 5 5 0 ?
 MODEL floor_1653018962 @floor 20 0 0 0 0 0 5 5 5 0 ?
 MODEL wall_windowed_231185838 @wall_windowed 30 0 5 0 90 0 5 5 5 0 ?
 MODEL floor_466763176 @floor 0 0 -20 0 0 0 5 5 5 0 ?
@@ -48,15 +51,28 @@ MODEL wall_windowed_791725529 @wall_windowed 10 0 -5 0 90 0 5 5 5 0 ?
 MODEL ceiling_1904850671 @ceiling 0 5 30 0 0 0 5 5 5 0 ?
 MODEL pillar_2040933006 @pillar -15 0 -5 0 0 0 5 5 5 0 ?
 MODEL pillar_1088593736 @pillar 5 0 15 0 0 0 5 5 5 0 ?
-AMBIENT_LIGHT 1 1 1 0.05
+MODEL wall_1352991710 @wall -5 0 20 0 0 0 5 5 5 0 ?
+MODEL wall_windowed_1064299117 @wall_windowed -5 0 30 0 0 0 5 5 5 0 ?
+MODEL wall_windowed_1866421374 @wall_windowed 5 0 30 0 0 0 5 5 5 0 ?
+MODEL wall_2035848938 @wall -20 0 -5 0 90 0 5 5 5 0 ?
+MODEL wall_windowed_956780048 @wall_windowed -30 0 -5 0 90 0 5 5 5 0 ?
+MODEL wall_windowed_1358059617 @wall_windowed -30 0 5 0 90 0 5 5 5 0 ?
+MODEL wall_1046406362 @wall 20 0 -5 0 90 0 5 5 5 0 ?
+MODEL wall_windowed_475508914 @wall_windowed 30 0 -5 0 90 0 5 5 5 0 ?
+MODEL wall_371144507 @wall 5 0 -20 0 0 0 5 5 5 0 ?
+MODEL wall_windowed_1673764617 @wall_windowed -5 0 -30 0 0 0 5 5 5 0 ?
+MODEL wall_windowed_1071372073 @wall_windowed 5 0 -30 0 0 0 5 5 5 0 ?
+MODEL lamp1_1237540287 @lamp1 0 0 0 0 0 0 3.5 3.5 3.5 0 ?
+AMBIENT_LIGHT 1 1 1 0.1
 DIRECTIONAL_LIGHT 1000 1000 1000 0.937255 0.556863 0.219608 1 100 1
-POINT_LIGHT light_1079710537 0 2 0 5 5 10 1 1 1 10
+POINT_LIGHT light_1079710537 0 4 -20 10 10 15 0.501961 0.501961 1 2.5
+POINT_LIGHT light_800878447 0 3 0 10 10 10 1 1 1 5
 LOD_DISTANCE 10000
 SCENE_REFLECTION_HEIGHT 0
 EDITOR_SPEED 5
-EDITOR_POSITION 0.721599 2.86683 -20.3412
-EDITOR_YAW 90.8831
-EDITOR_PITCH -0.691065
+EDITOR_POSITION -0.499271 4.53349 10.5506
+EDITOR_YAW 259.152
+EDITOR_PITCH -8.86564
 GRAPHICS_SHADOWS 64 0.25 25.000000 25.000000 25.000000 0.000000 0.000000 0.000000 1 0 0
 GRAPHICS_MOTION_BLUR 0.25
 GRAPHICS_DOF 1 2 1

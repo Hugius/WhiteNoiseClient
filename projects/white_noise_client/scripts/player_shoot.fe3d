@@ -1,4 +1,4 @@
-30 4
+36 55
 META script_type_update
 META script_execution_waiting
 
@@ -35,7 +35,7 @@ ELSE:
 
 /// Update shooting
 IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
-    IF _isGunEquipped IS <true>:
+    IF _isGunEquipped IS <true> AND _bulletCount MORE 0:
         IF isSkelAdsStarted IS <false> OR isSkelAdsPaused IS <true>:
             IF mustFireSemi IS <true> OR mustFireAuto IS <true>:
                 /// Fire a bullet
@@ -45,6 +45,7 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
                 fe3d:billboard_set_visible(gunfire2ID, <true>)
                 fe3d:light_set_visible(gunfireID, <true>)
                 EDIT _gunfireTickCount = 0
+                DECR _bulletCount 1
                 /// Send shoot message to server
                 STR message = misc:string_concat("forward:player_gun_shoot:", username)
                 EDIT message = misc:string_concat(message, ":")
