@@ -1,4 +1,4 @@
-36 55
+47 37
 META script_type_update
 META script_execution_waiting
 
@@ -46,6 +46,9 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
                 fe3d:light_set_visible(gunfireID, <true>)
                 EDIT _gunfireTickCount = 0
                 DECR _bulletCount 1
+                CAST _bulletCount STR
+                fe3d:text_set_content("bullets", _bulletCount)
+                CAST _bulletCount INT
                 /// Send shoot message to server
                 STR message = misc:string_concat("forward:player_gun_shoot:", username)
                 EDIT message = misc:string_concat(message, ":")

@@ -1,6 +1,6 @@
 FE3D_PART light
 FE3D_DIFFUSE_MAP miscellaneous\lamp2_light.png
-FE3D_LIGHT_MAP miscellaneous\lamp2_light.png
+FE3D_EMISSION_MAP miscellaneous\lamp2_light.png
 FE3D_NORMAL_MAP miscellaneous\lamp2_light.png
 v 0.011080 0.097908 0.859450
 v 0.003222 0.099088 0.859488
