@@ -1,4 +1,4 @@
-36 49
+49 69
 META script_type_update
 META script_execution_waiting
 
@@ -42,11 +42,13 @@ ELSE:
     fe3d:camera_set_max_first_person_pitch(50.0)
 
 /// Update first-person view
+DEC currentYaw = fe3d:camera_get_yaw()
+DEC currentPitch = fe3d:camera_get_pitch()
 BOOL capsDown = fe3d:input_is_key_down("KEY_CAPSLOCK")
 BOOL isFirstPersonViewEnabled = fe3d:camera_is_first_person_view_enabled()
 IF capsDown IS <true>:
     IF isFirstPersonViewEnabled IS <false>:
-        fe3d:camera_enable_first_person_view()
+        fe3d:camera_enable_first_person_view(currentYaw, currentPitch)
         fe3d:cursor_set_visible(<false>)
 ELSE:
     IF isFirstPersonViewEnabled IS <true>:
