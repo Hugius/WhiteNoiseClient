@@ -1,4 +1,4 @@
-23 88
+33 48
 META script_type_update
 META script_execution_waiting
 
@@ -23,3 +23,13 @@ fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)
 
 /// Lights
 fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 1.0, 0.85, 0.7, 7.5)
+
+/// Images
+fe3d:image_place("crosshair", "crosshair.png", 0.0, 0.0, 0.0, 0.03, 0.05)
+fe3d:image_place("ammo", "ammo.png", -0.85, -0.85, 0.0, 0.25, 0.25)
+
+/// Text
+fe3d:text_place("bullets", "font.ttf", "8", -0.9, -0.8, 0.0, 0.03, 0.1)
+fe3d:text_place("slash", "font.ttf", "/", -0.85, -0.85, 0.0, 0.03, 0.1)
+fe3d:text_place("mags", "font.ttf", "16", -0.8, -0.9, 0.0, 0.06, 0.1)
+fe3d:text_place("ping", "font.ttf", "16", -0.925, 0.95, 0.0, 0.0, 0.0)

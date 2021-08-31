@@ -1,7 +1,19 @@
-5 55
+17 41
 META script_type_update
 META script_execution_waiting
 
-/// Crosshair visibility
+/// Crosshair
 BOOL isCrosshairVisible = (_isGunAds IS <false> AND _isGunEquipped IS <true>)
 fe3d:image_set_visible("crosshair", isCrosshairVisible)
+
+/// Ping
+BOOL interval = fe3d:time_interval(10)
+IF interval IS <true>:
+    INT ping = fe3d:client_get_ping_latency()
+    CAST ping STR
+    STR content = misc:string_concat(ping, "ms")
+    INT size = misc:string_get_size(content)
+    CAST size DEC
+    MUL size 0.03
+    fe3d:text_set_content("ping", content)
+    fe3d:text_set_size("ping", size, 0.1)
