@@ -1,4 +1,4 @@
-14 14
+52 17
 META script_type_update
 META script_execution_waiting
 
@@ -13,8 +13,6 @@ STR message = ""
 STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
-STR part3 = ""
-STR tagID = ""
 STR skelID = ""
 INT index = 0
 BOOL isJoined = <false>
@@ -33,20 +31,7 @@ LOOP:
     EDIT skelID = misc:string_concat(part2, "_skeleton")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
-        IF part1 IS "player_skeleton_position":
-            EDIT part3 = messageParts[2]
-            CAST part3 VEC3
-            fe3d:model_set_position(skelID, part3.x, part3.y, part3.z)
-            EDIT tagID = misc:string_concat(part2, "_tag")
-            INCR part3.y 3.5
-            fe3d:billboard_set_position(tagID, part3.x, part3.y, part3.z)
-            CAST part3 STR
-        ELIF part1 IS "player_skeleton_rotation":
-            EDIT part3 = messageParts[2]
-            CAST part3 VEC3
-            fe3d:model_set_rotation(skelID, part3.x, part3.y, part3.z)
-            CAST part3 STR
-        ELIF part1 IS "player_skeleton_legs_start":
+        IF part1 IS "player_skeleton_legs_start":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
             IF isStarted IS <false>:
                 fe3d:model_start_animation(skelID, legsID, -1)
@@ -62,13 +47,6 @@ LOOP:
                     fe3d:client_send_tcp_message(rejectMessage)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF part1 IS "player_skeleton_legs_speed":
-            EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
-            IF isStarted IS <true>:
-                EDIT part3 = messageParts[2]
-                CAST part3 DEC
-                fe3d:model_set_animation_speed(skelID, legsID, part3)
-                CAST part3 STR
         ELIF part1 IS "player_skeleton_arms_start":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
             IF isStarted IS <false>:
@@ -85,11 +63,4 @@ LOOP:
                     fe3d:client_send_tcp_message(rejectMessage)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF part1 IS "player_skeleton_arms_speed":
-            EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
-            IF isStarted IS <true>:
-                EDIT part3 = messageParts[2]
-                CAST part3 DEC
-                fe3d:model_set_animation_speed(skelID, armsID, part3)
-                CAST part3 STR
     INCR index 1

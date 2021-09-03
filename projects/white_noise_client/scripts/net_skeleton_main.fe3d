@@ -1,0 +1,62 @@
+19 24
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST STR legsID = "skeleton_walk_legs"
+CONST STR armsID = "skeleton_walk_arms"
+CONST INT maxIndex = misc:list_get_size("_playerMoveMessages")
+
+/// Non-constants
+LIST messageParts = {}
+STR message = ""
+STR rejectMessage = ""
+STR part1 = ""
+STR part2 = ""
+STR part3 = ""
+STR skelID = ""
+STR tagID = ""
+INT index = 0
+BOOL isJoined = <false>
+BOOL isStarted = <false>
+
+/// Handle player skeleton messages
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT message = _playerMoveMessages[index]
+    EDIT rejectMessage = misc:string_concat("reject:", message)
+    EDIT messageParts = misc:string_split(message, ":")
+    EDIT part1 = messageParts[0]
+    EDIT part2 = messageParts[1]
+    EDIT skelID = misc:string_concat(part2, "_skeleton")
+    EDIT isJoined = fe3d:model_is_existing(skelID)
+    IF isJoined IS <true>:
+        IF part1 IS "player_skeleton_position":
+            EDIT part3 = messageParts[2]
+            CAST part3 VEC3
+            fe3d:model_set_position(skelID, part3.x, part3.y, part3.z)
+            EDIT tagID = misc:string_concat(part2, "_tag")
+            INCR part3.y _tagHeight
+            fe3d:billboard_set_position(tagID, part3.x, part3.y, part3.z)
+            CAST part3 STR
+        ELIF part1 IS "player_skeleton_rotation":
+            EDIT part3 = messageParts[2]
+            CAST part3 VEC3
+            fe3d:model_set_rotation(skelID, part3.x, part3.y, part3.z)
+            CAST part3 STR
+        ELIF part1 IS "player_skeleton_legs_speed":
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
+            IF isStarted IS <true>:
+                EDIT part3 = messageParts[2]
+                CAST part3 DEC
+                fe3d:model_set_animation_speed(skelID, legsID, part3)
+                CAST part3 STR
+        ELIF part1 IS "player_skeleton_arms_speed":
+            EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
+            IF isStarted IS <true>:
+                EDIT part3 = messageParts[2]
+                CAST part3 DEC
+                fe3d:model_set_animation_speed(skelID, armsID, part3)
+                CAST part3 STR
+    INCR index 1

@@ -1,4 +1,4 @@
-38 32
+47 68
 META script_type_update
 META script_execution_waiting
 
@@ -46,8 +46,8 @@ LOOP:
             CAST usernameLength INT
             fe3d:billboard_place(tagID, "tag", 0.0, 0.0, 0.0)
             fe3d:billboard_set_text(tagID, username)
+            fe3d:billboard_set_position(tagID, 0.0, _tagHeight, 0.0)
             fe3d:billboard_set_size(tagID, tagWidth, charHeight)
-            fe3d:billboard_set_visible(tagID, <false>)
             /// Gunfire
             fe3d:billboard_place(gunfire1ID, "gunfire", 0.0, 0.0, 0.0)
             fe3d:billboard_place(gunfire2ID, "gunfire", 0.0, 0.0, 0.0)

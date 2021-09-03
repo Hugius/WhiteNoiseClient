@@ -1,4 +1,4 @@
-21 40
+29 31
 META script_type_init
 META script_execution_waiting
 
@@ -28,6 +28,7 @@ GLOB CONST DEC _bobbingSpeed = 0.005
 GLOB CONST DEC _maxBobbingOffset = 0.125
 GLOB CONST DEC _defaultCameraHeight = 3.0
 GLOB CONST DEC _pitchSpeed = 2.5
+GLOB CONST DEC _tagHeight = 3.5
 GLOB CONST INT _gunMagSize = 8
 GLOB CONST INT _maxGunfireTickCount = 5
 
