@@ -1,4 +1,4 @@
-33 48
+22 24
 META script_type_update
 META script_execution_waiting
 
@@ -11,18 +11,21 @@ fe3d:camera_set_mouse_sensitivity(0.02)
 
 /// Models
 fe3d:model_place("player_skeleton", "skeleton", 0.0, 0.0, 0.0)
-fe3d:model_place("player_m1911", "m1911", 0.0, 0.0, 0.0)
-fe3d:model_set_visible("player_m1911", <false>)
+fe3d:model_place("player_gun", "gun", 0.0, 0.0, 0.0)
+fe3d:model_set_visible("player_gun", <false>)
 
 /// Billboards
 fe3d:billboard_place("player_gunfire1", "gunfire", 0.0, 0.0, 0.0)
 fe3d:billboard_place("player_gunfire2", "gunfire", 0.0, 0.0, 0.0)
+fe3d:billboard_set_visible("player_gunfire1", <false>)
+fe3d:billboard_set_visible("player_gunfire2", <false>)
 
 /// Sounds
-fe3d:sound_place_2D("m1911_shoot", "m1911_shoot", 0.75)
+fe3d:sound_place_2D("gun_shoot", "gun_shoot", 0.75)
 
 /// Lights
 fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 1.0, 0.85, 0.7, 7.5)
+fe3d:light_set_visible("player_gunfire", <false>)
 
 /// Images
 fe3d:image_place("crosshair", "crosshair.png", 0.0, 0.0, 0.0, 0.03, 0.05)

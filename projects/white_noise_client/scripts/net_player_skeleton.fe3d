@@ -1,4 +1,4 @@
-34 50
+14 14
 META script_type_update
 META script_execution_waiting
 
@@ -14,8 +14,6 @@ STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
 STR part3 = ""
-STR part4 = ""
-STR part5 = ""
 STR tagID = ""
 STR skelID = ""
 INT index = 0

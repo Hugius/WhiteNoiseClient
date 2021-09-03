@@ -1,10 +1,10 @@
-6 37
+43 34
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST STR skelID = "player_skeleton"
-CONST STR gunID = misc:string_concat("player_", _equippedGunType)
+CONST STR gunID = "player_gun"
 CONST STR gunfireID = "player_gunfire"
 CONST STR gunfire1ID = "player_gunfire1"
 CONST STR gunfire2ID = "player_gunfire2"
@@ -15,9 +15,9 @@ VEC3 camPos = fe3d:camera_get_position()
 
 /// Update gun position
 VEC3 gunOffset = [0.0 0.0 0.0]
-EDIT gunOffset.x = _gunDataDistance[_equippedGunIndex]
-EDIT gunOffset.y = _gunDataHeight[_equippedGunIndex]
-EDIT gunOffset.z = _gunDataDistance[_equippedGunIndex]
+EDIT gunOffset.x = _gunDistance
+EDIT gunOffset.y = _gunHeight
+EDIT gunOffset.z = _gunDistance
 INCR gunOffset.y _gunOffsetY
 DEC gunYaw = yaw
 INCR gunYaw _gunOffsetX
@@ -32,17 +32,17 @@ fe3d:model_set_position(gunID, gunPos.x, gunPos.y, gunPos.z)
 
 /// Update gunfire position
 VEC3 gunfireOffset = gunOffset
-INCR gunfireOffset.y _gunfireDataHeight[_equippedGunIndex]
+INCR gunfireOffset.y _gunfireHeight
 DEC gunfireYaw = yaw
 INCR gunfireYaw _gunOffsetX
 IF _isGunAds IS <true>:
-    INCR gunfireOffset.x _gunfireDataDistanceAds[_equippedGunIndex]
-    INCR gunfireOffset.z _gunfireDataDistanceAds[_equippedGunIndex]
-    DECR gunfireYaw _gunfireDataOffsetAds[_equippedGunIndex]
+    INCR gunfireOffset.x _gunfireDistanceAds
+    INCR gunfireOffset.z _gunfireDistanceAds
+    DECR gunfireYaw _gunfireOffsetAds
 ELSE:
-    INCR gunfireOffset.x _gunfireDataDistance[_equippedGunIndex]
-    INCR gunfireOffset.z _gunfireDataDistance[_equippedGunIndex]
-    DECR gunfireYaw _gunfireDataOffset[_equippedGunIndex]
+    INCR gunfireOffset.x _gunfireDistance
+    INCR gunfireOffset.z _gunfireDistance
+    DECR gunfireYaw _gunfireOffset
 DEC cosGunfireYaw = math:cos(gunfireYaw)
 DEC sinGunfireYaw = math:sin(gunfireYaw)
 VEC3 finalGunfireOffset = gunfireOffset

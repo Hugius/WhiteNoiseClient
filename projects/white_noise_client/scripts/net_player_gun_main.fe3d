@@ -1,4 +1,4 @@
-61 22
+41 48
 META script_type_update
 META script_execution_waiting
 
@@ -13,7 +13,6 @@ STR part1 = ""
 STR part2 = ""
 STR part3 = ""
 STR part4 = ""
-STR part5 = ""
 STR skelID = ""
 STR gunID = ""
 STR gunfireID = ""
@@ -31,51 +30,49 @@ LOOP:
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
-    EDIT part3 = messageParts[2]
     EDIT skelID = misc:string_concat(part2, "_skeleton")
-    EDIT gunID = misc:string_concat(part2, "_")
-    EDIT gunID = misc:string_concat(gunID, part3)
+    EDIT gunID = misc:string_concat(part2, "_gun")
     EDIT gunfireID = misc:string_concat(part2, "_gunfire")
     EDIT gunfire1ID = misc:string_concat(part2, "_gunfire1")
     EDIT gunfire2ID = misc:string_concat(part2, "_gunfire2")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
         IF part1 IS "player_gun_position":
-            EDIT part4 = messageParts[3]
-            CAST part4 VEC3
-            fe3d:model_set_position(gunID, part4.x, part4.y, part4.z)
-            CAST part4 STR
+            EDIT part3 = messageParts[2]
+            CAST part3 VEC3
+            fe3d:model_set_position(gunID, part3.x, part3.y, part3.z)
+            CAST part3 STR
         ELIF part1 IS "player_gun_rotation":
-            EDIT part4 = messageParts[3]
-            CAST part4 VEC3
-            fe3d:model_set_rotation(gunID, part4.x, part4.y, part4.z)
-            CAST part4 STR
+            EDIT part3 = messageParts[2]
+            CAST part3 VEC3
+            fe3d:model_set_rotation(gunID, part3.x, part3.y, part3.z)
+            CAST part3 STR
         ELIF part1 IS "player_gun_visibility":
-            EDIT part4 = messageParts[3]
-            CAST part4 BOOL
-            fe3d:model_set_visible(gunID, part4)
-            CAST part4 STR
+            EDIT part3 = messageParts[2]
+            CAST part3 BOOL
+            fe3d:model_set_visible(gunID, part3)
+            CAST part3 STR
         ELIF part1 IS "player_gunfire_position":
-            EDIT part4 = messageParts[3]
-            CAST part4 VEC3
-            fe3d:billboard_set_position(gunfire1ID, part4.x, part4.y, part4.z)
-            fe3d:billboard_set_position(gunfire2ID, part4.x, part4.y, part4.z)
-            fe3d:light_set_position(gunfireID, part4.x, part4.y, part4.z)
-            CAST part4 STR
+            EDIT part3 = messageParts[2]
+            CAST part3 VEC3
+            fe3d:billboard_set_position(gunfire1ID, part3.x, part3.y, part3.z)
+            fe3d:billboard_set_position(gunfire2ID, part3.x, part3.y, part3.z)
+            fe3d:light_set_position(gunfireID, part3.x, part3.y, part3.z)
+            CAST part3 STR
         ELIF part1 IS "player_gunfire_rotation":
+            EDIT part3 = messageParts[2]
             EDIT part4 = messageParts[3]
-            EDIT part5 = messageParts[4]
+            CAST part3 VEC3
             CAST part4 VEC3
-            CAST part5 VEC3
-            fe3d:billboard_set_rotation(gunfire1ID, part4.x, part4.y, part4.z)
-            fe3d:billboard_set_rotation(gunfire2ID, part5.x, part5.y, part5.z)
+            fe3d:billboard_set_rotation(gunfire1ID, part3.x, part3.y, part3.z)
+            fe3d:billboard_set_rotation(gunfire2ID, part4.x, part4.y, part4.z)
+            CAST part3 STR
             CAST part4 STR
-            CAST part5 STR
         ELIF part1 IS "player_gunfire_visibility":
-            EDIT part4 = messageParts[3]
-            CAST part4 BOOL
-            fe3d:billboard_set_visible(gunfire1ID, part4)
-            fe3d:billboard_set_visible(gunfire2ID, part4)
-            fe3d:light_set_visible(gunfireID, part4)
-            CAST part4 STR
+            EDIT part3 = messageParts[2]
+            CAST part3 BOOL
+            fe3d:billboard_set_visible(gunfire1ID, part3)
+            fe3d:billboard_set_visible(gunfire2ID, part3)
+            fe3d:light_set_visible(gunfireID, part3)
+            CAST part3 STR
     INCR index 1

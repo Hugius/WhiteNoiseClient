@@ -1,4 +1,4 @@
-32 32
+16 13
 META script_type_update
 META script_execution_waiting
 
@@ -11,8 +11,6 @@ STR message = ""
 STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
-STR part3 = ""
-STR part4 = ""
 STR skelID = ""
 STR gunID = ""
 STR skelAnimID = ""
@@ -31,15 +29,12 @@ LOOP:
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
-    EDIT part3 = messageParts[2]
     EDIT skelID = misc:string_concat(part2, "_skeleton")
-    EDIT gunID = misc:string_concat(part2, "_")
-    EDIT gunID = misc:string_concat(gunID, part3)
+    EDIT gunID = misc:string_concat(part2, "_gun")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
         IF part1 IS "player_gun_equip":
-            EDIT skelAnimID = misc:string_concat("skeleton_", part3)
-            EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
+            EDIT skelAnimID = "skeleton_gun_eqp"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <false>:
                 fe3d:model_start_animation(skelID, skelAnimID, 0)
@@ -47,8 +42,7 @@ LOOP:
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
         ELIF part1 IS "player_gun_unequip":
-            EDIT skelAnimID = misc:string_concat("skeleton_", part3)
-            EDIT skelAnimID = misc:string_concat(skelAnimID, "_eqp")
+            EDIT skelAnimID = "skeleton_gun_eqp"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <true>:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
@@ -59,8 +53,7 @@ LOOP:
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
         ELIF part1 IS "player_gun_ads":
-            EDIT skelAnimID = misc:string_concat("skeleton_", part3)
-            EDIT skelAnimID = misc:string_concat(skelAnimID, "_ads")
+            EDIT skelAnimID = "skeleton_gun_ads"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <true>:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
@@ -74,9 +67,8 @@ LOOP:
         ELIF part1 IS "player_gun_shoot":
             PASS
         ELIF part1 IS "player_gun_reload":
-            EDIT skelAnimID = misc:string_concat("skeleton_", part3)
-            EDIT skelAnimID = misc:string_concat(skelAnimID, "_rld")
-            EDIT gunAnimID = misc:string_concat(part3, "_reload")
+            EDIT skelAnimID = "skeleton_gun_rld"
+            EDIT gunAnimID = "gun_reload"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <false>:
                 fe3d:model_start_animation(skelID, skelAnimID, 0)

@@ -1,4 +1,4 @@
-23 20
+11 0
 META script_type_update
 META script_execution_waiting
 
@@ -20,8 +20,10 @@ IF _isSpawned IS <true>:
     EXEC player_shoot
     EXEC player_reload
     EXEC player_skeleton
-    EXEC player_send_skeleton
-    EXEC player_send_gun
+    BOOL interval = fe3d:time_interval(5)
+    IF interval IS <true>:
+        EXEC player_send_skeleton
+        EXEC player_send_gun
     EXEC player_misc
 
 /// Always receive network data
