@@ -1,12 +1,13 @@
-51 42
+8 4
 META script_type_update
 META script_execution_waiting
 
 /// Clear classified messages
-EDIT _playerMainMessages = {}
-EDIT _playerMoveMessages = {}
-EDIT _playerGunMainMessages = {}
-EDIT _playerGunEventMessages = {}
+EDIT _playerEventMessages = {}
+EDIT _skeletonMainMessages = {}
+EDIT _skeletonEventMessages = {}
+EDIT _gunMainMessages = {}
+EDIT _gunEventMessages = {}
 
 /// Classify received messages
 LIST stringParts = {}
@@ -21,47 +22,47 @@ LOOP:
     EDIT message = _receivedMessages[index]
     EDIT stringParts = misc:string_split(message, ":")
     IF stringParts[0] IS "player_join":
-        PUSH _playerMainMessages message
+        PUSH _playerEventMessages message
     ELIF stringParts[0] IS "player_leave":
-        PUSH _playerMainMessages message
+        PUSH _playerEventMessages message
     ELIF stringParts[0] IS "player_skeleton_position":
-        PUSH _playerMoveMessages message
+        PUSH _skeletonMainMessages message
     ELIF stringParts[0] IS "player_skeleton_rotation":
-        PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_legs_start":
-        PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_legs_stop":
-        PUSH _playerMoveMessages message
+        PUSH _skeletonMainMessages message
     ELIF stringParts[0] IS "player_skeleton_legs_speed":
-        PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_arms_start":
-        PUSH _playerMoveMessages message
-    ELIF stringParts[0] IS "player_skeleton_arms_stop":
-        PUSH _playerMoveMessages message
+        PUSH _skeletonMainMessages message
     ELIF stringParts[0] IS "player_skeleton_arms_speed":
-        PUSH _playerMoveMessages message
+        PUSH _skeletonMainMessages message
+    ELIF stringParts[0] IS "player_skeleton_legs_start":
+        PUSH _skeletonEventMessages message
+    ELIF stringParts[0] IS "player_skeleton_legs_stop":
+        PUSH _skeletonEventMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_start":
+        PUSH _skeletonEventMessages message
+    ELIF stringParts[0] IS "player_skeleton_arms_stop":
+        PUSH _skeletonEventMessages message
     ELIF stringParts[0] IS "player_gun_position":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gun_rotation":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gun_visibility":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gunfire_position":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gunfire_rotation":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gunfire_visibility":
-        PUSH _playerGunMainMessages message
+        PUSH _gunMainMessages message
     ELIF stringParts[0] IS "player_gun_equip":
-        PUSH _playerGunEventMessages message
+        PUSH _gunEventMessages message
     ELIF stringParts[0] IS "player_gun_unequip":
-        PUSH _playerGunEventMessages message
+        PUSH _gunEventMessages message
     ELIF stringParts[0] IS "player_gun_ads":
-        PUSH _playerGunEventMessages message
+        PUSH _gunEventMessages message
     ELIF stringParts[0] IS "player_gun_shoot":
-        PUSH _playerGunEventMessages message
+        PUSH _gunEventMessages message
     ELIF stringParts[0] IS "player_gun_reload":
-        PUSH _playerGunEventMessages message
+        PUSH _gunEventMessages message
     ELSE:
         EDIT log = misc:string_concat("Received unknown message: ", message)
         fe3d:print(log)

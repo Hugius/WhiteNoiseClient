@@ -1,4 +1,4 @@
-32 0
+48 37
 META script_type_update
 META script_execution_waiting
 
@@ -20,16 +20,11 @@ EDIT _isMoving = <false>
 EDIT _isSprinting = <false>
 MUL _movementSpeedX _movementSlowingFactor
 MUL _movementSpeedZ _movementSlowingFactor
-DEC minSpeed = _maxMovementSpeed
-NEG minSpeed
-DEC maxSpeed = _maxMovementSpeed
 DEC acceleration = _movementAcceleration
 BOOL isSprinting = <false>
 IF shiftDown IS <true> AND wDown IS <true> AND _isGunEquipped IS <false>:
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         MUL acceleration _sprintFactor
-        MUL minSpeed _sprintFactor
-        MUL maxSpeed _sprintFactor
         EDIT isSprinting = <true>
 
 /// Update movement inputs
@@ -51,7 +46,5 @@ IF aDown IS <true>:
     EDIT _isSprinting = isSprinting
 
 /// Update movement
-EDIT _movementSpeedX = math:clamp(_movementSpeedX, minSpeed, maxSpeed)
-EDIT _movementSpeedZ = math:clamp(_movementSpeedZ, minSpeed, maxSpeed)
 fe3d:camera_follow_x(_movementSpeedX)
 fe3d:camera_follow_z(_movementSpeedZ)

@@ -2,11 +2,11 @@
 META script_type_init
 META script_execution_waiting
 
-GLOB BOOL _isConnected = <false>
-
 GLOB LIST _receivedMessages = {}
+GLOB LIST _playerEventMessages = {}
+GLOB LIST _skeletonMainMessages = {}
+GLOB LIST _skeletonEventMessages = {}
+GLOB LIST _gunMainMessages = {}
+GLOB LIST _gunEventMessages = {}
 
-GLOB LIST _playerMainMessages = {}
-GLOB LIST _playerMoveMessages = {}
-GLOB LIST _playerGunMainMessages = {}
-GLOB LIST _playerGunEventMessages = {}
+GLOB BOOL _isConnected = <false>
