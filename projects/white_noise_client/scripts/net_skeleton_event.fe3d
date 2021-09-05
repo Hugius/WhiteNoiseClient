@@ -1,4 +1,4 @@
-24 33
+38 47
 META script_type_update
 META script_execution_waiting
 
@@ -11,8 +11,8 @@ CONST INT maxIndex = misc:list_get_size("_skeletonEventMessages")
 LIST messageParts = {}
 STR message = ""
 STR rejectMessage = ""
-STR p1 = ""
-STR p2 = ""
+STR part1 = ""
+STR part2 = ""
 STR skelID = ""
 INT index = 0
 BOOL isJoined = <false>
@@ -26,18 +26,18 @@ LOOP:
     EDIT message = _skeletonEventMessages[index]
     EDIT rejectMessage = misc:string_concat("reject:", message)
     EDIT messageParts = misc:string_split(message, ":")
-    EDIT p1 = messageParts[0]
-    EDIT p2 = messageParts[1]
-    EDIT skelID = misc:string_concat(p2, "_skeleton")
+    EDIT part1 = messageParts[0]
+    EDIT part2 = messageParts[1]
+    EDIT skelID = misc:string_concat(part2, "_skeleton")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
-        IF p1 IS "player_skeleton_legs_start":
+        IF part1 IS "player_skeleton_legs_start":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
             IF isStarted IS <false>:
                 fe3d:model_start_animation(skelID, legsID, -1)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF p1 IS "player_skeleton_legs_stop":
+        ELIF part1 IS "player_skeleton_legs_stop":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
             IF isStarted IS <true>:
                 EDIT isFading = fe3d:model_is_animation_fading(skelID, legsID)
@@ -47,13 +47,13 @@ LOOP:
                     fe3d:client_send_tcp_message(rejectMessage)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF p1 IS "player_skeleton_arms_start":
+        ELIF part1 IS "player_skeleton_arms_start":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
             IF isStarted IS <false>:
                 fe3d:model_start_animation(skelID, armsID, -1)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF p1 IS "player_skeleton_arms_stop":
+        ELIF part1 IS "player_skeleton_arms_stop":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
             IF isStarted IS <true>:
                 EDIT isFading = fe3d:model_is_animation_fading(skelID, armsID)
