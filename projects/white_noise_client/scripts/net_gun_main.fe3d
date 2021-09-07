@@ -1,4 +1,4 @@
-4 36
+46 12
 META script_type_update
 META script_execution_waiting
 
@@ -18,6 +18,8 @@ STR gunID = ""
 STR gunfireID = ""
 STR gunfire1ID = ""
 STR gunfire2ID = ""
+VEC3 current = [0.0 0.0 0.0]
+DEC difference = 0.0
 INT index = 0
 BOOL isJoined = <false>
 
@@ -40,12 +42,18 @@ LOOP:
         IF part1 IS "player_gun_position":
             EDIT part3 = messageParts[2]
             CAST part3 VEC3
-            fe3d:model_set_position(gunID, part3.x, part3.y, part3.z)
+            EDIT current = fe3d:model_get_position(gunID)
+            EDIT difference = math:vector_distance(current, part3)
+            DIV difference _positionInterpolationDivider
+            fe3d:model_move_to(gunID, part3.x, part3.y, part3.z, difference)
             CAST part3 STR
         ELIF part1 IS "player_gun_rotation":
             EDIT part3 = messageParts[2]
             CAST part3 VEC3
-            fe3d:model_set_rotation(gunID, part3.x, part3.y, part3.z)
+            EDIT current = fe3d:model_get_rotation(gunID)
+            EDIT difference = math:angle_difference(current.y, part3.y)
+            DIV difference _rotationInterpolationDivider
+            fe3d:model_rotate_to(gunID, part3.x, part3.y, part3.z, difference)
             CAST part3 STR
         ELIF part1 IS "player_gun_visibility":
             EDIT part3 = messageParts[2]

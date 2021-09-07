@@ -1,4 +1,4 @@
-41 51
+18 14
 META script_type_update
 META script_execution_waiting
 
@@ -40,12 +40,12 @@ LOOP:
             EDIT part3 = messageParts[2]
             CAST part3 VEC3
             EDIT current = fe3d:model_get_position(skelID)
-            EDIT difference = math:distance(current, part3)
+            EDIT difference = math:vector_distance(current, part3)
             DIV difference _positionInterpolationDivider
             fe3d:model_move_to(skelID, part3.x, part3.y, part3.z, difference)
             EDIT tagID = misc:string_concat(part2, "_tag")
             INCR part3.y _tagHeight
-            fe3d:billboard_set_position(tagID, part3.x, part3.y, part3.z)
+            fe3d:billboard_move_to(tagID, part3.x, part3.y, part3.z, difference)
             CAST part3 STR
         ELIF part1 IS "player_skeleton_rotation":
             EDIT part3 = messageParts[2]
