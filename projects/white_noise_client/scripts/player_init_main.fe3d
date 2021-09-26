@@ -1,4 +1,4 @@
-4 26
+11 0
 META script_type_update
 META script_execution_waiting
 
@@ -11,7 +11,7 @@ fe3d:camera_set_mouse_sensitivity(0.02)
 
 /// Collision
 fe3d:collision_set_camera_box(1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
-fe3d:collision_enable_camera_aabb_response(<true>, <true>, <true>)
+fe3d:collision_enable_camera_response(<true>, <true>, <true>)
 
 /// Models
 fe3d:model_place("player_skeleton", "skeleton", 0.0, 0.0, 0.0)

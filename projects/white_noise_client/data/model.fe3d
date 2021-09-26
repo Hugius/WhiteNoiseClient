@@ -1,11 +1,13 @@
-@bullet game_assets\meshes\bullet.obj game_assets\textures\diffuse_maps\bullet.png ? game_assets\textures\reflection_maps\bullet.png game_assets\textures\normal_maps\bullet.png 0.1 0.1 0.1 0 0 0 1 16 2.5 0.25 0.25 1 1 1 1 ? 0 0 1 bullet 0 0 0 0.440001 0.380001 1
-@ceiling game_assets\meshes\ceiling.obj game_assets\textures\diffuse_maps\ceiling.png ? ? game_assets\textures\normal_maps\ceiling.png 5 5 5 0 0 0 1 16 10 0.1 1 1 1 1 1 ? 0 0 1 ceiling 0 0 0 2.06 0.2 2.06
-@floor game_assets\meshes\floor.obj game_assets\textures\diffuse_maps\floor.png ? ? game_assets\textures\normal_maps\floor.png 5 5 5 0 0 1 1 64 10 0.5 0.75 1 1 1 1 ? 0 0 1 floor 0 -0.08 0 2.01 0.08 2.01
-@gun game_assets\meshes\gun.obj ? ? ? ? 0.1 0.1 0.1 0 0 0 1 8 5 0.15 0.5 1 1 1 1 ? 0 0 1 gun 0 0 0.2 1 3.75 6
-@lamp1 game_assets\meshes\lamp1.obj game_assets\textures\diffuse_maps\lamp1.png game_assets\textures\emission_maps\lamp1.png ? game_assets\textures\normal_maps\lamp1.png 3.5 3.5 3.5 0 0 0 1 8 5 0.5 1 1 1 1 1 ? 0 0 1 lamp1 0 0 0 0.7 1 0.7
-@lamp2 game_assets\meshes\lamp2.obj ? ? ? ? 3.5 3.5 3.5 0 0 0 1 8 5 0.5 1 1 1 1 1 ? 0 0 1 lamp2 0 0 0 0.11 0.13 1.9
-@pillar game_assets\meshes\pillar.obj game_assets\textures\diffuse_maps\pillar.png ? game_assets\textures\reflection_maps\pillar.png game_assets\textures\normal_maps\pillar.png 5 5 5 0 0 0 1 16 10 0.1 1 1 1 1 1 ? 0 0 1 pillar 0 0 0 0.34 1.03 0.34
-@skeleton game_assets\meshes\skeleton.obj ? ? ? ? 0.8 0.8 0.8 0 0 0 0 1 1 0.5 1 1 1 1 1 ? 0 0 1 skeleton 0 0 0 1.4 4.3 1.4
-@wall_door game_assets\meshes\wall_door.obj ? ? ? ? 5 5 5 0 0 0 1 16 10 0.1 1 1 1 1 1 ? 0 0 1
-@wall_solid game_assets\meshes\wall_solid.obj game_assets\textures\diffuse_maps\wall_solid.png ? game_assets\textures\reflection_maps\wall_solid.png game_assets\textures\normal_maps\wall_solid.png 5 5 5 0 0 0 1 16 10 0.1 1 1 1 1 1 ? 0 0 1 wall_solid 0 0 0 0.23 1.03 2
-@wall_windowed game_assets\meshes\wall_windowed.obj game_assets\textures\diffuse_maps\wall_windowed.png ? game_assets\textures\reflection_maps\wall_windowed.png game_assets\textures\normal_maps\wall_windowed.png 5 5 5 0 0 0 1 16 10 0.1 1 1 1 1 1 ? 0 0 1 wall_windowed 0 0 0 0.2 1.03 2
+MODEL @ceiling game_assets\meshes\ceiling.obj 5 5 5 ? 0 0 ? game_assets\textures\diffuse_maps\ceiling.png ? ? ? game_assets\textures\normal_maps\ceiling.png 0 1 0 8 10 0.1 1 1 1 1 1
+AABB @ceiling@ceiling @ceiling 0 0 0 2.06 0.22 2.06
+MODEL @floor game_assets\meshes\floor.obj 5 5 5 ? 0 0 ? ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @gun game_assets\meshes\gun.obj 0.1 0.1 0.1 ? 0 0 mag ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 body game_assets\textures\diffuse_maps\gun_body.png ? ? game_assets\textures\reflection_maps\gun_body.png game_assets\textures\normal_maps\gun_body.png 0 1 1 8 5 0.15 0.5 1 1 1 1
+AABB @gun@gun @gun 0 0 0.2 1 3.75 6
+MODEL @lamp1 game_assets\meshes\lamp1.obj 3.5 3.5 3.5 ? 0 0 ? game_assets\textures\diffuse_maps\lamp1.png game_assets\textures\emission_maps\lamp1.png ? ? game_assets\textures\normal_maps\lamp1.png 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @lamp2 game_assets\meshes\lamp2.obj 1 1 1 ? 0 0 light ? game_assets\textures\emission_maps\lamp2_light.png ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 frame game_assets\textures\diffuse_maps\lamp2_frame.png ? ? ? game_assets\textures\normal_maps\lamp2_frame.png 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @pillar game_assets\meshes\pillar.obj 5 5 5 ? 0 0 ? game_assets\textures\diffuse_maps\pillar.png ? ? ? game_assets\textures\normal_maps\pillar.png 0 1 1 8 5 0.15 1 1 1 1 1
+MODEL @skeleton game_assets\meshes\skeleton.obj 1 1 1 ? 0 1 right_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 body ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1
+AABB @skeleton@skeleton @skeleton 0 0 0 1.35 4.3 1.35
+MODEL @wall_door game_assets\meshes\wall_door.obj 5 5 5 ? 0 0 wall game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 0 0 1 1 0.5 1 1 1 1 1 door game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @wall_solid game_assets\meshes\wall_solid.obj 5 5 5 ? 0 0 ? game_assets\textures\diffuse_maps\wall_solid.png ? ? ? game_assets\textures\normal_maps\wall_solid.png 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @wall_window game_assets\meshes\wall_window.obj 5 5 5 ? 0 0 ? game_assets\textures\diffuse_maps\wall_window.png ? ? ? game_assets\textures\normal_maps\wall_window.png 0 0 0 1 1 0.5 1 1 1 1 1
