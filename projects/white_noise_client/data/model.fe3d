@@ -9,7 +9,7 @@ MODEL @lamp2 game_assets\meshes\lamp2.obj 1 1 1 ? 0 0 light ? game_assets\textur
 AABB @lamp2@lamp @lamp2 0 0 0 0.1 0.13 1.89
 MODEL @pillar game_assets\meshes\pillar.obj 5 5 5 ? 0 0 ? game_assets\textures\diffuse_maps\pillar.png ? ? ? game_assets\textures\normal_maps\pillar.png 0 1 1 8 5 0.15 1 1 1 1 1
 AABB @pillar@pillar @pillar 0 0 0 0.33 1.03 0.33
-MODEL @skeleton game_assets\meshes\skeleton.obj 1 1 1 ? 0 1 right_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 body ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1
+MODEL @skeleton game_assets\meshes\skeleton.obj 0.8 0.8 0.8 ? 0 1 right_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 body ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1
 AABB @skeleton@skeleton @skeleton 0 0 0 1.35 4.3 1.35
 MODEL @wall_door game_assets\meshes\wall_door.obj 5 5 5 ? 0 0 wall game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 1 1 8 5 0.15 1 1 1 1 1 door game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 0 0 1 1 0.5 1 1 1 1 1
 AABB @wall_door@wall @wall_door 0 0 0 0.2 1.03 2
