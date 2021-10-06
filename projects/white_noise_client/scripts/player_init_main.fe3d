@@ -1,4 +1,4 @@
-11 0
+30 63
 META script_type_update
 META script_execution_waiting
 
@@ -29,7 +29,7 @@ fe3d:billboard_set_visible("player_gunfire2", <false>)
 fe3d:sound_place_2D("gun_shoot", "gun_shoot", 0.75)
 
 /// Lights
-fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 15.0, 15.0, 15.0, 1.0, 0.85, 0.7, 7.5)
+fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 25.0, 25.0, 25.0, 1.0, 0.85, 0.7, 7.5)
 fe3d:light_set_visible("player_gunfire", <false>)
 
 /// Images

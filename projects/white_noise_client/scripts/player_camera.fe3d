@@ -1,4 +1,4 @@
-37 52
+28 20
 META script_type_update
 META script_execution_waiting
 
@@ -26,7 +26,9 @@ fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
 IF _isGunEquipped IS <true> OR _isGunEquipping IS <true>:
     DEC pitch = fe3d:camera_get_pitch()
     DEC absPitch = math:abs(pitch)
-    IF absPitch LESS 1.0:
+    DEC maxPitch = _pitchSpeed
+    MUL maxPitch 2.0
+    IF absPitch LESS maxPitch:
         EDIT pitch = 0.0
     ELIF pitch MORE 0.0:
         DECR pitch _pitchSpeed
