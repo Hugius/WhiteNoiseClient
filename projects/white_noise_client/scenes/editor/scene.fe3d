@@ -1,14 +1,11 @@
-CAMERA_POSITION 30.3345 3.52021 36.301
-CAMERA_YAW 31.466
-CAMERA_PITCH -18.0317
+CAMERA_POSITION 1.86529 3.12021 11.1354
+CAMERA_YAW 97.9653
+CAMERA_PITCH -14.069
 SKY space @space
 MODEL lamp2_1407031486 @lamp2 20 5 0 180 90 0 3.5 3.5 3.5 0 ?
+MODEL pillar_811990549 @pillar 5 0 -15 0 0 0 5 5 5 0 ?
 MODEL wall_window_781213216 @wall_window -50 0 5 0 90 0 5 5 5 0 ?
 MODEL pillar_414174122 @pillar -35 0 -5 0 0 0 5 5 5 0 ?
-MODEL floor_1963142617 @floor -20 0 -40 0 0 0 5 5 5 0 ?
-MODEL wall_window_1123182751 @wall_window 5 0 50 0 0 0 5 5 5 0 ?
-MODEL wall_solid_358807443 @wall_solid 30 0 -45 0 90 0 5 5 5 0 ?
-MODEL pillar_811990549 @pillar 5 0 -15 0 0 0 5 5 5 0 ?
 MODEL wall_solid_1746738204 @wall_solid -20 0 5 0 90 0 5 5 5 0 ?
 MODEL pillar_410628412 @pillar -25 0 -35 0 0 0 5 5 5 0 ?
 MODEL floor_1981910920 @floor 30 0 0 0 0 0 5 5 5 0 ?
@@ -18,9 +15,19 @@ MODEL pillar_1225908574 @pillar -15 0 5 0 0 0 5 5 5 0 ?
 MODEL wall_solid_27848682 @wall_solid 0 0 55 0 90 0 5 5 5 0 ?
 MODEL wall_solid_205418683 @wall_solid 35 0 -20 0 0 0 5 5 5 0 ?
 MODEL wall_814988933 @wall_solid 20 0 5 0 90 0 5 5 5 0 ?
+MODEL satellite4_415229223 @satellite4 45 0 -45 0 0 0 0.75 0.75 0.75 0 satellite
+MODEL floor_1963142617 @floor -20 0 -40 0 0 0 5 5 5 0 ?
+MODEL wall_window_1123182751 @wall_window 5 0 50 0 0 0 5 5 5 0 ?
 MODEL pillar_1300994042 @pillar -5 0 -5 0 0 0 5 5 5 0 ?
 MODEL floor_1801238018 @floor -30 0 30 0 0 0 5 5 5 0 ?
 MODEL floor_925089746 @floor 0 0 -40 0 0 0 5 5 5 0 ?
+MODEL ceiling_894455678 @ceiling -40 5 -10 0 0 0 5 5 5 0 ?
+MODEL lamp2_1012564088 @lamp2 0 5.06 -20 180 0 0 3.5 3.5 3.5 0 ?
+MODEL wall_window_192132351 @wall_window 35 0 -40 0 0 0 5 5 5 0 ?
+MODEL pillar_1334839450 @pillar 35 0 45 0 0 0 5 5 5 0 ?
+MODEL wall_window_414793229 @wall_window 10 0 5 0 90 0 5 5 5 0 ?
+MODEL lamp2_926335048 @lamp2 -20 5 0 180 90 0 3.5 3.5 3.5 0 ?
+MODEL wall_solid_358807443 @wall_solid 30 0 -45 0 90 0 5 5 5 0 ?
 MODEL ceiling_1691292244 @ceiling 0 5 -10 0 0 0 5 5 5 0 ?
 MODEL floor_2140166045 @floor 40 0 20 0 0 0 5 5 5 0 ?
 MODEL floor_831075311 @floor 10 0 0 0 0 0 5 5 5 0 ?
@@ -43,12 +50,7 @@ MODEL pillar_851567318 @pillar 15 0 5 0 0 0 5 5 5 0 ?
 MODEL wall_solid_365822333 @wall_solid 5 0 20 0 0 0 5 5 5 0 ?
 MODEL pillar_1394694610 @pillar -5 0 25 0 0 0 5 5 5 0 ?
 MODEL wall_window_841158087 @wall_window -10 0 5 0 90 0 5 5 5 0 ?
-MODEL wall_window_192132351 @wall_window 35 0 -40 0 0 0 5 5 5 0 ?
-MODEL pillar_1334839450 @pillar 35 0 45 0 0 0 5 5 5 0 ?
-MODEL wall_window_414793229 @wall_window 10 0 5 0 90 0 5 5 5 0 ?
 MODEL wall_window_1078439459 @wall_window 5 0 10 0 0 0 5 5 5 0 ?
-MODEL ceiling_894455678 @ceiling -40 5 -10 0 0 0 5 5 5 0 ?
-MODEL lamp2_1012564088 @lamp2 0 5.06 -20 180 0 0 3.5 3.5 3.5 0 ?
 MODEL wall_window_804403028 @wall_window -5 0 10 0 0 0 5 5 5 0 ?
 MODEL wall_solid_681684642 @wall_solid -30 0 45 0 90 0 5 5 5 0 ?
 MODEL pillar_694998 @pillar 35 0 -15 0 0 0 5 5 5 0 ?
@@ -115,7 +117,6 @@ MODEL pillar_2021094824 @pillar 5 0 -25 0 0 0 5 5 5 0 ?
 MODEL pillar_680088589 @pillar -15 0 45 0 0 0 5 5 5 0 ?
 MODEL pillar_303901777 @pillar -5 0 -25 0 0 0 5 5 5 0 ?
 MODEL ceiling_448711711 @ceiling 0 5 30 0 0 0 5 5 5 0 ?
-MODEL lamp2_926335048 @lamp2 -20 5 0 180 90 0 3.5 3.5 3.5 0 ?
 MODEL wall_window_441410155 @wall_window -30 0 25 0 90 0 5 5 5 0 ?
 MODEL wall_solid_170431349 @wall_solid 30 0 45 0 90 0 5 5 5 0 ?
 MODEL lamp2_238826354 @lamp2 0 5 20 180 0 0 3.5 3.5 3.5 0 ?
@@ -228,6 +229,7 @@ MODEL pillar_1769383488 @pillar -35 0 25 0 0 0 5 5 5 0 ?
 MODEL pillar_1670677762 @pillar 25 0 -25 0 0 0 5 5 5 0 ?
 MODEL pillar_786716122 @pillar 35 0 -25 0 0 0 5 5 5 0 ?
 MODEL wall_solid_1438140370 @wall_solid 10 0 -45 0 90 0 5 5 5 0 ?
+MODEL satellite3_1720853308 @satellite3 -50 0 50 0 106.212 0 0.3 0.3 0.3 0 satellite
 MODEL wall_window_439374690 @wall_window 40 0 -35 0 90 0 5 5 5 0 ?
 MODEL pillar_560269797 @pillar -35 0 5 0 0 0 5 5 5 0 ?
 MODEL wall_solid_114673768 @wall_solid 45 0 -10 0 0 0 5 5 5 0 ?
