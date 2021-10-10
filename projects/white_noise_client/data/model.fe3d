@@ -10,6 +10,10 @@ MODEL @lamp2 game_assets\meshes\lamp2.obj 1 1 1 ? 0 0 2 light ? game_assets\text
 AABB @lamp2@lamp @lamp2 0 0 0 0.1 0.13 1.89
 MODEL @pillar game_assets\meshes\pillar.obj 5 5 5 ? 0 0 2 ? game_assets\textures\diffuse_maps\pillar.png ? ? ? game_assets\textures\normal_maps\pillar.png 0 1 1 8 5 0.15 0.75 1 1 1 1
 AABB @pillar@pillar @pillar 0 0 0 0.33 1.03 0.33
+MODEL @satellite1 game_assets\meshes\satellite1.obj 1.5 1.5 1.5 ? 0 0 2 ? game_assets\textures\diffuse_maps\satellite1.png ? ? ? game_assets\textures\normal_maps\satellite1.png 0 1 0 16 5 0.25 0.5 1 1 1 1
+AABB @satellite1@satellite @satellite1 0 0 0 18.5 5 2
+MODEL @satellite2 game_assets\meshes\satellite2.obj 2.5 2.5 2.5 ? 0 0 2 wings game_assets\textures\diffuse_maps\satellite2_wings.png ? ? game_assets\textures\reflection_maps\satellite2_wings.png game_assets\textures\normal_maps\satellite_wings.png 0 0 1 1 1 0.25 1 1 1 1 1 body game_assets\textures\diffuse_maps\satellite2_body.png ? ? ? game_assets\textures\normal_maps\satellite2_body.png 0 0 1 16 1 0.5 0.5 1 1 1 1
+AABB @satellite2@satellite @satellite2 0 0 -1.25 12.5 3.5 12.5
 MODEL @skeleton game_assets\meshes\skeleton.obj 0.8 0.8 0.8 ? 0 1 2 right_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_arm ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_hand ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 left_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 right_leg ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1 body ? ? ? ? ? 0 0 0 1 1 0.5 1 1 1 1 1
 AABB @skeleton@skeleton @skeleton 0 0 0 1.35 4.3 1.35
 MODEL @wall_door game_assets\meshes\wall_door.obj 5 5 5 ? 0 0 2 wall game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 1 1 8 5 0.15 1 1 1 1 1 door game_assets\textures\diffuse_maps\wall_door.png ? ? ? game_assets\textures\normal_maps\wall_door.png 0 0 0 1 1 0.5 1 1 1 1 1
