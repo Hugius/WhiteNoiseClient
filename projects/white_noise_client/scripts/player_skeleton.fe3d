@@ -1,4 +1,4 @@
-29 12
+42 54
 META script_type_update
 META script_execution_waiting
 
@@ -15,14 +15,14 @@ STR message = ""
 
 /// Start legs animation
 IF _isMoving IS <true> AND isLegsStarted IS <false>:
-    EDIT message = misc:string_concat("forward:player_skeleton_legs_start:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_legs_start:", username)
     fe3d:model_start_animation(skelID, legsID, -1)
     /// Send message to server
     fe3d:client_send_tcp_message(message)
 
 /// Start arms animation
 IF _isMoving IS <true> AND isArmsStarted IS <false> AND _isGunEquipped IS <false>:
-    EDIT message = misc:string_concat("forward:player_skeleton_arms_start:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_arms_start:", username)
     IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
         INT frame = fe3d:model_get_animation_frame_index(skelID, legsID)
         IF frame IS 0:
@@ -32,7 +32,7 @@ IF _isMoving IS <true> AND isArmsStarted IS <false> AND _isGunEquipped IS <false
 
 /// Stop legs animation
 IF isLegsStarted IS <true> AND _isMoving IS <false>:
-    EDIT message = misc:string_concat("forward:player_skeleton_legs_stop:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_legs_stop:", username)
     BOOL isLegsFading = fe3d:model_is_animation_fading(skelID, legsID)
     IF isLegsFading IS <false>:
         fe3d:model_fade_animation(skelID, legsID, 1)
@@ -41,7 +41,7 @@ IF isLegsStarted IS <true> AND _isMoving IS <false>:
 
 /// Stop arms animation
 IF isArmsStarted IS <true>:
-    EDIT message = misc:string_concat("forward:player_skeleton_arms_stop:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_arms_stop:", username)
     IF _isMoving IS <false> OR _wasMouseScrolled IS <true>:
         BOOL isArmsFading = fe3d:model_is_animation_fading(skelID, armsID)
         IF isArmsFading IS <false>:

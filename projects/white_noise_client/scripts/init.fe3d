@@ -1,6 +1,8 @@
-9 21
+3 33
 META script_type_init
 META script_execution_entry
+
+GLOB BOOL _isGameStarted = <false>
 
 INT random = misc:get_random_integer(0, 1000)
 CAST random STR

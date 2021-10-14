@@ -1,4 +1,4 @@
-34 31
+28 61
 META script_type_update
 META script_execution_waiting
 
@@ -27,7 +27,7 @@ IF rmbPressed IS <true> OR _wasMouseScrolled IS <true>:
                 fe3d:model_set_animation_autopaused(skelID, skelAdsID, <true>)
                 EDIT _isGunAds = <true>
             /// Send gun ADS status to server
-            STR message = misc:string_concat("forward:player_gun_ads:", username)
+            STR message = misc:string_concat("forward:player:gun_ads:", username)
             fe3d:client_send_tcp_message(message)
 
 /// Update ADS - aiming animation

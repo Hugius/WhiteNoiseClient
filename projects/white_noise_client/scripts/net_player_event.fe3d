@@ -1,4 +1,4 @@
-26 57
+20 0
 META script_type_update
 META script_execution_waiting
 
@@ -20,7 +20,7 @@ INT maxIndex = misc:list_get_size("_playerEventMessages")
 INT usernameLength = 0
 DEC tagWidth = 0.0
 
-/// Handle player main messages
+/// Handle player event messages
 LOOP:
     IF index IS maxIndex:
         BREAK

@@ -1,4 +1,4 @@
-9 0
+38 62
 META script_type_update
 META script_execution_waiting
 
@@ -28,7 +28,7 @@ IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <
                 EDIT _isGunEquipped = <false>
                 EDIT _isGunUnequipping = <true>
                 /// Send unequip message to server
-                EDIT msg = misc:string_concat("forward:player_gun_unequip:", username)
+                EDIT msg = misc:string_concat("forward:player:gun_unequip:", username)
                 fe3d:client_send_tcp_message(msg)
             ELSE:
                 /// Equip gun
@@ -37,7 +37,7 @@ IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <
                 fe3d:model_set_animation_autopaused(skelID, armID, <true>)
                 EDIT _isGunEquipping = <true>
                 /// Send equip message to server
-                EDIT msg = misc:string_concat("forward:player_gun_equip:", username)
+                EDIT msg = misc:string_concat("forward:player:gun_equip:", username)
                 fe3d:client_send_tcp_message(msg)
 
 /// Reset mouse scroll state

@@ -1,5 +1,7 @@
-3 20
+6 34
 META script_type_init
 META script_execution_entry
 
-fe3d:server_start(3)
+fe3d:server_start(4)
+
+GLOB INT _readyCount = 0

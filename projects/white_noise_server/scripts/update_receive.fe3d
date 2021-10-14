@@ -1,4 +1,4 @@
-17 23
+33 42
 META script_type_update
 META script_execution_waiting
 
@@ -32,7 +32,8 @@ LOOP:
     IF contains IS <true>:
         EDIT contentParts = misc:string_split(content, ":")
         IF contentParts[0] IS "server":
-            PASS
+            IF contentParts[1] IS "ready":
+                INCR _readyCount 1
         ELIF contentParts[0] IS "forward":
             DECR contentSize 8
             EDIT content = misc:string_get_part(content, 8, contentSize)

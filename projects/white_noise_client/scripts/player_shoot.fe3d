@@ -1,4 +1,4 @@
-34 35
+47 65
 META script_type_update
 META script_execution_waiting
 
@@ -46,5 +46,5 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
                 fe3d:text_set_content("bullets", _bulletCount)
                 CAST _bulletCount INT
                 /// Send shoot message to server
-                STR message = misc:string_concat("forward:player_gun_shoot:", username)
+                STR message = misc:string_concat("forward:player:gun_shoot:", username)
                 fe3d:client_send_tcp_message(message)

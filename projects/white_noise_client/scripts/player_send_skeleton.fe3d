@@ -1,4 +1,4 @@
-25 17
+18 50
 META script_type_update
 META script_execution_waiting
 
@@ -17,7 +17,7 @@ STR message = ""
 VEC3 position = _multiplayerSkeletonPosition
 EDIT position.y = 0.0
 CAST position STR
-EDIT message = misc:string_concat("forward:player_skeleton_position:", username)
+EDIT message = misc:string_concat("forward:player:skeleton_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, position)
 fe3d:client_send_udp_message(message)
@@ -25,7 +25,7 @@ fe3d:client_send_udp_message(message)
 /// Send skeleton rotation to server
 VEC3 rotation = fe3d:model_get_rotation(skelID)
 CAST rotation STR
-EDIT message = misc:string_concat("forward:player_skeleton_rotation:", username)
+EDIT message = misc:string_concat("forward:player:skeleton_rotation:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, rotation)
 fe3d:client_send_udp_message(message)
@@ -34,7 +34,7 @@ fe3d:client_send_udp_message(message)
 IF isLegsStarted IS <true>:
     DEC legsSpeed = fe3d:model_get_animation_speed(skelID, legsID)
     CAST legsSpeed STR
-    EDIT message = misc:string_concat("forward:player_skeleton_legs_speed:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_legs_speed:", username)
     EDIT message = misc:string_concat(message, ":")
     EDIT message = misc:string_concat(message, legsSpeed)
     fe3d:client_send_udp_message(message)
@@ -43,7 +43,7 @@ IF isLegsStarted IS <true>:
 IF isArmsStarted IS <true>:
     DEC armsSpeed = fe3d:model_get_animation_speed(skelID, armsID)
     CAST armsSpeed STR
-    EDIT message = misc:string_concat("forward:player_skeleton_arms_speed:", username)
+    EDIT message = misc:string_concat("forward:player:skeleton_arms_speed:", username)
     EDIT message = misc:string_concat(message, ":")
     EDIT message = misc:string_concat(message, armsSpeed)
     fe3d:client_send_udp_message(message)
