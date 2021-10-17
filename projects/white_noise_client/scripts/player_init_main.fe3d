@@ -1,13 +1,10 @@
-30 63
+2 0
 META script_type_update
 META script_execution_waiting
 
 /// Camera
-fe3d:camera_set_position(50.0, _defaultCameraHeight, 0.0)
 fe3d:camera_set_fov(_defaultFov)
-fe3d:camera_set_yaw(180.0)
-fe3d:camera_set_pitch(0.0)
-fe3d:camera_set_mouse_sensitivity(0.02)
+fe3d:camera_set_mouse_sensitivity(0.025)
 
 /// Collision
 fe3d:collision_set_camera_box(1.0, 1.0, 1.0, 1.0, 1.0, 1.0)

@@ -1,8 +1,9 @@
-26 41
+4 12
 META script_type_update
 META script_execution_waiting
 
 /// Clear classified messages
+EDIT _serverEventMessages = {}
 EDIT _playerEventMessages = {}
 EDIT _skeletonMainMessages = {}
 EDIT _skeletonEventMessages = {}
@@ -22,8 +23,7 @@ LOOP:
     EDIT message = _receivedMessages[index]
     EDIT messageParts = misc:string_split(message, ":")
     IF messageParts[0] IS "server" AND messageParts[1] IS "start":
-        EXEC player_init_main
-        EDIT _isGameStarted = <true>
+        PUSH _serverEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "join":
         PUSH _playerEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "leave":

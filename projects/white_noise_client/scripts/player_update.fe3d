@@ -1,4 +1,4 @@
-7 27
+39 15
 META script_type_update
 META script_execution_waiting
 
@@ -11,9 +11,6 @@ IF _isConnected IS <false>:
 
 /// Check ready-up
 IF _isReady IS <false>:
-    DEC yaw = fe3d:camera_get_yaw()
-    INCR yaw 0.1
-    fe3d:camera_set_yaw(yaw)
     BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
     IF rPressed IS <true>:
         EDIT _isReady = <true>
@@ -33,10 +30,15 @@ IF _isGameStarted IS <true>:
         EXEC player_send_skeleton
         EXEC player_send_gun
     EXEC player_misc
+ELSE:
+    DEC yaw = fe3d:camera_get_yaw()
+    INCR yaw 0.1
+    fe3d:camera_set_yaw(yaw)
 
 /// Always receive network data
 EXEC net_receive
 EXEC net_classify
+EXEC net_server_event
 EXEC net_player_event
 EXEC net_skeleton_event
 EXEC net_gun_event
