@@ -1,4 +1,4 @@
-22 26
+26 41
 META script_type_update
 META script_execution_waiting
 
@@ -10,7 +10,7 @@ EDIT _gunMainMessages = {}
 EDIT _gunEventMessages = {}
 
 /// Classify received messages
-LIST stringParts = {}
+LIST messageParts = {}
 STR message = ""
 STR log = ""
 INT index = 0
@@ -20,51 +20,51 @@ LOOP:
     IF index IS maxIndex:
         BREAK
     EDIT message = _receivedMessages[index]
-    EDIT stringParts = misc:string_split(message, ":")
-    IF stringParts[0] IS "server" AND stringParts[1] IS "start":
+    EDIT messageParts = misc:string_split(message, ":")
+    IF messageParts[0] IS "server" AND messageParts[1] IS "start":
         EXEC player_init_main
         EDIT _isGameStarted = <true>
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "join":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "join":
         PUSH _playerEventMessages message
-    ELIF stringParts[0] IS "player_leave" AND stringParts[1] IS "leave":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "leave":
         PUSH _playerEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_position":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_position":
         PUSH _skeletonMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_rotation":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_rotation":
         PUSH _skeletonMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_legs_speed":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_speed":
         PUSH _skeletonMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_arms_speed":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_speed":
         PUSH _skeletonMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_legs_start":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_start":
         PUSH _skeletonEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_legs_stop":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_stop":
         PUSH _skeletonEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_arms_start":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_start":
         PUSH _skeletonEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "skeleton_arms_stop":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_stop":
         PUSH _skeletonEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_position":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_position":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_rotation":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_rotation":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_visibility":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_visibility":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gunfire_position":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_position":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gunfire_rotation":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_rotation":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gunfire_visibility":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_visibility":
         PUSH _gunMainMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_equip":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_equip":
         PUSH _gunEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_unequip":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_unequip":
         PUSH _gunEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_ads":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_ads":
         PUSH _gunEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_shoot":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_shoot":
         PUSH _gunEventMessages message
-    ELIF stringParts[0] IS "player" AND stringParts[1] IS "gun_reload":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_reload":
         PUSH _gunEventMessages message
     ELSE:
         EDIT log = misc:string_concat("Received unknown message: ", message)

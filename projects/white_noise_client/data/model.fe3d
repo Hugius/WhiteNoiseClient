@@ -1,6 +1,6 @@
 MODEL @ceiling game_assets\meshes\ceiling.obj 5 5 5 ? 0 0 2 ? game_assets\textures\diffuse_maps\ceiling.png ? ? game_assets\textures\reflection_maps\ceiling.png game_assets\textures\normal_maps\ceiling.png 0 1 1 8 10 0.5 0.25 1 1 1 1
 AABB @ceiling@ceiling @ceiling 0 0 0 2.06 0.22 2.06
-MODEL @earth game_assets\meshes\earth.obj 1 1 1 ? 0 0 2 ? game_assets\textures\diffuse_maps\earth.png ? ? ? ? 0 0 0 8 1 0.5 0.5 1 1 1 1
+MODEL @earth game_assets\meshes\earth.obj 1 1 1 ? 0 0 2 ? game_assets\textures\diffuse_maps\earth.png ? ? ? ? 0 0 0 8 1 0.5 0.3 1 1 1 1
 AABB @earth@earth @earth 0 0 0 2 2 2
 MODEL @floor game_assets\meshes\floor.obj 5 5 5 ? 0 0 2 ? game_assets\textures\diffuse_maps\floor.png ? ? ? game_assets\textures\normal_maps\floor.png 1 1 1 32 10 0.25 0.25 1 1 1 1
 AABB @floor@floor @floor 0 0 0 2 0.01 2

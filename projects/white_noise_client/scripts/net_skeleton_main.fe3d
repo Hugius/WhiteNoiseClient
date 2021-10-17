@@ -1,4 +1,4 @@
-18 14
+67 43
 META script_type_update
 META script_execution_waiting
 
@@ -33,40 +33,41 @@ LOOP:
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
-    EDIT skelID = misc:string_concat(part2, "_skeleton")
+    EDIT part3 = messageParts[2]
+    EDIT skelID = misc:string_concat(part3, "_skeleton")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
-        IF part1 IS "player_skeleton_position":
-            EDIT part3 = messageParts[2]
-            CAST part3 VEC3
+        IF part1 IS "player" AND part2 IS "skeleton_position":
+            EDIT part4 = messageParts[3]
+            CAST part4 VEC3
             EDIT current = fe3d:model_get_position(skelID)
-            EDIT difference = math:vector_distance(current, part3)
+            EDIT difference = math:vector_distance(current, part4)
             DIV difference _positionInterpolationDivider
-            fe3d:model_move_to(skelID, part3.x, part3.y, part3.z, difference)
-            EDIT tagID = misc:string_concat(part2, "_tag")
-            INCR part3.y _tagHeight
-            fe3d:billboard_move_to(tagID, part3.x, part3.y, part3.z, difference)
-            CAST part3 STR
-        ELIF part1 IS "player_skeleton_rotation":
-            EDIT part3 = messageParts[2]
-            CAST part3 VEC3
+            fe3d:model_move_to(skelID, part4.x, part4.y, part4.z, difference)
+            EDIT tagID = misc:string_concat(part3, "_tag")
+            INCR part4.y _tagHeight
+            fe3d:billboard_move_to(tagID, part4.x, part4.y, part4.z, difference)
+            CAST part4 STR
+        ELIF part1 IS "player" AND part2 IS "skeleton_rotation":
+            EDIT part4 = messageParts[3]
+            CAST part4 VEC3
             EDIT current = fe3d:model_get_rotation(skelID)
-            EDIT difference = math:angle_difference(current.y, part3.y)
+            EDIT difference = math:angle_difference(current.y, part4.y)
             DIV difference _rotationInterpolationDivider
-            fe3d:model_rotate_to(skelID, part3.x, part3.y, part3.z, difference)
-            CAST part3 STR
-        ELIF part1 IS "player_skeleton_legs_speed":
+            fe3d:model_rotate_to(skelID, part4.x, part4.y, part4.z, difference)
+            CAST part4 STR
+        ELIF part1 IS "player" AND part2 IS "skeleton_legs_speed":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, legsID)
             IF isStarted IS <true>:
-                EDIT part3 = messageParts[2]
-                CAST part3 DEC
-                fe3d:model_set_animation_speed(skelID, legsID, part3)
-                CAST part3 STR
-        ELIF part1 IS "player_skeleton_arms_speed":
+                EDIT part4 = messageParts[3]
+                CAST part4 DEC
+                fe3d:model_set_animation_speed(skelID, legsID, part4)
+                CAST part4 STR
+        ELIF part1 IS "player" AND part2 IS "skeleton_arms_speed":
             EDIT isStarted = fe3d:model_is_animation_started(skelID, armsID)
             IF isStarted IS <true>:
-                EDIT part3 = messageParts[2]
-                CAST part3 DEC
-                fe3d:model_set_animation_speed(skelID, armsID, part3)
-                CAST part3 STR
+                EDIT part4 = messageParts[3]
+                CAST part4 DEC
+                fe3d:model_set_animation_speed(skelID, armsID, part4)
+                CAST part4 STR
     INCR index 1

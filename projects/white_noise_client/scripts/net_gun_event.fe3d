@@ -1,4 +1,4 @@
-25 21
+68 16
 META script_type_update
 META script_execution_waiting
 
@@ -11,6 +11,7 @@ STR message = ""
 STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
+STR part3 = ""
 STR skelID = ""
 STR gunID = ""
 STR skelAnimID = ""
@@ -29,11 +30,12 @@ LOOP:
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
-    EDIT skelID = misc:string_concat(part2, "_skeleton")
-    EDIT gunID = misc:string_concat(part2, "_gun")
+    EDIT part3 = messageParts[2]
+    EDIT skelID = misc:string_concat(part3, "_skeleton")
+    EDIT gunID = misc:string_concat(part3, "_gun")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
-        IF part1 IS "player_gun_equip":
+        IF part1 IS "player" AND part2 IS "gun_equip":
             EDIT skelAnimID = "skeleton_gun_eqp"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <false>:
@@ -41,7 +43,7 @@ LOOP:
                 fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF part1 IS "player_gun_unequip":
+        ELIF part1 IS "player" AND part2 IS "gun_unequip":
             EDIT skelAnimID = "skeleton_gun_eqp"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <true>:
@@ -52,7 +54,7 @@ LOOP:
                     fe3d:client_send_tcp_message(rejectMessage)
             ELSE:
                 fe3d:client_send_tcp_message(rejectMessage)
-        ELIF part1 IS "player_gun_ads":
+        ELIF part1 IS "player" AND part2 IS "gun_ads":
             EDIT skelAnimID = "skeleton_gun_ads"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
             IF isStarted IS <true>:
@@ -64,9 +66,9 @@ LOOP:
             ELSE:
                 fe3d:model_start_animation(skelID, skelAnimID, 0)
                 fe3d:model_set_animation_autopaused(skelID, skelAnimID, <true>)
-        ELIF part1 IS "player_gun_shoot":
+        ELIF part1 IS "player" AND part2 IS "gun_shoot":
             PASS
-        ELIF part1 IS "player_gun_reload":
+        ELIF part1 IS "player" AND part2 IS "gun_reload":
             EDIT skelAnimID = "skeleton_gun_rld"
             EDIT gunAnimID = "gun_reload"
             EDIT isStarted = fe3d:model_is_animation_started(skelID, skelAnimID)
