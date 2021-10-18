@@ -1,4 +1,4 @@
-14 9
+56 67
 META script_type_update
 META script_execution_waiting
 
@@ -55,7 +55,7 @@ LOOP:
             EDIT current = fe3d:model_get_rotation(gunID)
             EDIT difference = math:angle_difference(current.y, part4.y)
             DIV difference _rotationInterpolationDivider
-            fe3d:model_rotate_to(gunID, part4.x, part4.y, part4.z, difference)
+            fe3d:model_rotate_to(gunID, current.x, part4.y, current.z, difference)
             CAST part4 STR
         ELIF part1 IS "player" AND part2 IS "gun_visibility":
             EDIT part4 = messageParts[3]
