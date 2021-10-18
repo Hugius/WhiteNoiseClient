@@ -1,4 +1,4 @@
-21 31
+21 30
 META script_type_init
 META script_execution_waiting
 
@@ -17,10 +17,10 @@ GLOB CONST DEC _movementSlowingFactor = 0.925
 GLOB CONST DEC _sprintFactor = 2.0
 GLOB CONST DEC _skeletonEyeOffset = 0.3
 GLOB CONST DEC _defaultFov = 80.0
-GLOB CONST DEC _adsFov = 50.0
+GLOB CONST DEC _adsFov = 30.0
 GLOB CONST DEC _minPitch = -50.0
 GLOB CONST DEC _maxPitch = 50.0
-GLOB CONST DEC _fovSpeed = 0.75
+GLOB CONST DEC _fovSpeed = 1.5
 GLOB CONST DEC _defaultGunOffsetX = 21.5
 GLOB CONST DEC _adsGunOffsetX = 0.0
 GLOB CONST DEC _equippedGunOffsetY = -0.01

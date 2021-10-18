@@ -1,4 +1,4 @@
-7 0
+23 33
 META script_type_update
 META script_execution_waiting
 
@@ -14,12 +14,15 @@ LOOP:
     ELSE:
         EDIT messageParts = misc:string_split(_serverEventMessages[index], ":")
         IF messageParts[0] IS "server" AND messageParts[1] IS "start":
+            /// Load player
             EXEC player_init_main
             EDIT _isGameStarted = <true>
+            /// Extract camera values
             STR position = messageParts[2]
             STR yaw = messageParts[3]
             CAST position VEC3
             CAST yaw DEC
+            /// Set camera values
             fe3d:camera_set_position(position.x, _defaultCameraHeight, position.z)
             fe3d:camera_set_yaw(yaw)
         INCR index 1

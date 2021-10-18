@@ -1,4 +1,4 @@
-47 65
+24 4
 META script_type_update
 META script_execution_waiting
 
@@ -37,8 +37,9 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
                 /// Fire a bullet
                 fe3d:model_start_animation(gunID, gunShootID, 0)
                 fe3d:sound_play_forced(gunShootID, 0, 0)
-                fe3d:billboard_set_visible(gunfire1ID, <true>)
-                fe3d:billboard_set_visible(gunfire2ID, <true>)
+                IF _isGunAds IS <false>:
+                    fe3d:billboard_set_visible(gunfire1ID, <true>)
+                    fe3d:billboard_set_visible(gunfire2ID, <true>)
                 fe3d:light_set_visible(gunfireID, <true>)
                 EDIT _gunfireTickCount = 0
                 DECR _bulletCount 1

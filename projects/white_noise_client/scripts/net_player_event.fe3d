@@ -1,4 +1,4 @@
-34 67
+36 30
 META script_type_update
 META script_execution_waiting
 
@@ -35,7 +35,7 @@ LOOP:
         EDIT gunfire1ID = misc:string_concat(username, "_gunfire1")
         EDIT gunfire2ID = misc:string_concat(username, "_gunfire2")
         IF messageParts[0] IS "player" AND messageParts[1] IS "join":
-            /// Skeleton + guns
+            /// Skeleton + gun
             fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
             fe3d:model_place(gunID, "gun", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(gunID, <false>)
