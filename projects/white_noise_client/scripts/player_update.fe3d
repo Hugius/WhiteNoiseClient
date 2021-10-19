@@ -1,4 +1,4 @@
-39 15
+40 16
 META script_type_update
 META script_execution_waiting
 
@@ -34,6 +34,13 @@ ELSE:
     DEC yaw = fe3d:camera_get_yaw()
     INCR yaw 0.1
     fe3d:camera_set_yaw(yaw)
+    INCR yaw 90.0
+    NEG yaw
+    DEC sinYaw = math:sin(yaw)
+    DEC cosYaw = math:cos(yaw)
+    MUL sinYaw 85.0
+    MUL cosYaw 85.0
+    fe3d:camera_set_position(sinYaw, 5.0, cosYaw)
 
 /// Always receive network data
 EXEC net_receive
