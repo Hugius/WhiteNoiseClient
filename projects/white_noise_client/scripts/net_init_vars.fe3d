@@ -1,4 +1,4 @@
-4 17
+10 16
 META script_type_init
 META script_execution_waiting
 
@@ -9,5 +9,6 @@ GLOB LIST _skeletonMainMessages = {}
 GLOB LIST _skeletonEventMessages = {}
 GLOB LIST _gunMainMessages = {}
 GLOB LIST _gunEventMessages = {}
+GLOB LIST _lightMainMessages = {}
 
 GLOB BOOL _isConnected = <false>

@@ -1,4 +1,4 @@
-17 41
+20 58
 META script_type_update
 META script_execution_waiting
 
@@ -17,3 +17,6 @@ IF interval IS <true>:
     MUL size 0.03
     fe3d:text_set_content("ping", content)
     fe3d:text_set_size("ping", size, 0.1)
+
+/// Player light
+fe3d:spotlight_set_visible("player_light", _isGunEquipped)

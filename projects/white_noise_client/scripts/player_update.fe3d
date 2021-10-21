@@ -1,4 +1,4 @@
-40 16
+52 14
 META script_type_update
 META script_execution_waiting
 
@@ -51,3 +51,4 @@ EXEC net_skeleton_event
 EXEC net_gun_event
 EXEC net_skeleton_main
 EXEC net_gun_main
+EXEC net_light_main

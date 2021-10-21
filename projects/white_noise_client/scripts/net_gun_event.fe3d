@@ -1,4 +1,4 @@
-68 16
+41 79
 META script_type_update
 META script_execution_waiting
 
@@ -50,6 +50,7 @@ LOOP:
                 EDIT isPaused = fe3d:model_is_animation_paused(skelID, skelAnimID)
                 IF isPaused IS <true>:
                     fe3d:model_resume_animation(skelID, skelAnimID)
+                    fe3d:spotlight_set_visible(lightID, <false>)
                 ELSE:
                     fe3d:client_send_tcp_message(rejectMessage)
             ELSE:

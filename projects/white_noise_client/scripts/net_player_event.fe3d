@@ -1,20 +1,22 @@
-36 30
+6 17
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST DEC charWidth = 0.1
 CONST DEC charHeight = 0.2
+CONST DEC n = 0.0
 
 /// Non-constants
 LIST messageParts = {}
 STR username = ""
-STR tagID = ""
 STR skelID = ""
 STR gunID = ""
 STR gunfireID = ""
 STR gunfire1ID = ""
 STR gunfire2ID = ""
+STR tagID = ""
+STR lightID = ""
 INT index = 0
 INT maxIndex = misc:list_get_size("_playerEventMessages")
 INT usernameLength = 0
@@ -28,18 +30,27 @@ LOOP:
         EDIT messageParts = misc:string_split(_playerEventMessages[index], ":")
         EDIT username = messageParts[2]
         EDIT usernameLength = misc:string_get_size(username)
-        EDIT tagID = misc:string_concat(username, "_tag")
         EDIT skelID = misc:string_concat(username, "_skeleton")
         EDIT gunID = misc:string_concat(username, "_gun")
         EDIT gunfireID = misc:string_concat(username, "_gunfire")
         EDIT gunfire1ID = misc:string_concat(username, "_gunfire1")
         EDIT gunfire2ID = misc:string_concat(username, "_gunfire2")
+        EDIT tagID = misc:string_concat(username, "_tag")
+        EDIT lightID = misc:string_concat(username, "_light")
         IF messageParts[0] IS "player" AND messageParts[1] IS "join":
-            /// Skeleton + gun
+            /// Skeleton
             fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
+            /// Gun
             fe3d:model_place(gunID, "gun", 0.0, 0.0, 0.0)
             fe3d:model_set_visible(gunID, <false>)
-            /// Playertag
+            /// Gunfire
+            fe3d:billboard_place(gunfire1ID, "gunfire", 0.0, 0.0, 0.0)
+            fe3d:billboard_place(gunfire2ID, "gunfire", 0.0, 0.0, 0.0)
+            fe3d:billboard_set_visible(gunfire1ID, <false>)
+            fe3d:billboard_set_visible(gunfire2ID, <false>)
+            fe3d:pointlight_place(gunfireID,0.0,0.0,0.0,15.0,15.0,15.0,1.0,0.85,0.7,7.5)
+            fe3d:pointlight_set_visible(gunfireID, <false>)
+            /// Tag
             EDIT tagWidth = charWidth
             CAST usernameLength DEC
             MUL tagWidth usernameLength
@@ -48,18 +59,15 @@ LOOP:
             fe3d:billboard_set_text(tagID, username)
             fe3d:billboard_set_position(tagID, 0.0, _tagHeight, 0.0)
             fe3d:billboard_set_size(tagID, tagWidth, charHeight)
-            /// Gunfire
-            fe3d:billboard_place(gunfire1ID, "gunfire", 0.0, 0.0, 0.0)
-            fe3d:billboard_place(gunfire2ID, "gunfire", 0.0, 0.0, 0.0)
-            fe3d:billboard_set_visible(gunfire1ID, <false>)
-            fe3d:billboard_set_visible(gunfire2ID, <false>)
-            fe3d:light_place(gunfireID,0.0,0.0,0.0,15.0,15.0,15.0,1.0,0.85,0.7,7.5)
-            fe3d:light_set_visible(gunfireID, <false>)
+            /// Light
+            fe3d:spotlight_place(lightID,n,n,n,n,n,n,1.0,1.0,1.0,1.0,25.0,30.0)
+            fe3d:spotlight_set_visible(lightID, <false>)
         IF messageParts[0] IS "player" AND messageParts[1] IS "leave":
             fe3d:model_delete(skelID)
             fe3d:model_delete(gunID)
             fe3d:billboard_delete(tagID)
             fe3d:billboard_delete(gunfire1ID)
             fe3d:billboard_delete(gunfire2ID)
-            fe3d:light_delete(gunfireID)
+            fe3d:pointlight_delete(gunfireID)
+            fe3d:spotlight_delete(lightID)
         INCR index 1

@@ -1,4 +1,4 @@
-67 43
+19 16
 META script_type_update
 META script_execution_waiting
 
@@ -18,6 +18,7 @@ STR part4 = ""
 STR p5 = ""
 STR skelID = ""
 STR tagID = ""
+STR lightID = ""
 VEC3 current = [0.0 0.0 0.0]
 DEC difference = 0.0
 INT index = 0
@@ -35,6 +36,8 @@ LOOP:
     EDIT part2 = messageParts[1]
     EDIT part3 = messageParts[2]
     EDIT skelID = misc:string_concat(part3, "_skeleton")
+    EDIT tagID = misc:string_concat(part3, "_tag")
+    EDIT lightID = misc:string_concat(part3, "_light")
     EDIT isJoined = fe3d:model_is_existing(skelID)
     IF isJoined IS <true>:
         IF part1 IS "player" AND part2 IS "skeleton_position":
@@ -44,7 +47,7 @@ LOOP:
             EDIT difference = math:vector_distance(current, part4)
             DIV difference _positionInterpolationDivider
             fe3d:model_move_to(skelID, part4.x, part4.y, part4.z, difference)
-            EDIT tagID = misc:string_concat(part3, "_tag")
+            fe3d:spotlight_move_to(tagID, part4.x, part4.y, part4.z, difference)
             INCR part4.y _tagHeight
             fe3d:billboard_move_to(tagID, part4.x, part4.y, part4.z, difference)
             CAST part4 STR

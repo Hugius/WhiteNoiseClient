@@ -1,0 +1,34 @@
+25 0
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST STR username = fe3d:client_get_username()
+CONST STR lightID = "player_light"
+
+/// Non-constants
+STR message = ""
+
+/// Send light position to server
+VEC3 position = fe3d:spotlight_get_position(lightID)
+CAST position STR
+STR message = misc:string_concat("forward:player:light_position:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, position)
+fe3d:client_send_udp_message(message)
+
+/// Send light rotation to server
+VEC3 front = fe3d:spotlight_get_front(lightID)
+CAST front STR
+EDIT message = misc:string_concat("forward:player:light_front:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, front)
+fe3d:client_send_udp_message(message)
+
+/// Send light visibility to server
+BOOL visibility = fe3d:spotlight_is_visible(lightID)
+CAST visibility STR
+EDIT message = misc:string_concat("forward:player:light_visibility:", username)
+EDIT message = misc:string_concat(message, ":")
+EDIT message = misc:string_concat(message, visibility)
+fe3d:client_send_udp_message(message)

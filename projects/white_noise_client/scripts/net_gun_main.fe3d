@@ -1,4 +1,4 @@
-56 67
+86 16
 META script_type_update
 META script_execution_waiting
 
@@ -67,7 +67,7 @@ LOOP:
             CAST part4 VEC3
             fe3d:billboard_set_position(gunfire1ID, part4.x, part4.y, part4.z)
             fe3d:billboard_set_position(gunfire2ID, part4.x, part4.y, part4.z)
-            fe3d:light_set_position(gunfireID, part4.x, part4.y, part4.z)
+            fe3d:pointlight_set_position(gunfireID, part4.x, part4.y, part4.z)
             CAST part4 STR
         ELIF part1 IS "player" AND part2 IS "gunfire_rotation":
             EDIT part4 = messageParts[3]
@@ -83,6 +83,6 @@ LOOP:
             CAST part4 BOOL
             fe3d:billboard_set_visible(gunfire1ID, part4)
             fe3d:billboard_set_visible(gunfire2ID, part4)
-            fe3d:light_set_visible(gunfireID, part4)
+            fe3d:pointlight_set_visible(gunfireID, part4)
             CAST part4 STR
     INCR index 1

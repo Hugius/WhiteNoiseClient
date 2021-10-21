@@ -1,4 +1,4 @@
-32 31
+26 10
 META script_type_update
 META script_execution_waiting
 
@@ -26,13 +26,9 @@ fe3d:billboard_set_visible("player_gunfire2", <false>)
 fe3d:sound_place_2D("gun_shoot", "gun_shoot", 0.75)
 
 /// Lights
-fe3d:light_place("player_gunfire", 0.0, 0.0, 0.0, 30.0, 30.0, 30.0, 1.0, 0.85, 0.7, 7.5)
-fe3d:light_set_visible("player_gunfire", <false>)
-fe3d:lighting_enable_spot()
-fe3d:lighting_set_spot_color(1.0, 1.0, 1.0)
-fe3d:lighting_set_spot_intensity(1.0)
-fe3d:lighting_set_spot_angle(25.0)
-fe3d:lighting_set_spot_distance(25.0)
+fe3d:pointlight_place("player_gunfire",0.0,0.0,0.0,30.0,30.0,30.0,1.0,0.85,0.7,7.5)
+fe3d:pointlight_set_visible("player_gunfire", <false>)
+fe3d:spotlight_place("player_light",0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,25.0,30.0)
 
 /// Images
 fe3d:image_place("crosshair", "crosshair.png", 0.0, 0.0, 0.0, 0.03, 0.05)

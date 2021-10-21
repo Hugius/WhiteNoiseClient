@@ -1,4 +1,4 @@
-24 4
+46 37
 META script_type_update
 META script_execution_waiting
 
@@ -25,7 +25,7 @@ IF isSkelAdsStarted IS <true>:
 IF _gunfireTickCount IS _maxGunfireTickCount:
     fe3d:billboard_set_visible(gunfire1ID, <false>)
     fe3d:billboard_set_visible(gunfire2ID, <false>)
-    fe3d:light_set_visible(gunfireID, <false>)
+    fe3d:pointlight_set_visible(gunfireID, <false>)
 ELSE:
     INCR _gunfireTickCount 1
 
@@ -40,7 +40,7 @@ IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
                 IF _isGunAds IS <false>:
                     fe3d:billboard_set_visible(gunfire1ID, <true>)
                     fe3d:billboard_set_visible(gunfire2ID, <true>)
-                fe3d:light_set_visible(gunfireID, <true>)
+                fe3d:pointlight_set_visible(gunfireID, <true>)
                 EDIT _gunfireTickCount = 0
                 DECR _bulletCount 1
                 CAST _bulletCount STR
