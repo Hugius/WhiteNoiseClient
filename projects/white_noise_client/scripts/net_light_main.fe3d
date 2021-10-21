@@ -1,4 +1,4 @@
-49 54
+49 36
 META script_type_update
 META script_execution_waiting
 
@@ -40,10 +40,15 @@ LOOP:
             DIV difference _positionInterpolationDivider
             fe3d:spotlight_move_to(lightID, part4.x, part4.y, part4.z, difference)
             CAST part4 STR
-        ELIF part1 IS "player" AND part2 IS "light_front":
+        ELIF part1 IS "player" AND part2 IS "light_yaw":
             EDIT part4 = messageParts[3]
-            CAST part4 VEC3
-            fe3d:spotlight_set_front_vector(lightID, part4.x, part4.y, part4.z)
+            CAST part4 DEC
+            fe3d:spotlight_set_yaw(lightID, part4)
+            CAST part4 STR
+        ELIF part1 IS "player" AND part2 IS "light_pitch":
+            EDIT part4 = messageParts[3]
+            CAST part4 DEC
+            fe3d:spotlight_set_pitch(lightID, part4)
             CAST part4 STR
         ELIF part1 IS "player" AND part2 IS "light_visibility":
             EDIT part4 = messageParts[3]

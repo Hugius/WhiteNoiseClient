@@ -1,4 +1,4 @@
-82 32
+83 24
 META script_type_update
 META script_execution_waiting
 
@@ -9,8 +9,8 @@ CONST STR lightID = "player_light"
 CONST STR gunfireID = "player_gunfire"
 CONST STR gunfire1ID = "player_gunfire1"
 CONST STR gunfire2ID = "player_gunfire2"
-CONST VEC3 front = fe3d:camera_get_front_vector()
 CONST DEC yaw = fe3d:camera_get_yaw()
+CONST DEC pitch = fe3d:camera_get_pitch()
 
 /// Non-constants
 VEC3 camPos = fe3d:camera_get_position()
@@ -80,8 +80,9 @@ fe3d:billboard_set_rotation(gunfire2ID, 0.0, gunfireRot.y, -45.0)
 /// Update skeleton rotation
 fe3d:model_set_rotation(skelID, 0.0, gunRot.y, 0.0)
 
-/// Update spotlight position
-fe3d:spotlight_set_front_vector(lightID, front.x, front.y, front.z)
+/// Update spotlight rotation
+fe3d:spotlight_set_yaw(lightID, yaw)
+fe3d:spotlight_set_pitch(lightID, pitch)
 
 /// Revert eye offset
 fe3d:camera_follow_z(_skeletonEyeOffset)

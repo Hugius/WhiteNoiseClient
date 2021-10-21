@@ -1,4 +1,4 @@
-38 62
+67 12
 META script_type_update
 META script_execution_waiting
 
@@ -65,3 +65,6 @@ IF _isGunEquipping IS <true>:
     INCR _gunOffsetY _gunOffsetSpeedY
 IF _isGunUnequipping IS <true>:
     DECR _gunOffsetY _gunOffsetSpeedY
+
+/// Update player light
+fe3d:spotlight_set_visible("player_light", _isGunEquipped)

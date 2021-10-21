@@ -1,4 +1,4 @@
-69 39
+72 72
 META script_type_update
 META script_execution_waiting
 
@@ -69,7 +69,9 @@ LOOP:
         PUSH _gunEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_position":
         PUSH _lightMainMessages message
-    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_front":
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_yaw":
+        PUSH _lightMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_pitch":
         PUSH _lightMainMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_visibility":
         PUSH _lightMainMessages message

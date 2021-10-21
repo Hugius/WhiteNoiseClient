@@ -1,11 +1,10 @@
-30 30
+41 40
 META script_type_update
 META script_execution_waiting
 
 /// Check connection
 IF _isConnected IS <false>:
     fe3d:scene_load("scene")
-    fe3d:camera_set_position(50.0, 3.5, 50.0)
     fe3d:camera_set_yaw(225.0)
     EDIT _isConnected = <true>
 
@@ -30,7 +29,7 @@ IF _isGameStarted IS <true>:
         EXEC player_send_skeleton
         EXEC player_send_gun
         EXEC player_send_light
-    EXEC player_misc
+    EXEC player_gui
 ELSE:
     DEC yaw = fe3d:camera_get_yaw()
     INCR yaw 0.1
@@ -41,7 +40,7 @@ ELSE:
     DEC cosYaw = math:cos(yaw)
     MUL sinYaw 85.0
     MUL cosYaw 85.0
-    fe3d:camera_set_position(sinYaw, 5.0, cosYaw)
+    fe3d:camera_set_position(sinYaw, 2.5, cosYaw)
 
 /// Always receive network data
 EXEC net_receive

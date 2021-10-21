@@ -1,11 +1,10 @@
-6 17
+5 26
 META script_type_update
 META script_execution_waiting
 
 /// Constants
 CONST DEC charWidth = 0.1
 CONST DEC charHeight = 0.2
-CONST DEC n = 0.0
 
 /// Non-constants
 LIST messageParts = {}
@@ -60,7 +59,7 @@ LOOP:
             fe3d:billboard_set_position(tagID, 0.0, _tagHeight, 0.0)
             fe3d:billboard_set_size(tagID, tagWidth, charHeight)
             /// Light
-            fe3d:spotlight_place(lightID,n,n,n,n,n,n,1.0,1.0,1.0,1.0,25.0,30.0)
+            fe3d:spotlight_place(lightID,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,25.0,30.0)
             fe3d:spotlight_set_visible(lightID, <false>)
         IF messageParts[0] IS "player" AND messageParts[1] IS "leave":
             fe3d:model_delete(skelID)
