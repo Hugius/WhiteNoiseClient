@@ -1,4 +1,4 @@
-25 0
+19 44
 META script_type_update
 META script_execution_waiting
 
@@ -12,13 +12,13 @@ STR message = ""
 /// Send light position to server
 VEC3 position = fe3d:spotlight_get_position(lightID)
 CAST position STR
-STR message = misc:string_concat("forward:player:light_position:", username)
+EDIT message = misc:string_concat("forward:player:light_position:", username)
 EDIT message = misc:string_concat(message, ":")
 EDIT message = misc:string_concat(message, position)
 fe3d:client_send_udp_message(message)
 
 /// Send light rotation to server
-VEC3 front = fe3d:spotlight_get_front(lightID)
+VEC3 front = fe3d:spotlight_get_front_vector(lightID)
 CAST front STR
 EDIT message = misc:string_concat("forward:player:light_front:", username)
 EDIT message = misc:string_concat(message, ":")

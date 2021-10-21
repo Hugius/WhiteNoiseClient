@@ -1,4 +1,4 @@
-52 14
+30 30
 META script_type_update
 META script_execution_waiting
 
@@ -29,6 +29,7 @@ IF _isGameStarted IS <true>:
     IF interval IS <true>:
         EXEC player_send_skeleton
         EXEC player_send_gun
+        EXEC player_send_light
     EXEC player_misc
 ELSE:
     DEC yaw = fe3d:camera_get_yaw()

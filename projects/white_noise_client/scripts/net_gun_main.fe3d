@@ -1,4 +1,4 @@
-86 16
+8 16
 META script_type_update
 META script_execution_waiting
 
@@ -8,7 +8,6 @@ INT maxIndex = misc:list_get_size("_gunMainMessages")
 /// Non-constants
 LIST messageParts = {}
 STR message = ""
-STR rejectMessage = ""
 STR part1 = ""
 STR part2 = ""
 STR part3 = ""
@@ -29,7 +28,6 @@ LOOP:
     IF index IS maxIndex:
         BREAK
     EDIT message = _gunMainMessages[index]
-    EDIT rejectMessage = misc:string_concat("reject:", message)
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]

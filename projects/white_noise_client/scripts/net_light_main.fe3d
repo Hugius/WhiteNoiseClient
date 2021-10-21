@@ -1,4 +1,4 @@
-13 8
+49 54
 META script_type_update
 META script_execution_waiting
 
@@ -23,8 +23,7 @@ BOOL isJoined = <false>
 LOOP:
     IF index IS maxIndex:
         BREAK
-    EDIT message = _gunMainMessages[index]
-    EDIT rejectMessage = misc:string_concat("reject:", message)
+    EDIT message = _lightMainMessages[index]
     EDIT messageParts = misc:string_split(message, ":")
     EDIT part1 = messageParts[0]
     EDIT part2 = messageParts[1]
@@ -44,7 +43,7 @@ LOOP:
         ELIF part1 IS "player" AND part2 IS "light_front":
             EDIT part4 = messageParts[3]
             CAST part4 VEC3
-            fe3d:spotlight_set_front(lightID, part4)
+            fe3d:spotlight_set_front_vector(lightID, part4.x, part4.y, part4.z)
             CAST part4 STR
         ELIF part1 IS "player" AND part2 IS "light_visibility":
             EDIT part4 = messageParts[3]
