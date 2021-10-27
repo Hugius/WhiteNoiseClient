@@ -1,10 +1,10 @@
-29 68
+5 22
 META script_type_update
 META script_execution_waiting
 
 /// Camera
 fe3d:camera_set_fov(_defaultFov)
-fe3d:camera_set_mouse_sensitivity(0.025)
+fe3d:camera_set_cursor_sensitivity(0.025)
 
 /// Collision
 fe3d:collision_set_camera_box(1.0, 1.0, 1.0, 1.0, 1.0, 1.0)

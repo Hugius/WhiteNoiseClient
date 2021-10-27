@@ -31,5 +31,5 @@ AABB @wall_solid@wall @wall_solid 0 0 0 0.2 1.03 2
 MODEL @wall_window game_assets\meshes\wall_window.obj 5 5 5 ? 0 1 2 ? game_assets\textures\diffuse_maps\wall_window.png ? ? ? game_assets\textures\normal_maps\wall_window.png 0 1 1 8 5 0.15 0.75 1 1 1 1
 AABB @wall_window@left @wall_window 0 0 0.65 0.2 1.03 0.7
 AABB @wall_window@right @wall_window 0 0 -0.65 0.2 1.03 0.7
-AABB @wall_window@bottom @wall_window 0 0 0 0.2 0.24 2
-AABB @wall_window@top @wall_window 0 0.76 0 0.2 0.27 2
+AABB @wall_window@bottom @wall_window 0 0 0 0.2 0.24 0.6
+AABB @wall_window@top @wall_window 0 0.76 0 0.2 0.27 0.6
