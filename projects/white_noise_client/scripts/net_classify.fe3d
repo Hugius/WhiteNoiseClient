@@ -1,4 +1,4 @@
-72 72
+33 41
 META script_type_update
 META script_execution_waiting
 
@@ -25,9 +25,13 @@ LOOP:
     EDIT messageParts = misc:string_split(message, ":")
     IF messageParts[0] IS "server" AND messageParts[1] IS "start":
         PUSH _serverEventMessages message
+    ELIF messageParts[0] IS "server" AND messageParts[1] IS "next":
+        PUSH _serverEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "join":
         PUSH _playerEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "leave":
+        PUSH _playerEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "hit":
         PUSH _playerEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_position":
         PUSH _skeletonMainMessages message

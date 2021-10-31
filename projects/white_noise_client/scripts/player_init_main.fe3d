@@ -1,4 +1,4 @@
-36 48
+18 45
 META script_type_update
 META script_execution_waiting
 
@@ -12,9 +12,12 @@ fe3d:collision_enable_camera_response(<true>, <true>, <true>)
 
 /// Models
 fe3d:model_place("player_skeleton", "skeleton", 0.0, 0.0, 0.0)
+fe3d:model_set_aabb_raycast_responsive("player_skeleton", <false>)
+fe3d:model_set_aabb_collision_responsive("player_skeleton", <false>)
 fe3d:model_place("player_gun", "gun", 0.0, 0.0, 0.0)
-fe3d:model_set_visible("player_gun", <false>)
+fe3d:model_set_aabb_raycast_responsive("player_gun", <false>)
 fe3d:model_set_aabb_collision_responsive("player_gun", <false>)
+fe3d:model_set_visible("player_gun", <false>)
 
 /// Billboards
 fe3d:billboard_place("player_gunfire1", "gunfire", 0.0, 0.0, 0.0)

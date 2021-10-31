@@ -1,4 +1,4 @@
-50 20
+37 43
 META script_type_init
 META script_execution_waiting
 
@@ -36,9 +36,11 @@ GLOB CONST INT _gunMagSize = 8
 GLOB CONST INT _maxGunfireTickCount = 5
 
 /// Non-constants
+GLOB VEC3 _startingPosition = [0.0 0.0 0.0]
 GLOB VEC3 _multiplayerSkeletonPosition = [0.0 0.0 0.0]
 GLOB VEC3 _multiplayerGunPosition = [0.0 0.0 0.0]
 GLOB VEC3 _multiplayerGunfirePosition = [0.0 0.0 0.0]
+GLOB DEC _startingYaw = 0.0
 GLOB DEC _gunOffsetX = _defaultGunOffsetX
 GLOB DEC _gunOffsetY = _unequippedGunOffsetY
 GLOB DEC _cameraHeightOffset = 0.0
