@@ -1,4 +1,4 @@
-17 41
+20 8
 META script_type_update
 META script_execution_waiting
 
@@ -12,8 +12,12 @@ IF interval IS <true>:
     INT ping = fe3d:client_get_ping_latency()
     CAST ping STR
     STR content = misc:string_concat(ping, "ms")
+    fe3d:text_set_content("ping", content)
     INT size = misc:string_get_size(content)
     CAST size DEC
     MUL size 0.03
-    fe3d:text_set_content("ping", content)
     fe3d:text_set_size("ping", size, 0.1)
+    MUL size 0.5
+    DEC x = 1.0
+    DECR x size
+    fe3d:text_set_position("ping", x, 0.95)

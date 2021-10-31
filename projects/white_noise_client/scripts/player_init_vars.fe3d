@@ -1,4 +1,4 @@
-11 49
+50 20
 META script_type_init
 META script_execution_waiting
 
@@ -48,6 +48,8 @@ GLOB DEC _bobbingDirection = 1.0
 GLOB INT _gunfireTickCount = 0
 GLOB INT _bulletCount = 8
 GLOB INT _magCount = 2
+GLOB INT _kills = 0
+GLOB INT _deaths = 0
 GLOB BOOL _isMoving = <false>
 GLOB BOOL _isSprinting = <false>
 GLOB BOOL _isGunAds = <false>
