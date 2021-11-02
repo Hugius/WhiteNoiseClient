@@ -1,4 +1,4 @@
-5 26
+52 88
 META script_type_update
 META script_execution_waiting
 
@@ -39,12 +39,16 @@ LOOP:
         IF messageParts[0] IS "player" AND messageParts[1] IS "join":
             /// Skeleton
             fe3d:model_place(skelID, "skeleton", 0.0, 0.0, 0.0)
+            fe3d:model_set_aabb_collision_responsive(skelID, <false>)
             /// Gun
             fe3d:model_place(gunID, "gun", 0.0, 0.0, 0.0)
+            fe3d:model_set_aabb_collision_responsive(gunID, <false>)
             fe3d:model_set_visible(gunID, <false>)
             /// Gunfire
             fe3d:billboard_place(gunfire1ID, "gunfire", 0.0, 0.0, 0.0)
             fe3d:billboard_place(gunfire2ID, "gunfire", 0.0, 0.0, 0.0)
+            fe3d:billboard_set_aabb_collision_responsive(gunfire1ID, <false>)
+            fe3d:billboard_set_aabb_collision_responsive(gunfire2ID, <false>)
             fe3d:billboard_set_visible(gunfire1ID, <false>)
             fe3d:billboard_set_visible(gunfire2ID, <false>)
             fe3d:pointlight_place(gunfireID,0.0,0.0,0.0,15.0,15.0,15.0,1.0,0.85,0.7,7.5)
@@ -58,6 +62,7 @@ LOOP:
             fe3d:billboard_set_text(tagID, username)
             fe3d:billboard_set_position(tagID, 0.0, _tagHeight, 0.0)
             fe3d:billboard_set_size(tagID, tagWidth, charHeight)
+            fe3d:billboard_set_aabb_collision_responsive(tagID, <false>)
             /// Light
             fe3d:spotlight_place(lightID,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,25.0,30.0)
             fe3d:spotlight_set_visible(lightID, <false>)
