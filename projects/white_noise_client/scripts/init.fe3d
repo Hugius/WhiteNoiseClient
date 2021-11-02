@@ -1,8 +1,7 @@
-3 19
+2 0
 META script_type_init
 META script_execution_entry
 
-GLOB INT _round = 1
 GLOB BOOL _isGameStarted = <false>
 
 INT random = misc:get_random_integer(0, 1000)

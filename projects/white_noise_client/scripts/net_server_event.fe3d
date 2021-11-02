@@ -1,4 +1,4 @@
-37 33
+30 56
 META script_type_update
 META script_execution_waiting
 
@@ -28,14 +28,23 @@ LOOP:
             fe3d:camera_set_position(position.x, _defaultCameraHeight, position.z)
             fe3d:camera_set_yaw(yaw)
         ELIF messageParts[0] IS "server" AND messageParts[1] IS "next":
-            INCR _round 1
-            CAST _round STR
-            STR content = misc:string_concat("Round: ", _round)
+            STR round = messageParts[2]
+            STR content = misc:string_concat("Round: ", round)
             fe3d:text_set_content("round", content)
-            CAST _round INT
             VEC3 position = _startingPosition
             DEC yaw = _startingYaw
             fe3d:camera_set_position(position.x, _defaultCameraHeight, position.z)
             fe3d:camera_set_yaw(yaw)
             fe3d:camera_set_pitch(0.0)
+        ELIF messageParts[0] IS "server" AND messageParts[1] IS "stop":
+            STR winner = messageParts[2]
+            STR kills = messageParts[3]
+            STR content = misc:string_concat(winner, " won the game with ")
+            EDIT content = misc:string_concat(content, kills)
+            EDIT content = misc:string_concat(content, " kills!")
+            fe3d:text_set_content("winner", content)
+            INT size = misc:string_get_size(content)
+            CAST size DEC
+            MUL size 0.03
+            fe3d:text_set_size("winner", size, 0.1)
         INCR index 1

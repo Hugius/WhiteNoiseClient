@@ -1,4 +1,4 @@
-33 41
+28 65
 META script_type_update
 META script_execution_waiting
 
@@ -26,6 +26,8 @@ LOOP:
     IF messageParts[0] IS "server" AND messageParts[1] IS "start":
         PUSH _serverEventMessages message
     ELIF messageParts[0] IS "server" AND messageParts[1] IS "next":
+        PUSH _serverEventMessages message
+    ELIF messageParts[0] IS "server" AND messageParts[1] IS "stop":
         PUSH _serverEventMessages message
     ELIF messageParts[0] IS "player" AND messageParts[1] IS "join":
         PUSH _playerEventMessages message
