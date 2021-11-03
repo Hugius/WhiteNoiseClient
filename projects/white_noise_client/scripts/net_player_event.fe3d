@@ -17,7 +17,7 @@ STR gunfire2ID = ""
 STR tagID = ""
 STR lightID = ""
 INT index = 0
-INT maxIndex = misc:list_get_size("_playerEventMessages")
+INT maxIndex = misc:list_size("_playerEventMessages")
 INT usernameLength = 0
 DEC tagWidth = 0.0
 

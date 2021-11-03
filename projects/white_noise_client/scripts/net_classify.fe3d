@@ -16,7 +16,7 @@ LIST messageParts = {}
 STR message = ""
 STR log = ""
 INT index = 0
-INT maxIndex = misc:list_get_size("_receivedMessages")
+INT maxIndex = misc:list_size("_receivedMessages")
 BOOL contains = <false>
 LOOP:
     IF index IS maxIndex:

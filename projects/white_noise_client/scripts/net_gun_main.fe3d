@@ -3,7 +3,7 @@ META script_type_update
 META script_execution_waiting
 
 /// Constants
-INT maxIndex = misc:list_get_size("_gunMainMessages")
+INT maxIndex = misc:list_size("_gunMainMessages")
 
 /// Non-constants
 LIST messageParts = {}

@@ -1,11 +1,11 @@
-30 56
+8 32
 META script_type_update
 META script_execution_waiting
 
 /// Non-constants
 LIST messageParts = {}
 INT index = 0
-INT maxIndex = misc:list_get_size("_serverEventMessages")
+INT maxIndex = misc:list_size("_serverEventMessages")
 
 /// Handle server event messages
 LOOP:

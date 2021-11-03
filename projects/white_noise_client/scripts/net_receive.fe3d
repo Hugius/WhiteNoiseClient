@@ -18,7 +18,7 @@ EDIT _receivedMessages = {}
 /// Sort messages based on protocol
 STR log = ""
 EDIT index = 0
-EDIT maxIndex = misc:list_get_size("messages")
+EDIT maxIndex = misc:list_size("messages")
 LOOP:
     IF index IS maxIndex:
         BREAK
@@ -40,7 +40,7 @@ LIST udpHeaders = {}
 EDIT udpMessages = misc:list_reverse("udpMessages")
 STR udpHeader = ""
 EDIT index = 0
-EDIT maxIndex = misc:list_get_size("udpMessages")
+EDIT maxIndex = misc:list_size("udpMessages")
 LOOP:
     IF index IS maxIndex:
         BREAK

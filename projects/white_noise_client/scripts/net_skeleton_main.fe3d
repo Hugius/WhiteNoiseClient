@@ -5,7 +5,7 @@ META script_execution_waiting
 /// Constants
 CONST STR legsID = "skeleton_walk_legs"
 CONST STR armsID = "skeleton_walk_arms"
-CONST INT maxIndex = misc:list_get_size("_skeletonMainMessages")
+CONST INT maxIndex = misc:list_size("_skeletonMainMessages")
 
 /// Non-constants
 LIST messageParts = {}
