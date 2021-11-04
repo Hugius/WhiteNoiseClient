@@ -1,10 +1,11 @@
-39 23
+6 40
 META script_type_update
 META script_execution_waiting
 
 /// Camera
 fe3d:camera_set_fov(_defaultFov)
 fe3d:camera_set_cursor_sensitivity(0.025)
+fe3d:camera_enable_first_person_view(0.0, 0.0)
 
 /// Collision
 fe3d:collision_set_camera_box(1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
@@ -33,12 +34,9 @@ fe3d:pointlight_place("player_gunfire",0.0,0.0,0.0,30.0,30.0,30.0,1.0,0.85,0.7,7
 fe3d:pointlight_set_visible("player_gunfire", <false>)
 fe3d:spotlight_place("player_light",0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,25.0,30.0)
 
-/// Images
+/// GUI
 fe3d:image_place("crosshair", "crosshair.png", 0.0, 0.0, 0.0, 0.03, 0.05)
 fe3d:image_place("ammo", "ammo.png", -0.85, -0.85, 0.0, 0.25, 0.25)
-
-/// Text
-fe3d:text_place("winner", "font.ttf", "", 0.0, 0.0, 0.0, 0.0, 0.0)
 fe3d:text_place("ping", "font.ttf", "", 0.0, 0.0, 0.0, 0.0, 0.0)
 fe3d:text_place("round", "font.ttf", "Round: 1", -0.88, 0.95, 0.0, 0.24, 0.1)
 fe3d:text_place("kills", "font.ttf", "K: 0", -0.94, 0.85, 0.0, 0.12, 0.1)
@@ -46,3 +44,9 @@ fe3d:text_place("deaths", "font.ttf", "D: 0", -0.94, 0.75, 0.0, 0.12, 0.1)
 fe3d:text_place("bullets", "font.ttf", "8", -0.90, -0.80, 0.0, 0.03, 0.1)
 fe3d:text_place("slash", "font.ttf", "/", -0.85, -0.85, 0.0, 0.03, 0.1)
 fe3d:text_place("mags", "font.ttf", "16", -0.80, -0.90, 0.0, 0.06, 0.1)
+fe3d:image_place("black", "black.png", 0.0, 0.0, 0.0, 2.0, 2.0)
+fe3d:text_place("winner", "font.ttf", "", 0.0, 0.0, 0.0, 0.0, 0.0)
+fe3d:image_set_visible("black", <false>)
+
+/// Miscellaneous
+fe3d:cursor_set_visible(<false>)

@@ -1,4 +1,4 @@
-31 16
+52 51
 META script_type_update
 META script_execution_waiting
 
@@ -38,6 +38,8 @@ LOOP:
             fe3d:camera_set_yaw(yaw)
             fe3d:camera_set_pitch(0.0)
         ELIF messageParts[0] IS "server" AND messageParts[1] IS "stop":
+            /// GUI
+            fe3d:image_set_visible("black", <true>)
             STR winner = messageParts[2]
             STR kills = messageParts[3]
             EDIT content = misc:string_concat(winner, " won the game with ")
@@ -48,4 +50,8 @@ LOOP:
             CAST size DEC
             MUL size 0.03
             fe3d:text_set_size("winner", size, 0.1)
+            /// Stop game
+            fe3d:camera_disable_first_person_view()
+            fe3d:client_disconnect()
+            EDIT _isGameStarted = <false>
         INCR index 1

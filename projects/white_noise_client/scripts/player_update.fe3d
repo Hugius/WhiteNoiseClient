@@ -1,8 +1,8 @@
-41 40
+14 52
 META script_type_update
 META script_execution_waiting
 
-/// Check connection
+/// Load scene
 IF _isConnected IS <false>:
     fe3d:scene_load("scene")
     fe3d:camera_set_yaw(225.0)
@@ -15,6 +15,7 @@ IF _isReady IS <false>:
         EDIT _isReady = <true>
         fe3d:client_send_tcp_message("server:ready")
 
+/// Update gameplay logic
 IF _isGameStarted IS <true>:
     EXEC player_camera
     EXEC player_move
