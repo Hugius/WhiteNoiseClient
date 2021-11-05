@@ -1,4 +1,4 @@
-52 51
+51 26
 META script_type_update
 META script_execution_waiting
 
@@ -50,8 +50,10 @@ LOOP:
             CAST size DEC
             MUL size 0.03
             fe3d:text_set_size("winner", size, 0.1)
-            /// Stop game
-            fe3d:camera_disable_first_person_view()
+            /// Disconnect
             fe3d:client_disconnect()
+            /// Miscellaneous
+            fe3d:camera_disable_first_person_view()
+            fe3d:cursor_set_visible(<true>)
             EDIT _isGameStarted = <false>
         INCR index 1

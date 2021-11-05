@@ -1,4 +1,4 @@
-59 36
+64 40
 META script_type_update
 META script_execution_waiting
 
@@ -62,6 +62,7 @@ IF hasFired IS <true> AND targetID NOT "":
     fe3d:text_set_content("kills", content)
     CAST _kills INT
     /// Send hit messages to server
-    fe3d:client_send_tcp_message("server:hit")
+    EDIT message = misc:string_concat("server:hit:", username)
+    fe3d:client_send_tcp_message(message)
     EDIT message = misc:string_concat("forward:player:hit:", username)
     fe3d:client_send_tcp_message(message)
