@@ -1,4 +1,4 @@
-24 16
+24 8
 META script_type_update
 META script_execution_waiting
 
@@ -22,7 +22,8 @@ LOOP:
     IF index IS maxIndex:
         BREAK
     EDIT message = _receivedMessages[index]
-    IF message IS "DISCONNECT":
+    IF message IS "DISCONNECTED":
+        INCR index 1
         CONTINUE
     EDIT messageParts = misc:string_split(message, ":")
     IF messageParts[0] IS "server" AND messageParts[1] IS "start":

@@ -1,4 +1,4 @@
-40 14
+25 48
 META script_type_update
 META script_execution_waiting
 
@@ -16,20 +16,22 @@ BOOL contains = <false>
 EDIT _receivedMessages = {}
 
 /// Sort messages based on protocol
+STR message = ""
 STR log = ""
 EDIT index = 0
 EDIT maxIndex = misc:list_size("messages")
 LOOP:
     IF index IS maxIndex:
         BREAK
-    EDIT contains = misc:string_contains(messages[index], ":")
-    IF contains IS <true>:
+    EDIT message = messages[index]
+    EDIT contains = misc:string_contains(message, ":")
+    IF contains IS <true> OR message IS "DISCONNECTED":
         IF protocols[index] IS "TCP":
-            PUSH _receivedMessages messages[index]
+            PUSH _receivedMessages message
         ELSE:
-            PUSH udpMessages messages[index]
+            PUSH udpMessages message
     ELSE:
-        EDIT log = misc:string_concat("Received invalid message: ", messages[index])
+        EDIT log = misc:string_concat("Received invalid message: ", message)
         fe3d:print(log)
         fe3d:application_stop()
     INCR index 1
