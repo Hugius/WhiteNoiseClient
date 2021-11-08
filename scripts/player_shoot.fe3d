@@ -1,0 +1,68 @@
+64 40
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST STR skelID = "player_skeleton"
+CONST STR gunID = "player_gun"
+CONST STR gunfireID = "player_gunfire"
+CONST STR gunfire1ID = "player_gunfire1"
+CONST STR gunfire2ID = "player_gunfire2"
+CONST STR gunShootID = "gun_shoot"
+CONST STR username = fe3d:client_get_username()
+CONST BOOL lmbPressed = fe3d:input_is_mouse_pressed("BUTTON_LEFT")
+CONST BOOL lmbDown = fe3d:input_is_mouse_down("BUTTON_LEFT")
+CONST BOOL isGunShootStarted = fe3d:model_is_animation_started(gunID, gunShootID)
+
+/// Non-constants
+STR message = ""
+STR skelAdsID = "skeleton_gun_ads"
+BOOL hasFired = <false>
+BOOL isSkelAdsStarted = fe3d:model_is_animation_started(skelID, skelAdsID)
+BOOL isSkelAdsPaused = <false>
+IF isSkelAdsStarted IS <true>:
+    EDIT isSkelAdsPaused = fe3d:model_is_animation_paused(skelID, skelAdsID)
+
+/// Update gunfire
+IF _gunfireTickCount IS _maxGunfireTickCount:
+    fe3d:billboard_set_visible(gunfire1ID, <false>)
+    fe3d:billboard_set_visible(gunfire2ID, <false>)
+    fe3d:pointlight_set_visible(gunfireID, <false>)
+ELSE:
+    INCR _gunfireTickCount 1
+
+/// Update shooting
+IF isGunShootStarted IS <false> AND _isGunReloading IS <false>:
+    IF _isGunEquipped IS <true> AND _bulletCount MORE 0:
+        IF isSkelAdsStarted IS <false> OR isSkelAdsPaused IS <true>:
+            IF lmbPressed IS <true>:
+                /// Fire a bullet
+                fe3d:model_start_animation(gunID, gunShootID, 0)
+                fe3d:sound_play_forced(gunShootID, 0, 0)
+                IF _isGunAds IS <false>:
+                    fe3d:billboard_set_visible(gunfire1ID, <true>)
+                    fe3d:billboard_set_visible(gunfire2ID, <true>)
+                fe3d:pointlight_set_visible(gunfireID, <true>)
+                EDIT _gunfireTickCount = 0
+                DECR _bulletCount 1
+                CAST _bulletCount STR
+                fe3d:text_set_content("bullets", _bulletCount)
+                CAST _bulletCount INT
+                EDIT hasFired = <true>
+                /// Send shoot message to server
+                EDIT message = misc:string_concat("forward:player:gun_shoot:", username)
+                fe3d:client_send_tcp_message(message)
+
+/// Update target hit
+STR targetID = fe3d:raycast_into_model("user", "", <true>)
+IF hasFired IS <true> AND targetID NOT "":
+    INCR _kills 1
+    CAST _kills STR
+    STR content = misc:string_concat("K: ", _kills)
+    fe3d:text_set_content("kills", content)
+    CAST _kills INT
+    /// Send hit messages to server
+    EDIT message = misc:string_concat("server:hit:", username)
+    fe3d:client_send_tcp_message(message)
+    EDIT message = misc:string_concat("forward:player:hit:", username)
+    fe3d:client_send_tcp_message(message)

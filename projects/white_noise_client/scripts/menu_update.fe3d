@@ -1,9 +1,0 @@
-7 37
-META script_type_update
-META script_execution_waiting
-
-/// Inputs
-BOOL cPressed = fe3d:input_is_key_pressed("KEY_C")
-
-IF cPressed IS <true>:
-    fe3d:client_connect("159.180.2.36")

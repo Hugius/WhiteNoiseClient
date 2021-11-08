@@ -1,0 +1,91 @@
+24 8
+META script_type_update
+META script_execution_waiting
+
+/// Clear classified messages
+EDIT _serverEventMessages = {}
+EDIT _playerEventMessages = {}
+EDIT _skeletonMainMessages = {}
+EDIT _skeletonEventMessages = {}
+EDIT _gunMainMessages = {}
+EDIT _gunEventMessages = {}
+EDIT _lightMainMessages = {}
+
+/// Classify received messages
+LIST messageParts = {}
+STR message = ""
+STR log = ""
+INT index = 0
+INT maxIndex = misc:list_size("_receivedMessages")
+BOOL contains = <false>
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT message = _receivedMessages[index]
+    IF message IS "DISCONNECTED":
+        INCR index 1
+        CONTINUE
+    EDIT messageParts = misc:string_split(message, ":")
+    IF messageParts[0] IS "server" AND messageParts[1] IS "start":
+        PUSH _serverEventMessages message
+    ELIF messageParts[0] IS "server" AND messageParts[1] IS "next":
+        PUSH _serverEventMessages message
+    ELIF messageParts[0] IS "server" AND messageParts[1] IS "stop":
+        PUSH _serverEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "join":
+        PUSH _playerEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "leave":
+        PUSH _playerEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "hit":
+        PUSH _playerEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_position":
+        PUSH _skeletonMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_rotation":
+        PUSH _skeletonMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_speed":
+        PUSH _skeletonMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_speed":
+        PUSH _skeletonMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_start":
+        PUSH _skeletonEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_legs_stop":
+        PUSH _skeletonEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_start":
+        PUSH _skeletonEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "skeleton_arms_stop":
+        PUSH _skeletonEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_position":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_rotation":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_visibility":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_position":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_rotation":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gunfire_visibility":
+        PUSH _gunMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_equip":
+        PUSH _gunEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_unequip":
+        PUSH _gunEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_ads":
+        PUSH _gunEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_shoot":
+        PUSH _gunEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "gun_reload":
+        PUSH _gunEventMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_position":
+        PUSH _lightMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_yaw":
+        PUSH _lightMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_pitch":
+        PUSH _lightMainMessages message
+    ELIF messageParts[0] IS "player" AND messageParts[1] IS "light_visibility":
+        PUSH _lightMainMessages message
+    ELSE:
+        EDIT log = misc:string_concat("Received unknown message: ", message)
+        fe3d:print(log)
+        fe3d:application_stop()
+    INCR index 1

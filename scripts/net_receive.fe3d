@@ -1,0 +1,55 @@
+25 48
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST LIST protocols = fe3d:client_get_pending_protocols()
+CONST LIST messages = fe3d:client_get_pending_contents()
+
+/// Commonly used values
+LIST udpMessages = {}
+INT index = 0
+INT maxIndex = 0
+BOOL contains = <false>
+
+/// Clear messages
+EDIT _receivedMessages = {}
+
+/// Sort messages based on protocol
+STR message = ""
+STR log = ""
+EDIT index = 0
+EDIT maxIndex = misc:list_size("messages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT message = messages[index]
+    EDIT contains = misc:string_contains(message, ":")
+    IF contains IS <true> OR message IS "DISCONNECTED":
+        IF protocols[index] IS "TCP":
+            PUSH _receivedMessages message
+        ELSE:
+            PUSH udpMessages message
+    ELSE:
+        EDIT log = misc:string_concat("Received invalid message: ", message)
+        fe3d:print(log)
+        fe3d:application_stop()
+    INCR index 1
+
+/// Filter UDP messages
+LIST messageParts = {}
+LIST udpHeaders = {}
+EDIT udpMessages = misc:list_reverse("udpMessages")
+STR udpHeader = ""
+EDIT index = 0
+EDIT maxIndex = misc:list_size("udpMessages")
+LOOP:
+    IF index IS maxIndex:
+        BREAK
+    EDIT messageParts = misc:string_split(udpMessages[index], ":")
+    EDIT udpHeader = misc:string_concat(messageParts[0], messageParts[1])
+    EDIT contains = misc:list_contains("udpHeaders", udpHeader)
+    IF contains IS <false>:
+        PUSH udpHeaders udpHeader
+        PUSH _receivedMessages udpMessages[index]
+    INCR index 1

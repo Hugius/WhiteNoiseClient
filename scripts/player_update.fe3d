@@ -1,0 +1,55 @@
+14 52
+META script_type_update
+META script_execution_waiting
+
+/// Load scene
+IF _isConnected IS <false>:
+    fe3d:scene_load("scene")
+    fe3d:camera_set_yaw(225.0)
+    EDIT _isConnected = <true>
+
+/// Check ready-up
+IF _isReady IS <false>:
+    BOOL rPressed = fe3d:input_is_key_pressed("KEY_R")
+    IF rPressed IS <true>:
+        EDIT _isReady = <true>
+        fe3d:client_send_tcp_message("server:ready")
+
+/// Update gameplay logic
+IF _isGameStarted IS <true>:
+    EXEC player_camera
+    EXEC player_move
+    EXEC player_eyes
+    EXEC player_equip
+    EXEC player_ads
+    EXEC player_shoot
+    EXEC player_reload
+    EXEC player_skeleton
+    BOOL interval = fe3d:time_interval(6)
+    IF interval IS <true>:
+        EXEC player_send_skeleton
+        EXEC player_send_gun
+        EXEC player_send_light
+    EXEC player_gui
+ELSE:
+    DEC yaw = fe3d:camera_get_yaw()
+    INCR yaw 0.1
+    fe3d:camera_set_yaw(yaw)
+    INCR yaw 90.0
+    NEG yaw
+    DEC sinYaw = math:sin(yaw)
+    DEC cosYaw = math:cos(yaw)
+    MUL sinYaw 85.0
+    MUL cosYaw 85.0
+    fe3d:camera_set_position(sinYaw, 2.5, cosYaw)
+
+/// Always receive network data
+EXEC net_receive
+EXEC net_classify
+EXEC net_server_event
+EXEC net_player_event
+EXEC net_skeleton_event
+EXEC net_gun_event
+EXEC net_skeleton_main
+EXEC net_gun_main
+EXEC net_light_main

@@ -1,0 +1,42 @@
+40 53
+META script_type_update
+META script_execution_waiting
+
+/// Update camera bobbing
+IF _isMoving IS <true> OR _cameraHeightOffset NOT 0.0:
+    DEC bobbingSpeed = _bobbingSpeed
+    IF _isSprinting IS <true>:
+        MUL bobbingSpeed _sprintFactor
+    MUL bobbingSpeed _bobbingDirection
+    INCR _cameraHeightOffset bobbingSpeed
+    DEC absOffset = math:abs(_cameraHeightOffset)
+    IF absOffset MORE _maxBobbingOffset:
+        MUL _bobbingDirection -1.0
+    ELIF _isMoving IS <false> AND absOffset LESS 0.000001:
+        EDIT _cameraHeightOffset = 0.0
+        EDIT _bobbingDirection = 1.0
+
+/// Update camera height
+VEC3 camPos = fe3d:camera_get_position()
+EDIT camPos.y = _defaultCameraHeight
+INCR camPos.y _cameraHeightOffset
+fe3d:camera_set_position(camPos.x, camPos.y, camPos.z)
+
+/// Update camera pitch locking
+IF _isGunEquipped IS <true> OR _isGunEquipping IS <true>:
+    DEC pitch = fe3d:camera_get_pitch()
+    DEC absPitch = math:abs(pitch)
+    DEC maxPitch = _pitchSpeed
+    MUL maxPitch 2.0
+    IF absPitch LESS maxPitch:
+        EDIT pitch = 0.0
+    ELIF pitch MORE 0.0:
+        DECR pitch _pitchSpeed
+    ELIF pitch LESS 0.0:
+        INCR pitch _pitchSpeed
+    fe3d:camera_set_pitch(pitch)
+    fe3d:camera_set_min_first_person_pitch(pitch)
+    fe3d:camera_set_max_first_person_pitch(pitch)
+ELSE:
+    fe3d:camera_set_min_first_person_pitch(_minPitch)
+    fe3d:camera_set_max_first_person_pitch(_maxPitch)

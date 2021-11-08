@@ -1,0 +1,70 @@
+67 12
+META script_type_update
+META script_execution_waiting
+
+/// Constants
+CONST STR skelID = "player_skeleton"
+CONST STR gunID = "player_gun"
+CONST STR armsID = "skeleton_walk_arms"
+CONST STR armID = "skeleton_gun_eqp"
+CONST STR username = fe3d:client_get_username()
+
+/// Non-constants
+STR msg = ""
+BOOL isArmsStarted = fe3d:model_is_animation_started(skelID, armsID)
+
+/// Inputs
+INT scrollDir = fe3d:input_get_mousewheel_direction()
+IF scrollDir NOT 0:
+    EDIT _wasMouseScrolled = <true>
+
+/// Update gun equip/unequip trigger
+IF _wasMouseScrolled IS <true> AND _isGunAds IS <false> AND _isGunReloading IS <false>:
+    IF _isGunEquipping IS <false> AND _isGunUnequipping IS <false>:
+        IF isArmsStarted IS <false>:
+            IF _isGunEquipped IS <true>:
+                /// Unequip gun
+                fe3d:model_resume_animation(skelID, armID)
+                EDIT _isGunEquipped = <false>
+                EDIT _isGunUnequipping = <true>
+                /// Send unequip message to server
+                EDIT msg = misc:string_concat("forward:player:gun_unequip:", username)
+                fe3d:client_send_tcp_message(msg)
+            ELSE:
+                /// Equip gun
+                fe3d:model_set_visible(gunID, <true>)
+                fe3d:model_start_animation(skelID, armID, 0)
+                fe3d:model_set_animation_autopaused(skelID, armID, <true>)
+                EDIT _isGunEquipping = <true>
+                /// Send equip message to server
+                EDIT msg = misc:string_concat("forward:player:gun_equip:", username)
+                fe3d:client_send_tcp_message(msg)
+
+/// Reset mouse scroll state
+IF isArmsStarted IS <false> AND _isGunAds IS <false>:
+    EDIT _wasMouseScrolled = <false>
+
+/// Update gun equipping
+IF _isGunEquipping IS <true>:
+    BOOL isPaused = fe3d:model_is_animation_paused(skelID, armID)
+    IF isPaused IS <true>:
+        EDIT _gunOffsetY = _equippedGunOffsetY
+        EDIT _isGunEquipping = <false>
+        EDIT _isGunEquipped = <true>
+
+/// Update gun unequipping
+IF _isGunUnequipping IS <true>:
+    BOOL isStarted = fe3d:model_is_animation_started(skelID, armID)
+    IF isStarted IS <false>:
+        EDIT _gunOffsetY = _unequippedGunOffsetY
+        EDIT _isGunUnequipping = <false>
+        fe3d:model_set_visible(gunID, <false>)
+
+/// Update gun height
+IF _isGunEquipping IS <true>:
+    INCR _gunOffsetY _gunOffsetSpeedY
+IF _isGunUnequipping IS <true>:
+    DECR _gunOffsetY _gunOffsetSpeedY
+
+/// Update player light
+fe3d:spotlight_set_visible("player_light", _isGunEquipped)
